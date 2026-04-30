@@ -1,0 +1,79 @@
+@import "tailwindcss";
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-border: var(--border-color);
+  --color-primary: var(--text-primary);
+  --color-secondary: var(--text-secondary);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-geist-sans);
+}
+
+:root {
+  /* Light mode (fallback if toggled) */
+  --background: #FAFAF7;
+  --surface: #FFFFFF;
+  --raised: #F0F0F0;
+  --border-color: #DDD8C8;
+  --text-primary: #101010;
+  --text-secondary: #505050;
+  --accent: #F5C542;
+  --accent-foreground: #000000;
+}
+
+.dark {
+  /* Dark mode (default per prompt) */
+  --background: #050505;
+  --surface: #0D0D0D;
+  --raised: #151515;
+  --border-color: #2A2A2A;
+  --text-primary: #F5F5F5;
+  --text-secondary: #B8B8B8;
+  --accent: #F5C542;
+  --accent-foreground: #000000;
+}
+
+body {
+  background-color: var(--background);
+  background-image: radial-gradient(color-mix(in srgb, var(--text-primary) 4%, transparent) 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  letter-spacing: normal;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .hero-badge {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
