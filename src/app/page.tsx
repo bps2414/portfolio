@@ -73,7 +73,7 @@ export default function Home() {
         </section>
 
         {/* 2. Projetos Principais */}
-        <section id="projetos" className="py-32 relative">
+        <section id="projetos" className="py-24 md:py-32 relative">
           <div className="container mx-auto max-w-6xl px-6">
             <FadeIn>
               <div className="mb-16 md:mb-24 flex flex-col md:flex-row md:items-end justify-between gap-8">
