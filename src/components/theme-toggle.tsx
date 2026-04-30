@@ -26,15 +26,20 @@ export function ThemeToggle() {
     <Button
       variant="ghost"
       size="icon"
-      className="w-10 h-10 px-0"
+      className="relative w-10 h-10 px-0 overflow-hidden"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
       aria-label="Alternar tema"
     >
-      {theme === "dark" ? (
-        <Sun className="h-5 w-5" />
-      ) : (
-        <Moon className="h-5 w-5" />
-      )}
+      <Sun
+        className={`absolute h-5 w-5 transition-all duration-300 ease-out ${
+          theme === "dark" ? "rotate-0 scale-100 opacity-100" : "-rotate-90 scale-75 opacity-0"
+        }`}
+      />
+      <Moon
+        className={`absolute h-5 w-5 transition-all duration-300 ease-out ${
+          theme === "dark" ? "rotate-90 scale-75 opacity-0" : "rotate-0 scale-100 opacity-100"
+        }`}
+      />
       <span className="sr-only">Alternar tema</span>
     </Button>
   );

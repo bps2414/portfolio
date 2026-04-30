@@ -4,12 +4,7 @@ export type Project = {
   type: string;
   description: string;
   stack: string[];
-  image?: {
-    src: string;
-    alt: string;
-    width: number;
-    height: number;
-  };
+  order: number;
   ogImage?: string;
   links: {
     demo?: string;
@@ -19,6 +14,9 @@ export type Project = {
   limitations?: string;
   microcopy?: string;
   isMain: boolean;
+  features?: string[];
+  technicalDecisions?: string[];
+  learnings?: string[];
   caseStudy?: {
     summary: {
       title: string;
@@ -44,6 +42,7 @@ export const projects: Project[] = [
     slug: "chamadafacil",
     title: "ChamadaFácil",
     type: "projeto técnico principal",
+    order: 1,
     description:
       "Help desk full-stack para pequenos negócios, com abertura pública de chamados, consulta por código e e-mail, painel administrativo protegido e gestão de status, urgência e respostas.",
     stack: [
@@ -57,13 +56,7 @@ export const projects: Project[] = [
       "Server Actions",
       "Vercel",
     ],
-    image: {
-      src: "/projects/chamadafacil-cover.png",
-      alt: "Capa do projeto ChamadaFácil, sistema de chamados para pequenos negócios",
-      width: 1672,
-      height: 941,
-    },
-    ogImage: "/projects/chamadafacil-cover.png",
+    ogImage: "/projects/chamadafacil/landing-desktop.png",
     links: {
       demo: "https://chamadafacil.vercel.app/",
       github: "https://github.com/bps2414/chamadafacil",
@@ -167,11 +160,39 @@ export const projects: Project[] = [
           caption: "Página pública com explicação do fluxo e chamadas principais.",
         },
         {
+          src: "/projects/chamadafacil/ticket-new-form.png",
+          alt: "Formulário de abertura de chamado com campos de informações e detalhes do problema.",
+          width: 1920,
+          height: 1080,
+          caption: "Formulário público para abrir um novo chamado sem necessidade de cadastro.",
+        },
+        {
+          src: "/projects/chamadafacil/ticket-lookup-form.png",
+          alt: "Página de consulta de chamado com campos de número do ticket e e-mail.",
+          width: 1920,
+          height: 1080,
+          caption: "Consulta pública por código do chamado e e-mail do solicitante.",
+        },
+        {
+          src: "/projects/chamadafacil/admin-login.png",
+          alt: "Tela de login administrativo com formulário de e-mail e senha.",
+          width: 1920,
+          height: 1080,
+          caption: "Acesso restrito ao painel de controle para operadores autenticados.",
+        },
+        {
           src: "/projects/chamadafacil/admin-dashboard.png",
           alt: "Dashboard administrativo do ChamadaFácil com cards de status e lista de chamados.",
           width: 1920,
           height: 1127,
           caption: "Painel protegido para acompanhar, filtrar e gerenciar a fila de chamados.",
+        },
+        {
+          src: "/projects/chamadafacil/admin-ticket-detail.png",
+          alt: "Detalhe do chamado com dados do solicitante, histórico de respostas e gerenciamento.",
+          width: 1920,
+          height: 1080,
+          caption: "Tela de detalhe com informações completas, respostas e ações de gerenciamento.",
         },
       ],
     },
@@ -180,16 +201,10 @@ export const projects: Project[] = [
     slug: "prado-auto-pecas",
     title: "Prado Auto Peças",
     type: "site real para negócio local",
+    order: 2,
     description:
       "Site institucional publicado para negócio local de autopeças e serviços relacionados, com foco em apresentação clara, contato rápido, SEO local e manutenção simples.",
     stack: ["HTML", "CSS", "JavaScript", "JSON", "PowerShell"],
-    image: {
-      src: "/projects/prado-auto-pecas-cover.png",
-      alt: "Capa do projeto Prado Auto Peças, site institucional para negócio local",
-      width: 1672,
-      height: 941,
-    },
-    ogImage: "/projects/prado-auto-pecas-cover.png",
     links: {
       site: "https://pradoautopecas.pages.dev/",
       github: "https://github.com/bps2414/pradoautopecas",
@@ -197,42 +212,79 @@ export const projects: Project[] = [
     limitations:
       "Site estático; não inclui backend, CMS online, login ou dados públicos de resultado.",
     isMain: true,
+    features: [
+      "Página institucional responsiva.",
+      "CTAs para telefone, WhatsApp e Instagram.",
+      "Conteúdo editável em JSON com editor local.",
+      "Editor local aberto por script batch.",
+      "Upload local de imagens pelo editor.",
+      "Backups automáticos a cada salvamento.",
+      "Sitemap, robots, canonical, Open Graph e JSON-LD.",
+      "Headers de segurança e cache para deploy estático.",
+      "Script de verificação técnica.",
+    ],
+    technicalDecisions: [
+      "Site estático primeiro para reduzir custo e manutenção.",
+      "Editor local em vez de painel online para evitar login e backend.",
+      "JSON como fonte única de conteúdo.",
+      "Páginas geradas no salvamento para manter o deploy simples.",
+      "PowerShell por ser adequado ao uso local em Windows.",
+    ],
+    learnings: [
+      "Arquitetura simples pode ser a melhor solução para pequenos negócios.",
+      "SEO local exige atenção a metadata, sitemap, robots e dados estruturados.",
+      "Editor local reduz superfície de ataque em projetos pequenos.",
+      "Scripts de validação ajudam a evitar quebra em deploy estático.",
+    ],
   },
   {
     slug: "ptbr-merger",
     title: "PTBRMerger",
     type: "ferramenta local técnica",
+    order: 3,
     description:
       "Ferramenta local para analisar arquivos MKV, detectar faixas de áudio PT-BR, criar um plano de processamento e gerar um arquivo final com FFmpeg/FFprobe.",
     stack: ["Python", "FFmpeg", "FFprobe", "Pytest", "HTML", "CSS", "JavaScript"],
-    image: {
-      src: "/projects/ptbr-merger-cover.png",
-      alt: "Capa do projeto PTBRMerger, ferramenta local para automação de mídia",
-      width: 1672,
-      height: 941,
-    },
-    ogImage: "/projects/ptbr-merger-cover.png",
     links: {
       github: "https://github.com/bps2414/ptbr-merger",
     },
     microcopy:
       "Não exige demo pública: a ferramenta foi pensada para rodar localmente, com dependência de arquivos e utilitários instalados na máquina do usuário.",
     isMain: false,
+    features: [
+      "Interface web local em 127.0.0.1.",
+      "Criação automática de pastas de trabalho.",
+      "Inspeção de streams via FFprobe.",
+      "Detecção de áudio PT-BR por metadados e palavras-chave.",
+      "Plano seguro antes da execução.",
+      "Mux com FFmpeg.",
+      "Relatórios e receitas locais.",
+      "Preflight operacional.",
+      "Fila, histórico e retry por JSON local.",
+      "Integrações opcionais com Radarr, qBittorrent, Discord e Bazarr.",
+    ],
+    technicalDecisions: [
+      "Local-first para evitar expor arquivos e credenciais.",
+      "Interface web simples em localhost para reduzir atrito.",
+      "Separação entre workflow manual e automação externa.",
+      "Relatórios e receitas para auditabilidade.",
+      "Testes com fixtures sintéticas em vez de arquivos reais de terceiros.",
+    ],
+    learnings: [
+      "Automação local exige preflight e mensagens operacionais claras.",
+      "Testes de fixtures ajudam a validar regras sem depender de dados reais.",
+      "Ferramentas técnicas precisam documentar limites e dependências.",
+      "Uma UI local pode tornar um fluxo de terminal mais avaliável.",
+    ],
   },
   {
     slug: "barbearia-da-vila",
     title: "Barbearia da Vila",
     type: "landing page comercial demonstrável",
+    order: 4,
     description:
       "Landing page responsiva para barbearia, com apresentação visual, serviços, galeria, equipe, FAQ, mapa, páginas legais, SEO básico e chamada para contato comercial.",
     stack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion", "Lucide React"],
-    image: {
-      src: "/projects/barbearia-da-vila-cover.png",
-      alt: "Capa do projeto Barbearia da Vila, landing page comercial para barbearia",
-      width: 1672,
-      height: 941,
-    },
-    ogImage: "/projects/barbearia-da-vila-cover.png",
     links: {
       demo: "https://barbeariadavila.vercel.app/",
       github: "https://github.com/bps2414/landingparabarbearia",
@@ -240,6 +292,30 @@ export const projects: Project[] = [
     limitations:
       "Projeto demonstrável; textos, dados comerciais e canais de contato devem ser revisados antes de uso por um negócio real.",
     isMain: false,
+    features: [
+      "Hero com imagem e CTA.",
+      "Menu fixo com navegação por seções.",
+      "Lista de serviços e preços.",
+      "Galeria em WebP otimizada.",
+      "Seções de sobre, equipe, primeira visita, depoimento e FAQ.",
+      "Mapa incorporado com localização.",
+      "Páginas de privacidade e termos.",
+      "SEO básico, Open Graph, sitemap e robots.",
+      "Vercel Analytics e Speed Insights.",
+    ],
+    technicalDecisions: [
+      "Next.js App Router para rotas, metadata, sitemap e robots.",
+      "Componentes por seção para facilitar manutenção.",
+      "WhatsApp como canal principal em vez de backend de agendamento.",
+      "Imagens WebP locais para carregamento mais eficiente.",
+      "Páginas legais simples e proporcionais ao escopo.",
+    ],
+    learnings: [
+      "Landing pages comerciais exigem hierarquia visual, CTA claro e conteúdo objetivo.",
+      "SEO básico em Next.js pode ser incorporado cedo.",
+      "Dados de negócio precisam ser validados antes de uso real.",
+      "Um projeto visual também precisa de documentação técnica honesta.",
+    ],
   },
 ];
 
