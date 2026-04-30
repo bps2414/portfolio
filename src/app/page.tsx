@@ -55,10 +55,10 @@ export default function Home() {
             </FadeIn>
 
             <FadeIn delay={400}>
-              <div className="mt-20 pt-8 border-t border-border/50 max-w-3xl">
-                <p className="text-sm font-medium text-secondary uppercase tracking-widest mb-6">Stack principal</p>
-                <div className="flex flex-wrap gap-3">
-                  {['React', 'Next.js', 'TypeScript', 'Supabase', 'Tailwind'].map((tech) => (
+              <div className="mt-12 max-w-3xl">
+                <p className="text-sm font-medium text-secondary uppercase tracking-widest mb-4">Stack principal</p>
+                <div className="flex flex-wrap gap-2.5">
+                  {['React', 'Next.js', 'TypeScript', 'Tailwind', 'HTML', 'CSS', 'JavaScript', 'Supabase'].map((tech) => (
                     <div 
                       key={tech}
                       className="px-4 py-2 rounded border border-border/40 bg-surface/50 backdrop-blur-sm text-sm font-medium text-primary shadow-sm"

@@ -26,7 +26,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
       {project.image && (
         <div className={cn(
           "relative w-full overflow-hidden bg-raised z-10",
-          isMain ? "aspect-[16/10] border-b border-border" : "aspect-[16/9] border-b border-border/50"
+          "aspect-[16/9] border-b border-border/50"
         )}>
           <Image
             src={project.image.src}
@@ -35,7 +35,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
             height={project.image.height}
             sizes="(max-width: 768px) 100vw, 600px"
             priority={isMain}
-            className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
           />
           {/* Subtle inner shadow for depth */}
           <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_20px_rgba(0,0,0,0.2)]" />
@@ -83,7 +83,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           href={`/projetos/${project.slug}`} 
           className="inline-flex items-center text-sm font-semibold text-primary group-hover:text-accent transition-colors"
         >
-          Ler case study
+          {project.caseStudy ? "Ler case study" : "Ver detalhes"}
           <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
         </Link>
         

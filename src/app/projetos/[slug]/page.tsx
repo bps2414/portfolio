@@ -125,23 +125,23 @@ export default async function ProjectPage({ params }: Props) {
                 </div>
               </FadeIn>
             </header>
-          </div>
 
-          <FadeIn delay={200}>
-            {project.image && (
-              <div className="max-w-6xl mx-auto relative mb-20 aspect-[16/9] md:aspect-[21/9] overflow-hidden rounded-2xl border border-border bg-surface shadow-2xl group">
-                <Image
-                  src={project.image.src}
-                  alt={project.image.alt}
-                  fill
-                  priority
-                  sizes="(max-width: 1200px) 100vw, 1200px"
-                  className="object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.02]"
-                />
-                <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_30px_rgba(0,0,0,0.4)]" />
-              </div>
-            )}
-          </FadeIn>
+            <FadeIn delay={200}>
+              {project.image && (
+                <div className="relative mb-20 aspect-[16/9] overflow-hidden rounded-xl border border-border bg-surface shadow-lg group">
+                  <Image
+                    src={project.image.src}
+                    alt={project.image.alt}
+                    fill
+                    priority
+                    sizes="(max-width: 1024px) 100vw, 1024px"
+                    className="object-cover object-top transition-transform duration-1000 ease-out group-hover:scale-[1.02]"
+                  />
+                  <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_20px_rgba(0,0,0,0.2)]" />
+                </div>
+              )}
+            </FadeIn>
+          </div>
 
           <div className="max-w-4xl mx-auto space-y-24">
             {project.caseStudy ? (
