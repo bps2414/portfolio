@@ -9,6 +9,7 @@ import { Github } from "@/components/icons";
 import { getButtonClasses } from "@/components/ui/button";
 import { getProjectBySlug, projects } from "@/data/projects";
 import { siteConfig } from "@/config/site";
+import { FadeIn } from "@/components/fade-in";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -76,78 +77,73 @@ export default async function ProjectPage({ params }: Props) {
   }
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col selection:bg-accent/30 selection:text-primary">
       <Header />
 
-      <main className="flex-1 py-10 md:py-20">
-        <article className="container mx-auto max-w-5xl px-4">
-          <Link
-            href="/#projetos"
-            className="mb-8 inline-flex items-center text-sm font-medium text-secondary transition-colors hover:text-primary"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" /> Voltar para projetos
-          </Link>
+      <main className="flex-1 pt-24 pb-16 md:pt-32 md:pb-24">
+        <article className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto">
+            <FadeIn>
+              <Link
+                href="/#projetos"
+                className="mb-12 inline-flex items-center text-sm font-medium text-secondary transition-colors hover:text-primary"
+              >
+                <ArrowLeft className="mr-2 h-4 w-4" /> Voltar para projetos
+              </Link>
+            </FadeIn>
 
-          <header className="mb-14">
+            <header className="mb-16 md:mb-24">
+              <FadeIn delay={100}>
+                <div className="flex items-center gap-3 mb-6">
+                  <span className="inline-flex items-center px-3 py-1 text-xs font-bold tracking-widest uppercase rounded-sm bg-accent/10 text-accent border border-accent/20">
+                    {project.type}
+                  </span>
+                </div>
+                <h1 className="mb-6 max-w-4xl text-5xl md:text-6xl lg:text-7xl font-heading font-extrabold tracking-tight text-primary">
+                  {project.title}
+                </h1>
+                <p className="mb-10 max-w-3xl text-xl leading-relaxed text-secondary font-light">
+                  {project.description}
+                </p>
+
+                <div className="flex flex-wrap gap-4">
+                  {project.links.demo && (
+                    <a href={project.links.demo} target="_blank" rel="noreferrer" className={getButtonClasses("primary", "lg")}>
+                      Acessar demo <ExternalLink className="ml-2 h-4 w-4" />
+                    </a>
+                  )}
+                  {project.links.site && (
+                    <a href={project.links.site} target="_blank" rel="noreferrer" className={getButtonClasses("primary", "lg")}>
+                      Visitar site <ExternalLink className="ml-2 h-4 w-4" />
+                    </a>
+                  )}
+                  {project.links.github && (
+                    <a href={project.links.github} target="_blank" rel="noreferrer" className={getButtonClasses("outline", "lg")}>
+                      <Github className="mr-2 h-5 w-5" /> Ver código fonte
+                    </a>
+                  )}
+                </div>
+              </FadeIn>
+            </header>
+          </div>
+
+          <FadeIn delay={200}>
             {project.image && (
-              <div className="relative mb-10 aspect-[16/9] overflow-hidden rounded-lg border border-border bg-surface shadow-[0_28px_80px_rgba(0,0,0,0.28)]">
+              <div className="max-w-6xl mx-auto relative mb-20 aspect-[16/9] md:aspect-[21/9] overflow-hidden rounded-2xl border border-border bg-surface shadow-2xl group">
                 <Image
                   src={project.image.src}
                   alt={project.image.alt}
                   fill
                   priority
-                  sizes="(max-width: 1024px) calc(100vw - 32px), 1024px"
-                  className="object-cover"
+                  sizes="(max-width: 1200px) 100vw, 1200px"
+                  className="object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.02]"
                 />
-                <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10" />
+                <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_30px_rgba(0,0,0,0.4)]" />
               </div>
             )}
+          </FadeIn>
 
-            <p className="mb-3 text-sm font-medium uppercase tracking-widest text-accent">
-              {project.type}
-            </p>
-            <h1 className="mb-6 max-w-3xl text-4xl font-bold tracking-tight md:text-6xl">
-              {project.title}
-            </h1>
-            <p className="mb-8 max-w-3xl text-lg leading-relaxed text-secondary md:text-xl">
-              {project.description}
-            </p>
-
-            <div className="flex flex-wrap gap-4">
-              {project.links.demo && (
-                <a
-                  href={project.links.demo}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={getButtonClasses("primary", "default")}
-                >
-                  <ExternalLink className="mr-2 h-4 w-4" /> Acessar demo
-                </a>
-              )}
-              {project.links.site && (
-                <a
-                  href={project.links.site}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={getButtonClasses("primary", "default")}
-                >
-                  <ExternalLink className="mr-2 h-4 w-4" /> Visitar site
-                </a>
-              )}
-              {project.links.github && (
-                <a
-                  href={project.links.github}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={getButtonClasses("outline", "default")}
-                >
-                  <Github className="mr-2 h-4 w-4" /> Ver código no GitHub
-                </a>
-              )}
-            </div>
-          </header>
-
-          <div className="space-y-14">
+          <div className="max-w-4xl mx-auto space-y-24">
             {project.caseStudy ? (
               <ProjectCaseStudy project={project} />
             ) : (
@@ -171,98 +167,109 @@ function ProjectCaseStudy({
 
   return (
     <>
-      <section className="grid gap-8 border-y border-border py-10 md:grid-cols-[220px_minmax(0,1fr)]">
-        <h2 className="text-2xl font-bold">Resumo</h2>
-        <div className="space-y-5">
-          <h3 className="text-2xl font-bold leading-tight">
-            {project.caseStudy.summary.title}
-          </h3>
-          {project.caseStudy.summary.body.map((paragraph) => (
-            <p key={paragraph} className="text-lg leading-relaxed text-secondary">
-              {paragraph}
-            </p>
-          ))}
-        </div>
-      </section>
-
-      <section>
-        <h2 className="mb-6 border-b border-border pb-2 text-2xl font-bold">
-          Stack
-        </h2>
-        <div className="flex flex-wrap gap-3">
-          {project.stack.map((tech) => (
-            <span
-              key={tech}
-              className="inline-flex items-center rounded bg-raised px-3 py-1.5 text-sm font-medium text-primary"
-            >
-              {tech}
-            </span>
-          ))}
-        </div>
-      </section>
-
-      {project.caseStudy.sections.map((section) => (
-        <section
-          key={section.title}
-          className="grid gap-6 md:grid-cols-[220px_minmax(0,1fr)]"
-        >
-          <h2 className="text-2xl font-bold">{section.title}</h2>
-          <div className="space-y-4 text-secondary">
-            {section.body?.map((paragraph) => (
-              <p key={paragraph} className="text-base leading-relaxed md:text-lg">
+      <FadeIn>
+        <section className="grid gap-8 md:grid-cols-[240px_minmax(0,1fr)] items-baseline">
+          <div className="flex items-center gap-4 text-accent text-sm font-bold tracking-widest uppercase">
+            <span className="w-8 h-px bg-accent"></span>
+            Resumo
+          </div>
+          <div className="space-y-6">
+            <h3 className="text-3xl font-heading font-bold leading-tight text-primary">
+              {project.caseStudy.summary.title}
+            </h3>
+            {project.caseStudy.summary.body.map((paragraph) => (
+              <p key={paragraph} className="text-lg md:text-xl leading-relaxed text-secondary font-light">
                 {paragraph}
               </p>
             ))}
-            {section.items && (
-              <ul className="grid gap-3">
-                {section.items.map((item) => (
-                  <li
-                    key={item}
-                    className="rounded-md border border-border bg-surface px-4 py-3 leading-relaxed"
-                  >
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            )}
           </div>
         </section>
-      ))}
+      </FadeIn>
 
-      {project.caseStudy.screenshots && (
-        <section>
-          <h2 className="mb-6 border-b border-border pb-2 text-2xl font-bold">
-            Telas do produto
-          </h2>
-          <div className="grid gap-6 md:grid-cols-2">
-            {project.caseStudy.screenshots.map((screenshot) => (
-              <figure
-                key={screenshot.src}
-                className="overflow-hidden rounded-lg border border-border bg-surface"
+      <FadeIn>
+        <section className="grid gap-8 md:grid-cols-[240px_minmax(0,1fr)]">
+          <div className="flex items-center gap-4 text-secondary text-sm font-bold tracking-widest uppercase">
+            <span className="w-8 h-px bg-border"></span>
+            Stack
+          </div>
+          <div className="flex flex-wrap gap-3">
+            {project.stack.map((tech) => (
+              <span
+                key={tech}
+                className="inline-flex items-center rounded-md bg-surface border border-border/60 px-4 py-2 text-sm font-medium text-primary shadow-sm"
               >
-                <Image
-                  src={screenshot.src}
-                  alt={screenshot.alt}
-                  width={screenshot.width}
-                  height={screenshot.height}
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="max-h-[520px] w-full object-cover object-top"
-                />
-                <figcaption className="border-t border-border px-4 py-3 text-sm leading-relaxed text-secondary">
-                  {screenshot.caption}
-                </figcaption>
-              </figure>
+                {tech}
+              </span>
             ))}
           </div>
         </section>
+      </FadeIn>
+
+      {project.caseStudy.sections.map((section, index) => (
+        <FadeIn key={section.title} delay={index * 50}>
+          <section className="grid gap-8 md:grid-cols-[240px_minmax(0,1fr)] pt-12 border-t border-border/40">
+            <h2 className="text-2xl font-heading font-bold text-primary">{section.title}</h2>
+            <div className="space-y-6">
+              {section.body?.map((paragraph) => (
+                <p key={paragraph} className="text-lg leading-relaxed text-secondary">
+                  {paragraph}
+                </p>
+              ))}
+              {section.items && (
+                <ul className="grid gap-4 mt-6">
+                  {section.items.map((item) => (
+                    <li
+                      key={item}
+                      className="relative pl-6 text-secondary text-lg leading-relaxed before:absolute before:left-0 before:top-2.5 before:w-2 before:h-2 before:bg-accent/50 before:rounded-sm"
+                    >
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </section>
+        </FadeIn>
+      ))}
+
+      {project.caseStudy.screenshots && (
+        <FadeIn>
+          <section className="pt-12 border-t border-border/40">
+            <h2 className="mb-10 text-3xl font-heading font-bold">Telas do produto</h2>
+            <div className="grid gap-12 md:grid-cols-2">
+              {project.caseStudy.screenshots.map((screenshot) => (
+                <figure
+                  key={screenshot.src}
+                  className="overflow-hidden rounded-xl border border-border bg-surface shadow-lg group"
+                >
+                  <div className="relative overflow-hidden aspect-[4/3]">
+                    <Image
+                      src={screenshot.src}
+                      alt={screenshot.alt}
+                      width={screenshot.width}
+                      height={screenshot.height}
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                    />
+                  </div>
+                  <figcaption className="border-t border-border px-6 py-4 text-sm leading-relaxed text-secondary">
+                    {screenshot.caption}
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          </section>
+        </FadeIn>
       )}
 
       {project.limitations && (
-        <ScopeNote
-          title="Limitações conhecidas"
-          icon="warning"
-          text={project.limitations}
-        />
+        <FadeIn>
+          <ScopeNote
+            title="Limitações conhecidas"
+            icon="warning"
+            text={project.limitations}
+          />
+        </FadeIn>
       )}
     </>
   );
@@ -275,28 +282,35 @@ function DefaultProjectDetails({
 }) {
   return (
     <>
-      <section>
-        <h2 className="mb-6 border-b border-border pb-2 text-2xl font-bold">
-          Stack tecnológica
-        </h2>
-        <div className="flex flex-wrap gap-3">
-          {project.stack.map((tech) => (
-            <span
-              key={tech}
-              className="inline-flex items-center rounded bg-raised px-3 py-1.5 text-sm font-medium text-primary"
-            >
-              {tech}
-            </span>
-          ))}
-        </div>
-      </section>
+      <FadeIn>
+        <section className="grid gap-8 md:grid-cols-[240px_minmax(0,1fr)]">
+          <div className="flex items-center gap-4 text-secondary text-sm font-bold tracking-widest uppercase">
+            <span className="w-8 h-px bg-border"></span>
+            Stack
+          </div>
+          <div className="flex flex-wrap gap-3">
+            {project.stack.map((tech) => (
+              <span
+                key={tech}
+                className="inline-flex items-center rounded-md bg-surface border border-border/60 px-4 py-2 text-sm font-medium text-primary shadow-sm"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        </section>
+      </FadeIn>
 
       {(project.limitations || project.microcopy) && (
-        <ScopeNote
-          title={project.limitations ? "Limitações conhecidas" : "Decisões de produto"}
-          icon={project.limitations ? "warning" : "info"}
-          text={project.limitations || project.microcopy || ""}
-        />
+        <FadeIn>
+          <div className="pt-12 border-t border-border/40">
+            <ScopeNote
+              title={project.limitations ? "Limitações conhecidas" : "Decisões de produto"}
+              icon={project.limitations ? "warning" : "info"}
+              text={project.limitations || project.microcopy || ""}
+            />
+          </div>
+        </FadeIn>
       )}
     </>
   );
@@ -315,14 +329,13 @@ function ScopeNote({
 
   return (
     <section>
-      <h2 className="mb-6 border-b border-border pb-2 text-2xl font-bold">
-        Notas sobre o escopo
-      </h2>
-      <div className="flex items-start gap-4 rounded-lg border border-border bg-surface p-6">
-        <Icon className="mt-0.5 h-6 w-6 shrink-0 text-accent" />
-        <div className="space-y-2">
-          <h3 className="font-semibold">{title}</h3>
-          <p className="leading-relaxed text-secondary">{text}</p>
+      <div className="flex flex-col sm:flex-row items-start gap-6 rounded-2xl border border-border bg-surface/50 p-8">
+        <div className="w-12 h-12 rounded-full bg-raised border border-border flex items-center justify-center shrink-0">
+          <Icon className="h-5 w-5 text-accent" />
+        </div>
+        <div className="space-y-3 pt-1">
+          <h3 className="font-heading font-bold text-xl">{title}</h3>
+          <p className="leading-relaxed text-secondary text-lg">{text}</p>
         </div>
       </div>
     </section>
