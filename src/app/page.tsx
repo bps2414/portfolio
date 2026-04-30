@@ -187,7 +187,7 @@ export default function Home() {
                   icon: LayoutTemplate,
                   title: "Frontend",
                   desc: "Desenvolvimento de interfaces performáticas e responsivas.",
-                  skills: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'Acessibilidade']
+                  skills: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'HTML', 'CSS', 'JavaScript', 'Acessibilidade']
                 },
                 {
                   icon: Code2,
