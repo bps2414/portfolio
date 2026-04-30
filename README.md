@@ -84,6 +84,28 @@ npm run build
 
 ---
 
+## Teste de performance mobile
+
+Para avaliar scroll e Web Vitals, use sempre build de producao local:
+
+```bash
+npm run build
+npm run start -- -p 3000
+```
+
+Depois abra `http://localhost:3000` em viewport mobile ou no celular pela URL da rede local exibida pelo Next.
+
+Checklist minimo:
+
+- Rodar Lighthouse em modo mobile e registrar Performance, LCP, CLS, TBT e Speed Index.
+- Rolar a home inteira em 360-430px de largura, observando travadas quando o header fixa e quando novas secoes entram.
+- No Chrome DevTools, usar Performance com CPU throttling 4x e procurar long tasks, paint/composite alto e frames acima de 50ms.
+- Em Android real, conectar o aparelho e usar `chrome://inspect` para gravar o scroll no dispositivo.
+
+Evite reintroduzir `backdrop-filter` em elementos fixos no mobile, `transition-all`, blur decorativo grande, hover shadows pesadas em telas pequenas e `priority` em imagens abaixo da dobra.
+
+---
+
 ## Deploy (Vercel)
 
 O projeto está configurado para deploy direto no Vercel sem variáveis de ambiente adicionais:

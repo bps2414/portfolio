@@ -178,7 +178,7 @@ export default async function ProjectPage({ params }: Props) {
                     {prevProject ? (
                       <Link
                         href={`/projetos/${prevProject.slug}`}
-                        className="group p-6 rounded-xl border border-border bg-surface hover:border-accent/30 transition-all duration-300"
+                        className="group p-6 rounded-xl border border-border bg-surface hover:border-accent/30 transition-colors duration-300"
                       >
                         <div className="text-xs font-bold tracking-widest uppercase text-secondary mb-2">
                           ← Anterior
@@ -193,7 +193,7 @@ export default async function ProjectPage({ params }: Props) {
                     {nextProject && (
                       <Link
                         href={`/projetos/${nextProject.slug}`}
-                        className="group p-6 rounded-xl border border-border bg-surface hover:border-accent/30 transition-all duration-300 text-right"
+                        className="group p-6 rounded-xl border border-border bg-surface hover:border-accent/30 transition-colors duration-300 text-right"
                       >
                         <div className="text-xs font-bold tracking-widest uppercase text-secondary mb-2">
                           Próximo →
@@ -226,7 +226,7 @@ function ProjectCaseStudy({
   return (
     <>
       <FadeIn>
-        <section className="grid gap-8 md:grid-cols-[240px_minmax(0,1fr)] items-baseline">
+        <section className="perf-section grid gap-8 md:grid-cols-[240px_minmax(0,1fr)] items-baseline">
           <div className="flex items-center gap-4 text-accent text-sm font-bold tracking-widest uppercase">
             <span className="w-8 h-px bg-accent"></span>
             Resumo
@@ -248,7 +248,7 @@ function ProjectCaseStudy({
       </FadeIn>
 
       <FadeIn>
-        <section className="grid gap-8 md:grid-cols-[240px_minmax(0,1fr)]">
+        <section className="perf-section grid gap-8 md:grid-cols-[240px_minmax(0,1fr)]">
           <div className="flex items-center gap-4 text-secondary text-sm font-bold tracking-widest uppercase">
             <span className="w-8 h-px bg-border"></span>
             Stack
@@ -268,7 +268,7 @@ function ProjectCaseStudy({
 
       {project.caseStudy.sections.map((section, index) => (
         <FadeIn key={section.title} delay={index * 50}>
-          <section className="grid gap-8 md:grid-cols-[240px_minmax(0,1fr)] pt-12 border-t border-border/40">
+          <section className="perf-section grid gap-8 md:grid-cols-[240px_minmax(0,1fr)] pt-12 border-t border-border/40">
             <h2 className="text-2xl font-heading font-bold text-primary">
               {section.title}
             </h2>
@@ -327,7 +327,7 @@ function DefaultProjectDetails({
     <>
       {/* Stack */}
       <FadeIn>
-        <section className="grid gap-8 md:grid-cols-[240px_minmax(0,1fr)]">
+        <section className="perf-section grid gap-8 md:grid-cols-[240px_minmax(0,1fr)]">
           <div className="flex items-center gap-4 text-secondary text-sm font-bold tracking-widest uppercase">
             <span className="w-8 h-px bg-border"></span>
             Stack
@@ -348,7 +348,7 @@ function DefaultProjectDetails({
       {/* Features */}
       {project.features && project.features.length > 0 && (
         <FadeIn>
-          <section className="pt-12 border-t border-border/40">
+          <section className="perf-section pt-12 border-t border-border/40">
             <div className="flex items-center gap-4 mb-8">
               <div className="w-10 h-10 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center">
                 <Zap className="w-5 h-5 text-accent" />
@@ -380,7 +380,7 @@ function DefaultProjectDetails({
       {project.technicalDecisions &&
         project.technicalDecisions.length > 0 && (
           <FadeIn>
-            <section className="pt-12 border-t border-border/40">
+            <section className="perf-section pt-12 border-t border-border/40">
               <div className="flex items-center gap-4 mb-8">
                 <div className="w-10 h-10 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center">
                   <Layers className="w-5 h-5 text-accent" />
@@ -406,7 +406,7 @@ function DefaultProjectDetails({
       {/* Learnings */}
       {project.learnings && project.learnings.length > 0 && (
         <FadeIn>
-          <section className="pt-12 border-t border-border/40">
+          <section className="perf-section pt-12 border-t border-border/40">
             <div className="flex items-center gap-4 mb-8">
               <div className="w-10 h-10 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center">
                 <BookOpen className="w-5 h-5 text-accent" />

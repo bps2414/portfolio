@@ -21,12 +21,12 @@ export default function Home() {
         {/* 1. Hero */}
         <section className="relative pt-28 pb-8 sm:pt-36 md:pt-48 md:pb-10 flex flex-col justify-center overflow-hidden">
           {/* Subtle background glow */}
-          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-accent/5 blur-[150px] rounded-[100%] pointer-events-none" />
+          <div className="mobile-paint-lite absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[320px] sm:w-[800px] sm:h-[500px] bg-accent/5 blur-[72px] sm:blur-[150px] rounded-[100%] pointer-events-none" />
           
           <div className="container mx-auto max-w-6xl px-4 sm:px-6 relative z-10 mt-8 sm:mt-12 md:mt-0">
             <FadeIn>
               <div className="inline-flex items-center gap-3 px-3 py-1.5 rounded-full bg-surface border border-border text-xs font-medium text-secondary mb-8 shadow-sm">
-                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                <span className="w-2 h-2 rounded-full bg-green-500 md:animate-pulse motion-reduce:animate-none" />
                 Disponível para novos projetos
               </div>
             </FadeIn>
@@ -61,7 +61,7 @@ export default function Home() {
                   {['React', 'Next.js', 'TypeScript', 'Tailwind', 'HTML', 'CSS', 'JavaScript', 'Supabase'].map((tech) => (
                     <div 
                       key={tech}
-                      className="px-4 py-2 rounded border border-border/40 bg-surface/50 backdrop-blur-sm text-sm font-medium text-primary shadow-sm"
+                      className="px-4 py-2 rounded border border-border/40 bg-surface/60 sm:backdrop-blur-sm text-sm font-medium text-primary shadow-sm"
                     >
                       {tech}
                     </div>
@@ -101,7 +101,7 @@ export default function Home() {
         </section>
 
         {/* 3. Projetos Secundários */}
-        <section className="py-32 bg-surface/30 border-y border-border">
+        <section className="perf-section py-32 bg-surface/30 border-y border-border">
           <div className="container mx-auto max-w-6xl px-6">
             <FadeIn>
               <div className="mb-16 md:mb-20 space-y-4 max-w-2xl">
@@ -127,7 +127,7 @@ export default function Home() {
         </section>
 
         {/* 4. Sobre */}
-        <section className="py-32">
+        <section className="perf-section py-32">
           <div className="container mx-auto max-w-6xl px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
               <FadeIn>
@@ -169,7 +169,7 @@ export default function Home() {
         </section>
 
         {/* 5. Stack e habilidades */}
-        <section className="py-32 bg-surface/30 border-y border-border">
+        <section className="perf-section py-32 bg-surface/30 border-y border-border">
           <div className="container mx-auto max-w-6xl px-6">
             <FadeIn>
               <div className="mb-20 space-y-4 max-w-2xl">
@@ -225,7 +225,7 @@ export default function Home() {
         </section>
 
         {/* 6. Processo */}
-        <section className="py-32 overflow-hidden relative">
+        <section className="perf-section py-32 overflow-hidden relative">
           <div className="container mx-auto max-w-6xl px-6 relative z-10">
             <FadeIn>
               <div className="mb-24 space-y-4 max-w-2xl mx-auto text-center">
@@ -286,13 +286,13 @@ export default function Home() {
         </section>
 
         {/* 7. Contato via GitHub */}
-        <section className="py-32 relative border-t border-border">
+        <section className="perf-section py-32 relative border-t border-border">
           {/* Subtle glow for the final section */}
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[300px] bg-accent/5 blur-[100px] rounded-[100%] pointer-events-none" />
+          <div className="mobile-paint-lite absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[220px] sm:h-[300px] bg-accent/5 blur-[56px] sm:blur-[100px] rounded-[100%] pointer-events-none" />
           
           <div className="container mx-auto max-w-4xl px-6 relative z-10">
             <FadeIn>
-              <div className="p-6 sm:p-12 md:p-24 rounded-3xl bg-surface border border-border shadow-xl text-center relative overflow-hidden">
+              <div className="p-6 sm:p-12 md:p-24 rounded-3xl bg-surface border border-border shadow-sm sm:shadow-xl text-center relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-accent to-transparent"></div>
                 
                 <div className="mx-auto w-20 h-20 rounded-2xl bg-background border border-border flex items-center justify-center mb-10 text-primary shadow-sm">

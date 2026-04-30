@@ -102,12 +102,12 @@ export function ScreenshotGallery({ screenshots }: ScreenshotGalleryProps) {
 
   return (
     <>
-      <section className="pt-12 border-t border-border/40">
+      <section className="perf-section pt-12 border-t border-border/40">
         <h2 className="mb-10 text-3xl font-heading font-bold">Telas do produto</h2>
 
         {/* Main image */}
         <div className="relative group">
-          <figure className="overflow-hidden rounded-xl border border-border bg-surface shadow-lg">
+          <figure className="overflow-hidden rounded-xl border border-border bg-surface shadow-sm sm:shadow-lg">
             <button
               type="button"
               onClick={() => setIsLightboxOpen(true)}
@@ -120,14 +120,14 @@ export function ScreenshotGallery({ screenshots }: ScreenshotGalleryProps) {
                   alt={current.alt}
                   width={current.width}
                   height={current.height}
-                  sizes="(max-width: 1024px) 100vw, 896px"
-                  priority={currentIndex === 0}
-                  className="w-full h-full object-cover object-top transition-transform duration-700 motion-reduce:transition-none group-hover:scale-[1.02]"
+                  sizes="(max-width: 640px) 92vw, (max-width: 1024px) 100vw, 896px"
+                  quality={82}
+                  className="w-full h-full object-cover object-top md:transition-transform md:duration-700 motion-reduce:transition-none md:group-hover:scale-[1.02]"
                 />
               </div>
               {/* Zoom hint overlay */}
               <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/20 transition-colors duration-300 motion-reduce:transition-none">
-                <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 motion-reduce:transition-none bg-background/80 backdrop-blur-sm rounded-full p-3 border border-border shadow-lg">
+                <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 motion-reduce:transition-none bg-background/85 md:backdrop-blur-sm rounded-full p-3 border border-border shadow-sm md:shadow-lg">
                   <ZoomIn className="w-5 h-5 text-primary" />
                 </div>
               </div>
@@ -147,7 +147,7 @@ export function ScreenshotGallery({ screenshots }: ScreenshotGalleryProps) {
               <button
                 type="button"
                 onClick={prev}
-                className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-background/80 backdrop-blur-sm border border-border shadow-lg flex items-center justify-center text-primary hover:bg-accent hover:text-accent-foreground hover:border-accent transition-colors duration-200 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-background/90 md:backdrop-blur-sm border border-border shadow-sm md:shadow-lg flex items-center justify-center text-primary hover:bg-accent hover:text-accent-foreground hover:border-accent transition-colors duration-200 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                 aria-label="Imagem anterior"
               >
                 <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -155,7 +155,7 @@ export function ScreenshotGallery({ screenshots }: ScreenshotGalleryProps) {
               <button
                 type="button"
                 onClick={next}
-                className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-background/80 backdrop-blur-sm border border-border shadow-lg flex items-center justify-center text-primary hover:bg-accent hover:text-accent-foreground hover:border-accent transition-colors duration-200 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-background/90 md:backdrop-blur-sm border border-border shadow-sm md:shadow-lg flex items-center justify-center text-primary hover:bg-accent hover:text-accent-foreground hover:border-accent transition-colors duration-200 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                 aria-label="Próxima imagem"
               >
                 <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -186,7 +186,7 @@ export function ScreenshotGallery({ screenshots }: ScreenshotGalleryProps) {
                   aria-label={`Ver ${screenshot.caption}`}
                   onClick={() => goTo(index)}
                   className={cn(
-                    "relative flex-shrink-0 w-24 sm:w-28 md:w-36 aspect-[16/9] rounded-lg overflow-hidden border-2 transition-all duration-200 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                    "relative flex-shrink-0 w-24 sm:w-28 md:w-36 aspect-[16/9] rounded-lg overflow-hidden border-2 transition-[border-color,opacity,box-shadow] duration-200 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                     index === currentIndex
                       ? "border-accent shadow-md shadow-accent/20"
                       : "border-border/40 opacity-60 hover:opacity-100 hover:border-border"
@@ -210,7 +210,7 @@ export function ScreenshotGallery({ screenshots }: ScreenshotGalleryProps) {
       {/* Lightbox */}
       {isLightboxOpen && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-md"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 md:backdrop-blur-md"
           role="dialog"
           aria-modal="true"
           aria-label="Visualização ampliada da tela"
@@ -224,7 +224,7 @@ export function ScreenshotGallery({ screenshots }: ScreenshotGalleryProps) {
           <button
             type="button"
             onClick={() => setIsLightboxOpen(false)}
-            className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-colors duration-200 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-white/10 md:backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-colors duration-200 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             aria-label="Fechar visualização"
           >
             <X className="w-5 h-5" />
@@ -261,7 +261,7 @@ export function ScreenshotGallery({ screenshots }: ScreenshotGalleryProps) {
                 width={current.width}
                 height={current.height}
                 sizes="90vw"
-                quality={90}
+                quality={85}
                 className="max-h-[80vh] w-auto h-auto object-contain"
               />
             </div>

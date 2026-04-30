@@ -15,8 +15,8 @@ export function ProjectCard({ project }: ProjectCardProps) {
   return (
     <div
       className={cn(
-        "group relative flex flex-col h-full overflow-hidden rounded-xl bg-surface transition-all duration-500 ease-out",
-        "hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)]",
+        "group relative flex flex-col h-full overflow-hidden rounded-xl bg-surface transition-[border-color,transform] duration-300 ease-out md:transition-[border-color,transform,box-shadow] md:duration-500",
+        "md:hover:-translate-y-2 md:hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)]",
         isMain
           ? "border border-border hover:border-accent/40"
           : "border border-border/60 hover:border-accent/30"

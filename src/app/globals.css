@@ -51,7 +51,7 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color 750ms ease, color 750ms ease;
+  transition: background-color 450ms ease, color 450ms ease;
 }
 
 html {
@@ -63,8 +63,8 @@ body,
 header,
 a,
 button {
-  transition-property: background-color, border-color, color, box-shadow, opacity;
-  transition-duration: 750ms;
+  transition-property: background-color, border-color, color, opacity;
+  transition-duration: 450ms;
   transition-timing-function: ease;
 }
 
@@ -84,6 +84,10 @@ body::before {
   background: radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--accent) 5%, transparent) 0%, transparent 60%);
   pointer-events: none;
   z-index: -1;
+}
+
+.perf-section {
+  contain: paint;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -118,6 +122,22 @@ h1, h2, h3, h4, h5, h6 {
   .hero-badge {
     opacity: 1 !important;
     transform: none !important;
+  }
+}
+
+@media (max-width: 767px) {
+  body {
+    background-image: none;
+  }
+
+  body::before {
+    background: radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--accent) 4%, transparent) 0%, transparent 52%);
+  }
+
+  .mobile-paint-lite {
+    filter: none !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
   }
 }
 
