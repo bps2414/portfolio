@@ -1,6 +1,9 @@
 {
-  "name": "portfolio-temp",
-  "version": "0.1.0",
+  "name": "bps2414-portfolio",
+  "version": "1.0.0",
+  "description": "Portfólio pessoal de Bryan / bps2414 — projetos web selecionados com estudos de caso.",
+  "author": "Bryan <bps2414>",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "dev": "next dev",
