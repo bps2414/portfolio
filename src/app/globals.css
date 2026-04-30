@@ -17,47 +17,70 @@
 
 :root {
   /* Light mode (fallback if toggled) */
-  --background: #FAFAF7;
+  --background: #FAFAFA;
   --surface: #FFFFFF;
-  --raised: #F0F0F0;
-  --border-color: #DDD8C8;
-  --text-primary: #101010;
-  --text-secondary: #505050;
-  --accent: #F5C542;
+  --raised: #F4F4F5;
+  --border-color: #E4E4E7;
+  --text-primary: #09090B;
+  --text-secondary: #71717A;
+  --accent: #EAB308; /* Tailwind Yellow 500 */
   --accent-foreground: #000000;
 }
 
 .dark {
-  /* Dark mode (default per prompt) */
+  /* Dark mode (default per prompt - Premium Dark) */
   --background: #050505;
-  --surface: #0D0D0D;
-  --raised: #151515;
-  --border-color: #2A2A2A;
-  --text-primary: #F5F5F5;
-  --text-secondary: #B8B8B8;
-  --accent: #F5C542;
+  --surface: #0A0A0A;
+  --raised: #121212;
+  --border-color: #1F1F1F;
+  --text-primary: #FAFAFA;
+  --text-secondary: #A1A1AA; /* Tailwind Zinc 400 */
+  --accent: #EAB308;
   --accent-foreground: #000000;
 }
 
 body {
   background-color: var(--background);
-  background-image: radial-gradient(color-mix(in srgb, var(--text-primary) 4%, transparent) 1px, transparent 1px);
-  background-size: 24px 24px;
+  /* Premium subtle grid */
+  background-image: 
+    linear-gradient(to right, color-mix(in srgb, var(--text-primary) 3%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--text-primary) 3%, transparent) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: center center;
   color: var(--text-primary);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Subtle radial gradient for depth */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--accent) 5%, transparent) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: -1;
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
-  letter-spacing: normal;
+  letter-spacing: -0.02em;
+}
+
+/* Typography Selection */
+::selection {
+  background-color: color-mix(in srgb, var(--accent) 30%, transparent);
+  color: var(--text-primary);
 }
 
 @keyframes fade-in-up {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(16px);
   }
   to {
     opacity: 1;
