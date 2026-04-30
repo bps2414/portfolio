@@ -1,8 +1,16 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ArrowLeft, AlertTriangle, ExternalLink, Info } from "lucide-react";
+import {
+  ArrowLeft,
+  AlertTriangle,
+  ExternalLink,
+  Info,
+  Lightbulb,
+  Zap,
+  Layers,
+  BookOpen,
+} from "lucide-react";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { Github } from "@/components/icons";
@@ -10,6 +18,7 @@ import { getButtonClasses } from "@/components/ui/button";
 import { getProjectBySlug, projects } from "@/data/projects";
 import { siteConfig } from "@/config/site";
 import { FadeIn } from "@/components/fade-in";
+import { ScreenshotGallery } from "@/components/screenshot-gallery";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -27,15 +36,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const url = `${siteConfig.url}/projetos/${project.slug}`;
   const title = `${project.title} | ${siteConfig.name}`;
-  const socialImage = project.ogImage ? `${siteConfig.url}${project.ogImage}` : undefined;
-  const isDedicatedOgImage = project.ogImage?.endsWith("/og-image.png");
+  const socialImage = project.ogImage
+    ? `${siteConfig.url}${project.ogImage}`
+    : undefined;
   const images = socialImage
     ? [
         {
           url: socialImage,
-          width: isDedicatedOgImage ? 1200 : (project.image?.width ?? 1672),
-          height: isDedicatedOgImage ? 630 : (project.image?.height ?? 941),
-          alt: project.image?.alt ?? project.title,
+          width: 1200,
+          height: 630,
+          alt: project.title,
         },
       ]
     : undefined;
@@ -76,6 +86,12 @@ export default async function ProjectPage({ params }: Props) {
     notFound();
   }
 
+  // Find adjacent projects for navigation
+  const currentIndex = projects.findIndex((p) => p.slug === project.slug);
+  const prevProject = currentIndex > 0 ? projects[currentIndex - 1] : null;
+  const nextProject =
+    currentIndex < projects.length - 1 ? projects[currentIndex + 1] : null;
+
   return (
     <div className="flex min-h-screen flex-col selection:bg-accent/30 selection:text-primary">
       <Header />
@@ -86,7 +102,7 @@ export default async function ProjectPage({ params }: Props) {
             <FadeIn>
               <Link
                 href="/#projetos"
-                className="mb-12 inline-flex items-center text-sm font-medium text-secondary transition-colors hover:text-primary"
+                className="mb-10 inline-flex items-center text-sm font-medium text-secondary transition-colors hover:text-primary"
               >
                 <ArrowLeft className="mr-2 h-4 w-4" /> Voltar para projetos
               </Link>
@@ -99,48 +115,49 @@ export default async function ProjectPage({ params }: Props) {
                     {project.type}
                   </span>
                 </div>
-                <h1 className="mb-6 max-w-4xl text-5xl md:text-6xl lg:text-7xl font-heading font-extrabold tracking-tight text-primary">
+                <h1 className="mb-6 max-w-4xl text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-heading font-extrabold tracking-tight text-primary">
                   {project.title}
                 </h1>
                 <p className="mb-10 max-w-3xl text-xl leading-relaxed text-secondary font-light">
                   {project.description}
                 </p>
 
-                <div className="flex flex-wrap gap-4">
+                <div className="flex flex-wrap gap-3">
                   {project.links.demo && (
-                    <a href={project.links.demo} target="_blank" rel="noreferrer" className={getButtonClasses("primary", "lg")}>
-                      Acessar demo <ExternalLink className="ml-2 h-4 w-4" />
+                    <a
+                      href={project.links.demo}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={getButtonClasses("primary", "lg")}
+                    >
+                      Acessar demo{" "}
+                      <ExternalLink className="ml-2 h-4 w-4" />
                     </a>
                   )}
                   {project.links.site && (
-                    <a href={project.links.site} target="_blank" rel="noreferrer" className={getButtonClasses("primary", "lg")}>
-                      Visitar site <ExternalLink className="ml-2 h-4 w-4" />
+                    <a
+                      href={project.links.site}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={getButtonClasses("primary", "lg")}
+                    >
+                      Visitar site{" "}
+                      <ExternalLink className="ml-2 h-4 w-4" />
                     </a>
                   )}
                   {project.links.github && (
-                    <a href={project.links.github} target="_blank" rel="noreferrer" className={getButtonClasses("outline", "lg")}>
+                    <a
+                      href={project.links.github}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={getButtonClasses("outline", "lg")}
+                    >
                       <Github className="mr-2 h-5 w-5" /> Ver código fonte
                     </a>
                   )}
                 </div>
               </FadeIn>
             </header>
-
-            <FadeIn delay={200}>
-              {project.image && (
-                <div className="relative mb-20 aspect-[16/9] overflow-hidden rounded-xl border border-border bg-surface shadow-lg group">
-                  <Image
-                    src={project.image.src}
-                    alt={project.image.alt}
-                    fill
-                    priority
-                    sizes="(max-width: 1024px) 100vw, 1024px"
-                    className="object-cover object-top transition-transform duration-1000 ease-out group-hover:scale-[1.02]"
-                  />
-                  <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_20px_rgba(0,0,0,0.2)]" />
-                </div>
-              )}
-            </FadeIn>
           </div>
 
           <div className="max-w-4xl mx-auto space-y-24">
@@ -148,6 +165,47 @@ export default async function ProjectPage({ params }: Props) {
               <ProjectCaseStudy project={project} />
             ) : (
               <DefaultProjectDetails project={project} />
+            )}
+
+            {/* Project navigation */}
+            {(prevProject || nextProject) && (
+              <FadeIn>
+                <nav
+                  className="pt-12 border-t border-border/40"
+                  aria-label="Navegação entre projetos"
+                >
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    {prevProject ? (
+                      <Link
+                        href={`/projetos/${prevProject.slug}`}
+                        className="group p-6 rounded-xl border border-border bg-surface hover:border-accent/30 transition-all duration-300"
+                      >
+                        <div className="text-xs font-bold tracking-widest uppercase text-secondary mb-2">
+                          ← Anterior
+                        </div>
+                        <div className="font-heading font-bold text-lg text-primary group-hover:text-accent transition-colors">
+                          {prevProject.title}
+                        </div>
+                      </Link>
+                    ) : (
+                      <div />
+                    )}
+                    {nextProject && (
+                      <Link
+                        href={`/projetos/${nextProject.slug}`}
+                        className="group p-6 rounded-xl border border-border bg-surface hover:border-accent/30 transition-all duration-300 text-right"
+                      >
+                        <div className="text-xs font-bold tracking-widest uppercase text-secondary mb-2">
+                          Próximo →
+                        </div>
+                        <div className="font-heading font-bold text-lg text-primary group-hover:text-accent transition-colors">
+                          {nextProject.title}
+                        </div>
+                      </Link>
+                    )}
+                  </div>
+                </nav>
+              </FadeIn>
             )}
           </div>
         </article>
@@ -178,7 +236,10 @@ function ProjectCaseStudy({
               {project.caseStudy.summary.title}
             </h3>
             {project.caseStudy.summary.body.map((paragraph) => (
-              <p key={paragraph} className="text-lg md:text-xl leading-relaxed text-secondary font-light">
+              <p
+                key={paragraph}
+                className="text-lg md:text-xl leading-relaxed text-secondary font-light"
+              >
                 {paragraph}
               </p>
             ))}
@@ -208,10 +269,15 @@ function ProjectCaseStudy({
       {project.caseStudy.sections.map((section, index) => (
         <FadeIn key={section.title} delay={index * 50}>
           <section className="grid gap-8 md:grid-cols-[240px_minmax(0,1fr)] pt-12 border-t border-border/40">
-            <h2 className="text-2xl font-heading font-bold text-primary">{section.title}</h2>
+            <h2 className="text-2xl font-heading font-bold text-primary">
+              {section.title}
+            </h2>
             <div className="space-y-6">
               {section.body?.map((paragraph) => (
-                <p key={paragraph} className="text-lg leading-relaxed text-secondary">
+                <p
+                  key={paragraph}
+                  className="text-lg leading-relaxed text-secondary"
+                >
                   {paragraph}
                 </p>
               ))}
@@ -232,35 +298,12 @@ function ProjectCaseStudy({
         </FadeIn>
       ))}
 
-      {project.caseStudy.screenshots && (
-        <FadeIn>
-          <section className="pt-12 border-t border-border/40">
-            <h2 className="mb-10 text-3xl font-heading font-bold">Telas do produto</h2>
-            <div className="grid gap-12 md:grid-cols-2">
-              {project.caseStudy.screenshots.map((screenshot) => (
-                <figure
-                  key={screenshot.src}
-                  className="overflow-hidden rounded-xl border border-border bg-surface shadow-lg group"
-                >
-                  <div className="relative overflow-hidden aspect-[4/3]">
-                    <Image
-                      src={screenshot.src}
-                      alt={screenshot.alt}
-                      width={screenshot.width}
-                      height={screenshot.height}
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                      className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                    />
-                  </div>
-                  <figcaption className="border-t border-border px-6 py-4 text-sm leading-relaxed text-secondary">
-                    {screenshot.caption}
-                  </figcaption>
-                </figure>
-              ))}
-            </div>
-          </section>
-        </FadeIn>
-      )}
+      {project.caseStudy.screenshots &&
+        project.caseStudy.screenshots.length > 0 && (
+          <FadeIn>
+            <ScreenshotGallery screenshots={project.caseStudy.screenshots} />
+          </FadeIn>
+        )}
 
       {project.limitations && (
         <FadeIn>
@@ -282,6 +325,7 @@ function DefaultProjectDetails({
 }) {
   return (
     <>
+      {/* Stack */}
       <FadeIn>
         <section className="grid gap-8 md:grid-cols-[240px_minmax(0,1fr)]">
           <div className="flex items-center gap-4 text-secondary text-sm font-bold tracking-widest uppercase">
@@ -301,11 +345,103 @@ function DefaultProjectDetails({
         </section>
       </FadeIn>
 
+      {/* Features */}
+      {project.features && project.features.length > 0 && (
+        <FadeIn>
+          <section className="pt-12 border-t border-border/40">
+            <div className="flex items-center gap-4 mb-8">
+              <div className="w-10 h-10 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center">
+                <Zap className="w-5 h-5 text-accent" />
+              </div>
+              <h2 className="text-2xl font-heading font-bold text-primary">
+                Funcionalidades
+              </h2>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {project.features.map((feature, i) => (
+                <div
+                  key={feature}
+                  className="flex items-start gap-3 p-4 rounded-lg bg-surface border border-border/40 hover:border-accent/20 transition-colors duration-300"
+                >
+                  <span className="flex-shrink-0 w-6 h-6 rounded bg-raised border border-border flex items-center justify-center text-xs font-bold text-secondary mt-0.5">
+                    {i + 1}
+                  </span>
+                  <p className="text-secondary leading-relaxed text-sm">
+                    {feature}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </section>
+        </FadeIn>
+      )}
+
+      {/* Technical Decisions */}
+      {project.technicalDecisions &&
+        project.technicalDecisions.length > 0 && (
+          <FadeIn>
+            <section className="pt-12 border-t border-border/40">
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-10 h-10 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center">
+                  <Layers className="w-5 h-5 text-accent" />
+                </div>
+                <h2 className="text-2xl font-heading font-bold text-primary">
+                  Decisões técnicas
+                </h2>
+              </div>
+              <div className="space-y-4">
+                {project.technicalDecisions.map((decision) => (
+                  <div
+                    key={decision}
+                    className="relative pl-6 text-secondary text-lg leading-relaxed before:absolute before:left-0 before:top-2.5 before:w-2 before:h-2 before:bg-accent/50 before:rounded-sm"
+                  >
+                    {decision}
+                  </div>
+                ))}
+              </div>
+            </section>
+          </FadeIn>
+        )}
+
+      {/* Learnings */}
+      {project.learnings && project.learnings.length > 0 && (
+        <FadeIn>
+          <section className="pt-12 border-t border-border/40">
+            <div className="flex items-center gap-4 mb-8">
+              <div className="w-10 h-10 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center">
+                <BookOpen className="w-5 h-5 text-accent" />
+              </div>
+              <h2 className="text-2xl font-heading font-bold text-primary">
+                O que aprendi
+              </h2>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {project.learnings.map((learning) => (
+                <div
+                  key={learning}
+                  className="flex items-start gap-3 p-4 rounded-lg bg-surface border border-border/40"
+                >
+                  <Lightbulb className="w-4 h-4 text-accent flex-shrink-0 mt-1" />
+                  <p className="text-secondary leading-relaxed text-sm">
+                    {learning}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </section>
+        </FadeIn>
+      )}
+
+      {/* Limitations / Microcopy */}
       {(project.limitations || project.microcopy) && (
         <FadeIn>
           <div className="pt-12 border-t border-border/40">
             <ScopeNote
-              title={project.limitations ? "Limitações conhecidas" : "Decisões de produto"}
+              title={
+                project.limitations
+                  ? "Limitações conhecidas"
+                  : "Decisões de produto"
+              }
               icon={project.limitations ? "warning" : "info"}
               text={project.limitations || project.microcopy || ""}
             />

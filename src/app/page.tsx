@@ -19,11 +19,11 @@ export default function Home() {
       
       <main className="flex-1">
         {/* 1. Hero */}
-        <section className="relative pt-40 pb-20 md:pt-48 md:pb-24 flex flex-col justify-center overflow-hidden">
+        <section className="relative pt-28 pb-8 sm:pt-36 md:pt-48 md:pb-10 flex flex-col justify-center overflow-hidden">
           {/* Subtle background glow */}
           <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-accent/5 blur-[150px] rounded-[100%] pointer-events-none" />
           
-          <div className="container mx-auto max-w-6xl px-6 relative z-10 mt-16 md:mt-0">
+          <div className="container mx-auto max-w-6xl px-4 sm:px-6 relative z-10 mt-8 sm:mt-12 md:mt-0">
             <FadeIn>
               <div className="inline-flex items-center gap-3 px-3 py-1.5 rounded-full bg-surface border border-border text-xs font-medium text-secondary mb-8 shadow-sm">
                 <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
@@ -32,13 +32,13 @@ export default function Home() {
             </FadeIn>
 
             <FadeIn delay={100}>
-              <h1 className="text-5xl md:text-7xl lg:text-[5.5rem] font-heading font-extrabold tracking-tighter mb-8 max-w-5xl leading-[1.05]">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-[5.5rem] font-heading font-extrabold tracking-tighter mb-6 sm:mb-8 max-w-5xl leading-[1.05]">
                 Construo projetos web com foco em <span className="bg-gradient-to-r from-accent to-yellow-600 text-transparent bg-clip-text">clareza</span>, usabilidade e <span className="text-primary/70 italic font-medium">entrega real</span>.
               </h1>
             </FadeIn>
 
             <FadeIn delay={200}>
-              <p className="text-lg md:text-2xl text-secondary max-w-3xl mb-12 leading-relaxed font-light">
+              <p className="text-base sm:text-lg md:text-2xl text-secondary max-w-3xl mb-8 sm:mb-12 leading-relaxed font-light">
                 Sou Bryan / bps2414. Crio interfaces, sistemas simples e ferramentas úteis com foco em organização, experiência do usuário e apresentação profissional.
               </p>
             </FadeIn>
@@ -73,7 +73,7 @@ export default function Home() {
         </section>
 
         {/* 2. Projetos Principais */}
-        <section id="projetos" className="py-24 md:py-32 relative">
+        <section id="projetos" className="pt-10 pb-24 md:pt-14 md:pb-32 relative scroll-mt-24">
           <div className="container mx-auto max-w-6xl px-6">
             <FadeIn>
               <div className="mb-16 md:mb-24 flex flex-col md:flex-row md:items-end justify-between gap-8">
@@ -292,7 +292,7 @@ export default function Home() {
           
           <div className="container mx-auto max-w-4xl px-6 relative z-10">
             <FadeIn>
-              <div className="p-12 md:p-24 rounded-3xl bg-surface border border-border shadow-xl text-center relative overflow-hidden">
+              <div className="p-6 sm:p-12 md:p-24 rounded-3xl bg-surface border border-border shadow-xl text-center relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-accent to-transparent"></div>
                 
                 <div className="mx-auto w-20 h-20 rounded-2xl bg-background border border-border flex items-center justify-center mb-10 text-primary shadow-sm">

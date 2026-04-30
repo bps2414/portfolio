@@ -51,6 +51,26 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 750ms ease, color 750ms ease;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Scope theme transitions to visual-only properties to avoid layout jitter */
+body,
+header,
+a,
+button {
+  transition-property: background-color, border-color, color, box-shadow, opacity;
+  transition-duration: 750ms;
+  transition-timing-function: ease;
+}
+
+/* Prevent unwanted horizontal overflow on mobile */
+body {
+  overflow-x: hidden;
 }
 
 /* Subtle radial gradient for depth */
@@ -99,4 +119,23 @@ h1, h2, h3, h4, h5, h6 {
     opacity: 1 !important;
     transform: none !important;
   }
+}
+
+/* Scrollbar for thumbnail strips */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  height: 4px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: var(--border-color);
+  border-radius: 9999px;
 }
