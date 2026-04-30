@@ -19,7 +19,7 @@ export default function Home() {
       
       <main className="flex-1">
         {/* 1. Hero */}
-        <section className="relative min-h-[95vh] flex flex-col justify-center py-24 md:py-32 overflow-hidden">
+        <section className="relative pt-40 pb-20 md:pt-48 md:pb-24 flex flex-col justify-center overflow-hidden">
           {/* Subtle background glow */}
           <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-accent/5 blur-[150px] rounded-[100%] pointer-events-none" />
           
