@@ -10,7 +10,7 @@ Portfólio pessoal construído com **Next.js 16**, **React 19**, **TypeScript** 
 
 | Projeto | Tipo | Stack |
 |---|---|---|
-| [ChamadaFácil](https://chamadafacil.vercel.app) | Sistema full-stack | Next.js, Supabase, PostgreSQL, RLS |
+| [ChamadaFácil](https://chamadafacil.vercel.app) | Sistema full-stack de chamados | Next.js, TypeScript, Supabase, PostgreSQL/RLS |
 | [Prado Auto Peças](https://pradoautopecas.pages.dev) | Site real para negócio local | HTML, CSS, JavaScript |
 | PTBRMerger | Ferramenta local técnica | Python, FFmpeg |
 | Barbearia da Vila | Landing page comercial | Next.js, Framer Motion |
