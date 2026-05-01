@@ -127,7 +127,7 @@ export default async function ProjectPage({ params }: Props) {
                     <a
                       href={project.links.demo}
                       target="_blank"
-                      rel="noreferrer"
+                      rel="noopener noreferrer"
                       className={getButtonClasses("primary", "lg")}
                     >
                       Acessar demo{" "}
@@ -138,7 +138,7 @@ export default async function ProjectPage({ params }: Props) {
                     <a
                       href={project.links.site}
                       target="_blank"
-                      rel="noreferrer"
+                      rel="noopener noreferrer"
                       className={getButtonClasses("primary", "lg")}
                     >
                       Visitar site{" "}
@@ -149,7 +149,7 @@ export default async function ProjectPage({ params }: Props) {
                     <a
                       href={project.links.github}
                       target="_blank"
-                      rel="noreferrer"
+                      rel="noopener noreferrer"
                       className={getButtonClasses("outline", "lg")}
                     >
                       <Github className="mr-2 h-5 w-5" /> Ver código fonte

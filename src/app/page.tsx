@@ -4,7 +4,7 @@ import { ProjectCard } from "@/components/project-card";
 import { projects } from "@/data/projects";
 import { getButtonClasses } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
-import { Code2, Wrench, LayoutTemplate, MessageSquare, CheckCircle2 } from "lucide-react";
+import { Code2, Wrench, LayoutTemplate, MessageSquare, CheckCircle2, Download } from "lucide-react";
 import { Github } from "@/components/icons";
 import { FadeIn } from "@/components/fade-in";
 import { cn } from "@/lib/utils";
@@ -48,7 +48,17 @@ export default function Home() {
                 <a href="#projetos" className={getButtonClasses("primary", "lg", "w-full sm:w-auto font-semibold")}>
                   Ver projetos selecionados
                 </a>
-                <a href={siteConfig.links.github} target="_blank" rel="noreferrer" className={getButtonClasses("outline", "lg", "w-full sm:w-auto font-semibold group")}>
+                <a
+                  href={siteConfig.links.resume}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Baixar curriculo em PDF"
+                  className={getButtonClasses("outline", "lg", "w-full sm:w-auto font-semibold group")}
+                >
+                  <Download className="mr-2 h-5 w-5 text-secondary group-hover:text-primary transition-colors" />
+                  Baixar currículo
+                </a>
+                <a href={siteConfig.links.github} target="_blank" rel="noopener noreferrer" className={getButtonClasses("outline", "lg", "w-full sm:w-auto font-semibold group")}>
                   <Github className="mr-2 h-5 w-5 text-secondary group-hover:text-primary transition-colors" /> GitHub
                 </a>
               </div>
@@ -307,9 +317,20 @@ export default function Home() {
                   Para oportunidades em desenvolvimento web, suporte ou projetos para pequenos negócios, meu contato é direto pelo GitHub.
                 </p>
                 
-                <a href={siteConfig.links.github} target="_blank" rel="noreferrer" className={getButtonClasses("primary", "lg", "font-semibold shadow-lg")}>
-                  <Github className="mr-3 h-5 w-5" /> Acessar Perfil no GitHub
-                </a>
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                  <a href={siteConfig.links.github} target="_blank" rel="noopener noreferrer" className={getButtonClasses("primary", "lg", "w-full sm:w-auto font-semibold shadow-lg")}>
+                    <Github className="mr-3 h-5 w-5" /> Acessar Perfil no GitHub
+                  </a>
+                  <a
+                    href={siteConfig.links.resume}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Baixar curriculo em PDF"
+                    className={getButtonClasses("outline", "lg", "w-full sm:w-auto font-semibold")}
+                  >
+                    <Download className="mr-3 h-5 w-5" /> Baixar currículo
+                  </a>
+                </div>
               </div>
             </FadeIn>
           </div>

@@ -52,7 +52,7 @@ export function Header() {
           <a
             href={siteConfig.links.github}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="flex items-center justify-center w-9 h-9 rounded-md text-secondary hover:text-primary hover:bg-surface border border-transparent hover:border-border transition-[background-color,border-color,color] duration-300"
             aria-label="Perfil no GitHub"
           >

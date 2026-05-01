@@ -4,5 +4,6 @@ export const siteConfig = {
   url: "https://bps2414.vercel.app", // Provisório
   links: {
     github: "https://github.com/bps2414",
+    resume: "/curriculo.pdf",
   },
 };

@@ -19,7 +19,7 @@ export function Footer() {
             <a
               href={siteConfig.links.github}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="flex items-center gap-2 hover:text-accent transition-colors"
             >
               <Github className="w-4 h-4" />

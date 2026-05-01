@@ -94,7 +94,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
             <a
               href={project.links.github}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="p-2 -m-2 text-secondary hover:text-primary transition-colors"
               aria-label="GitHub"
             >
@@ -105,7 +105,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
             <a
               href={project.links.demo || project.links.site}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="p-2 -m-2 text-secondary hover:text-primary transition-colors"
               aria-label="Visitar site"
             >
