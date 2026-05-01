@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { siteConfig } from "@/config/site";
@@ -40,13 +41,29 @@ export function Header() {
     <header className={cn(
       "fixed top-0 z-50 w-full transition-[background-color,border-color,box-shadow,padding] duration-300 md:duration-500",
       scrolled
-        ? "bg-background/95 border-b border-border py-3 shadow-none md:bg-background/70 md:backdrop-blur-xl md:shadow-sm"
-        : "bg-transparent border-transparent py-4 md:py-5"
+        ? "border-b border-white/10 bg-[#09090b]/88 py-3 shadow-[0_12px_36px_-26px_rgba(0,0,0,0.85)] backdrop-blur-xl"
+        : "border-b border-white/[0.06] bg-gradient-to-b from-[#0d0d10]/82 to-[#08080a]/58 py-4 shadow-[0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-md md:py-5"
     )}>
       <div className="container mx-auto max-w-6xl px-6 flex items-center justify-between">
-        <Link href="/" className="group flex items-center gap-2 font-heading font-semibold tracking-tight text-xl">
-          <span className="text-primary transition-colors group-hover:text-accent">bps2414</span>
-          <span className="w-1.5 h-1.5 rounded-full bg-accent md:animate-pulse motion-reduce:animate-none" />
+        <Link
+          href="/"
+          className="group flex min-w-0 items-center gap-2.5 font-heading text-base font-semibold tracking-tight text-white sm:text-lg md:text-xl"
+          aria-label={`${siteConfig.name} - início`}
+        >
+          <span className="relative flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-white/10 bg-[#111114] shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_8px_22px_-18px_rgba(255,255,255,0.45)] md:size-9">
+            <Image
+              src="/logo.png"
+              alt=""
+              width={40}
+              height={40}
+              sizes="(min-width: 768px) 36px, 32px"
+              className="h-full w-full object-cover"
+              priority
+            />
+          </span>
+          <span className="truncate text-[0.95rem] leading-none text-zinc-100 transition-colors group-hover:text-white sm:text-base md:text-lg">
+            {siteConfig.name}
+          </span>
         </Link>
         <div className="flex items-center gap-4">
           <a
