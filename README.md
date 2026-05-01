@@ -14,6 +14,13 @@ Portfólio pessoal construído com **Next.js 16**, **React 19**, **TypeScript** 
 | [Prado Auto Peças](https://pradoautopecas.pages.dev) | Site real para negócio local | HTML, CSS, JavaScript |
 | PTBRMerger | Ferramenta local técnica | Python, FFmpeg |
 | Barbearia da Vila | Landing page comercial | Next.js, Framer Motion |
+| [BPS Fishing Macro](https://github.com/bps2414/bps-fishing-macro) | Primeiro projeto técnico / automação desktop | Python, OCR, PyInstaller |
+
+---
+
+## Uso de IA
+
+Uso IA como apoio em pesquisa, revisão, prototipagem e tarefas repetitivas, mantendo responsabilidade sobre decisões técnicas, validação, código final e limites de cada projeto.
 
 ---
 

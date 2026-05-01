@@ -317,6 +317,55 @@ export const projects: Project[] = [
       "Um projeto visual também precisa de documentação técnica honesta.",
     ],
   },
+  {
+    slug: "bps-fishing-macro",
+    title: "BPS Fishing Macro",
+    type: "primeiro projeto técnico",
+    order: 5,
+    description:
+      "Ferramenta desktop local para Windows que automatiza um fluxo de pesca em jogo, com interface própria, controle de mouse e teclado, OCR, detecção por cor, configurações persistentes, logs e empacotamento em executável.",
+    stack: [
+      "Python",
+      "Tkinter",
+      "PyInstaller",
+      "Tesseract OCR",
+      "Pillow",
+      "Pytest",
+      "Windows automation",
+    ],
+    links: {
+      github: "https://github.com/bps2414/bps-fishing-macro",
+    },
+    limitations:
+      "Foi meu primeiro projeto de todos, então o código carrega decisões bagunçadas, versões antigas, experimentos e marcas de aprendizado. Não tem demo pública por depender de Windows, captura de tela, entrada de mouse/teclado e do jogo alvo.",
+    microcopy:
+      "Mantido no portfólio como registro do começo: mais importante pelo caminho de aprendizado, empacotamento e automação local do que por arquitetura limpa.",
+    isMain: false,
+    features: [
+      "Interface desktop local para configurar e controlar a automação.",
+      "Automação de ciclo de pesca com mouse, teclado e janelas do Windows.",
+      "OCR para leitura de informações visuais do jogo.",
+      "Detecção por cor para interpretar estados na tela.",
+      "Configurações persistentes em arquivo local.",
+      "Logs e estatísticas locais.",
+      "Webhooks opcionais para notificações.",
+      "Build em executável Windows com PyInstaller.",
+      "Testes automatizados em módulos isolados nas versões mais recentes.",
+    ],
+    technicalDecisions: [
+      "Python foi escolhido por permitir prototipagem rápida de automação desktop.",
+      "Execução local para acessar captura de tela, mouse, teclado e arquivos sem backend.",
+      "OCR e detecção por cor foram usados porque o fluxo depende de sinais visuais do jogo.",
+      "Empacotamento com PyInstaller para facilitar teste por executável sem exigir ambiente Python do usuário.",
+      "Evolução por versões sucessivas, deixando histórico de tentativa, erro e reorganização do código.",
+    ],
+    learnings: [
+      "Primeiro contato real com um projeto maior do que scripts pequenos.",
+      "Aprendi na prática o custo de deixar código crescer sem arquitetura clara desde o começo.",
+      "Entendi melhor logs, configuração local, empacotamento e dependências nativas no Windows.",
+      "Aprendi a transformar uma automação improvisada em uma ferramenta com interface e distribuição.",
+    ],
+  },
 ];
 
 export function getProjectBySlug(slug: string): Project | undefined {

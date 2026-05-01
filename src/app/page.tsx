@@ -148,6 +148,9 @@ export default function Home() {
                   <p>
                     Trabalho com escopos realistas: uma landing page precisa comunicar bem e carregar corretamente; um sistema web precisa ter fluxo compreensível, autenticação quando necessário e limites técnicos bem definidos.
                   </p>
+                  <p>
+                    Uso IA como apoio em pesquisa, revisão, prototipagem e aceleração de tarefas repetitivas, mantendo responsabilidade sobre decisões, validação, código final e limites de cada projeto.
+                  </p>
                   
                   <div className="pt-8 mt-8 border-t border-border grid grid-cols-1 sm:grid-cols-2 gap-6">
                     {[
