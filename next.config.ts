@@ -35,14 +35,6 @@ const nextConfig: NextConfig = {
           },
         ],
       },
-      {
-        source: "/curriculo.pdf",
-        headers: [
-          { key: "Content-Disposition", value: 'inline; filename="curriculo-bryan-bps2414.pdf"' },
-          { key: "X-Robots-Tag", value: "noindex, noarchive" },
-          { key: "Cache-Control", value: "public, max-age=3600, must-revalidate" },
-        ],
-      },
     ];
   },
 };
