@@ -11,6 +11,10 @@ export type Project = {
     site?: string;
     github?: string;
   };
+  demoLinks?: {
+    label: string;
+    href: string;
+  }[];
   limitations?: string;
   microcopy?: string;
   isMain: boolean;
@@ -265,10 +269,108 @@ export const projects: Project[] = [
     ],
   },
   {
+    slug: "food-templates-bps",
+    title: "Templates de Alimentação",
+    type: "template comercial / estudo de produto",
+    order: 3,
+    description:
+      "Template multi-tema para negócios de alimentação, com demos para restaurante, pizzaria e hamburgueria. Inclui páginas comerciais, cardápio digital, galeria, contato via WhatsApp e estudo técnico de backend/admin.",
+    stack: [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "Node.js",
+      "Express",
+      "PostgreSQL",
+      "Prisma",
+      "Vercel",
+    ],
+    links: {
+      github: "https://github.com/bps2414/templaterestaurantebps",
+    },
+    demoLinks: [
+      {
+        label: "Restaurante",
+        href: "https://saborearte-seven.vercel.app/",
+      },
+      {
+        label: "Pizzaria",
+        href: "https://fornoemassa.vercel.app/",
+      },
+      {
+        label: "Hamburgueria",
+        href: "https://burguerhouse-lilac.vercel.app/",
+      },
+    ],
+    limitations:
+      "Projeto criado no início da minha evolução como desenvolvedor e posteriormente higienizado para documentação, demonstração e reaproveitamento de escopo.",
+    microcopy:
+      "Apresentado como template comercial multi-tema e estudo de produto, não como sistema pronto para operação crítica.",
+    isMain: false,
+    caseStudy: {
+      summary: {
+        title:
+          "Uma base comercial reaproveitável para negócios de alimentação.",
+        body: [
+          "Este projeto nasceu como uma tentativa de transformar desenvolvimento web em produto comercial. A proposta era criar uma base reutilizável para pequenos negócios de alimentação, permitindo adaptar identidade visual, cardápio, páginas institucionais e canais de contato.",
+          "Com o tempo, o projeto também virou um estudo técnico de backend, autenticação, upload de imagens e deploy. Hoje ele é apresentado como case de evolução, organização de escopo e aprendizado sobre limites entre template, sistema e produto vendável.",
+        ],
+      },
+      sections: [
+        {
+          title: "Proposta",
+          body: [
+            "A coleção reúne variações para restaurante, pizzaria e hamburgueria, mantendo a mesma intenção comercial: apresentar o negócio, mostrar produtos, criar confiança visual e facilitar o contato pelo WhatsApp.",
+            "O foco do case é demonstrar raciocínio de produto para pequenos negócios, reaproveitamento de escopo e adaptação visual entre segmentos próximos.",
+          ],
+        },
+        {
+          title: "Demos publicadas",
+          items: [
+            "Restaurante: Saborearte, com identidade voltada a refeições e apresentação institucional.",
+            "Pizzaria: Forno e Massa, com linguagem visual e cardápio adaptados para pizzaria.",
+            "Hamburgueria: Burguer House, com estética mais direta para lanches e combos.",
+          ],
+        },
+        {
+          title: "Funcionalidades exploradas",
+          items: [
+            "Páginas institucionais para apresentação do negócio.",
+            "Cardápio digital com categorias e itens comerciais.",
+            "Galeria visual para reforçar produto e ambiente.",
+            "Contato via WhatsApp como canal principal de conversão.",
+            "Variações de identidade visual para segmentos diferentes.",
+            "Estudo técnico de backend/admin, autenticação, upload de imagens e persistência de dados.",
+          ],
+        },
+        {
+          title: "Decisões técnicas",
+          items: [
+            "Separação entre proposta visual demonstrável e estudo técnico de administração.",
+            "Uso de HTML, CSS e JavaScript para manter as páginas comerciais simples de entender.",
+            "Exploração de Node.js, Express, PostgreSQL e Prisma para aprender fluxos de backend.",
+            "Deploys separados na Vercel para validar as variações como demos independentes.",
+            "Documentação e higienização posterior para apresentar o projeto com escopo mais claro.",
+          ],
+        },
+        {
+          title: "Aprendizados",
+          items: [
+            "Templates comerciais precisam equilibrar aparência, conteúdo e facilidade de adaptação.",
+            "Nem toda ideia com painel administrativo deve ser vendida como produto completo.",
+            "Demos publicadas ajudam a comunicar variações de nicho com mais clareza.",
+            "Organizar limitações e contexto melhora a leitura técnica do projeto.",
+            "Pensamento comercial também faz parte do desenvolvimento para negócios locais.",
+          ],
+        },
+      ],
+    },
+  },
+  {
     slug: "ptbr-merger",
     title: "PTBRMerger",
     type: "ferramenta local técnica",
-    order: 3,
+    order: 5,
     description:
       "Ferramenta local para analisar arquivos MKV, detectar faixas de áudio PT-BR, criar um plano de processamento e gerar um arquivo final com FFmpeg/FFprobe.",
     stack: ["Python", "FFmpeg", "FFprobe", "Pytest", "HTML", "CSS", "JavaScript"],
@@ -348,7 +450,7 @@ export const projects: Project[] = [
     slug: "bps-fishing-macro",
     title: "BPS Fishing Macro",
     type: "primeiro projeto técnico",
-    order: 5,
+    order: 6,
     description:
       "Ferramenta desktop local para Windows que automatiza um fluxo de pesca em jogo, com interface própria, controle de mouse e teclado, OCR, detecção por cor, configurações persistentes, logs e empacotamento em executável.",
     stack: [

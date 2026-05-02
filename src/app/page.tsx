@@ -1,17 +1,23 @@
+import Link from "next/link";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { ProjectCard } from "@/components/project-card";
 import { projects } from "@/data/projects";
 import { getButtonClasses } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
-import { Code2, Wrench, LayoutTemplate, MessageSquare, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Code2, Wrench, LayoutTemplate, MessageSquare, CheckCircle2 } from "lucide-react";
 import { Github } from "@/components/icons";
 import { FadeIn } from "@/components/fade-in";
 import { cn } from "@/lib/utils";
 
 export default function Home() {
-  const mainProjects = projects.filter((p) => p.isMain);
-  const secondaryProjects = projects.filter((p) => !p.isMain);
+  const featuredProjects = projects.filter((p) => p.isMain);
+  const commercialSiteProjects = projects.filter((p) =>
+    ["food-templates-bps", "barbearia-da-vila"].includes(p.slug)
+  );
+  const technicalProjects = projects.filter((p) =>
+    ["ptbr-merger", "bps-fishing-macro"].includes(p.slug)
+  );
 
   return (
     <div className="flex flex-col min-h-screen selection:bg-accent/30 selection:text-primary">
@@ -91,7 +97,7 @@ export default function Home() {
             </FadeIn>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-              {mainProjects.map((project, i) => (
+              {featuredProjects.map((project, i) => (
                 <FadeIn key={project.slug} delay={i * 150} className="h-full">
                   <ProjectCard project={project} />
                 </FadeIn>
@@ -100,24 +106,24 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 3. Projetos Secundários */}
+        {/* 3. Sites e templates comerciais */}
         <section className="perf-section py-32 bg-surface/30 border-y border-border">
           <div className="container mx-auto max-w-6xl px-6">
             <FadeIn>
               <div className="mb-16 md:mb-20 space-y-4 max-w-2xl">
                 <div className="flex items-center gap-4 text-accent text-sm font-bold tracking-widest uppercase">
                   <span className="w-12 h-px bg-accent"></span>
-                  Ferramentas & Demos
+                  Presença digital
                 </div>
-                <h2 className="text-3xl md:text-4xl font-heading font-bold tracking-tight">Outros projetos</h2>
+                <h2 className="text-3xl md:text-4xl font-heading font-bold tracking-tight">Sites e templates comerciais</h2>
                 <p className="text-lg text-secondary leading-relaxed">
-                  Experimentos técnicos, automação local e templates comerciais.
+                  Projetos voltados a páginas comerciais, demos publicadas, contato direto e adaptação para negócios locais.
                 </p>
               </div>
             </FadeIn>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-              {secondaryProjects.map((project, i) => (
+              {commercialSiteProjects.map((project, i) => (
                 <FadeIn key={project.slug} delay={i * 150} className="h-full">
                   <ProjectCard project={project} />
                 </FadeIn>
@@ -126,7 +132,75 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 4. Sobre */}
+        {/* 4. Projetos técnicos complementares */}
+        <section className="perf-section py-20 border-b border-border/70">
+          <div className="container mx-auto max-w-6xl px-6">
+            <FadeIn>
+              <div className="mb-10 space-y-3 max-w-2xl">
+                <div className="flex items-center gap-4 text-secondary text-xs font-bold tracking-widest uppercase">
+                  <span className="w-10 h-px bg-border"></span>
+                  Repertório técnico
+                </div>
+                <h2 className="text-2xl md:text-3xl font-heading font-bold tracking-tight">Projetos técnicos complementares</h2>
+                <p className="text-base text-secondary leading-relaxed">
+                  Ferramentas locais e automações que mostram aprendizado técnico, sem serem o foco principal de venda.
+                </p>
+              </div>
+            </FadeIn>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {technicalProjects.map((project, i) => (
+                <FadeIn key={project.slug} delay={i * 100} className="h-full">
+                  <div className="h-full rounded-xl border border-border/60 bg-surface/40 p-5 transition-colors hover:border-accent/30">
+                    <div className="mb-4 flex items-start justify-between gap-4">
+                      <div>
+                        <span className="mb-3 inline-flex items-center rounded-sm border border-border bg-raised px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-secondary">
+                          {project.type}
+                        </span>
+                        <h3 className="font-heading text-xl font-bold text-primary">
+                          {project.title}
+                        </h3>
+                      </div>
+                      {project.links.github && (
+                        <a
+                          href={project.links.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-2 -m-2 text-secondary transition-colors hover:text-primary"
+                          aria-label={`GitHub de ${project.title}`}
+                        >
+                          <Github className="h-5 w-5" />
+                        </a>
+                      )}
+                    </div>
+                    <p className="mb-5 text-sm leading-relaxed text-secondary">
+                      {project.description}
+                    </p>
+                    <div className="mb-5 flex flex-wrap gap-2">
+                      {project.stack.slice(0, 4).map((tech) => (
+                        <span
+                          key={tech}
+                          className="rounded border border-border/50 bg-raised px-2 py-1 text-xs font-medium text-secondary"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                    <Link
+                      href={`/projetos/${project.slug}`}
+                      className="inline-flex items-center text-sm font-semibold text-secondary transition-colors hover:text-accent"
+                    >
+                      Ver detalhes
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </div>
+                </FadeIn>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* 5. Sobre */}
         <section className="perf-section py-32">
           <div className="container mx-auto max-w-6xl px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
@@ -171,7 +245,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 5. Stack e habilidades */}
+        {/* 6. Stack e habilidades */}
         <section className="perf-section py-32 bg-surface/30 border-y border-border">
           <div className="container mx-auto max-w-6xl px-6">
             <FadeIn>
@@ -227,7 +301,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 6. Processo */}
+        {/* 7. Processo */}
         <section className="perf-section py-32 overflow-hidden relative">
           <div className="container mx-auto max-w-6xl px-6 relative z-10">
             <FadeIn>
@@ -288,7 +362,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 7. Contato via GitHub */}
+        {/* 8. Contato via GitHub */}
         <section className="perf-section py-32 relative border-t border-border">
           {/* Subtle glow for the final section */}
           <div className="mobile-paint-lite absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[220px] sm:h-[300px] bg-accent/5 blur-[56px] sm:blur-[100px] rounded-[100%] pointer-events-none" />

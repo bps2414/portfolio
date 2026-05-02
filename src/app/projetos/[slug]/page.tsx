@@ -86,11 +86,15 @@ export default async function ProjectPage({ params }: Props) {
     notFound();
   }
 
-  // Find adjacent projects for navigation
-  const currentIndex = projects.findIndex((p) => p.slug === project.slug);
-  const prevProject = currentIndex > 0 ? projects[currentIndex - 1] : null;
+  // Mantém a navegação alinhada à ordem visual do portfólio.
+  const orderedProjects = [...projects].sort((a, b) => a.order - b.order);
+  const currentIndex = orderedProjects.findIndex((p) => p.slug === project.slug);
+  const prevProject =
+    currentIndex > 0 ? orderedProjects[currentIndex - 1] : null;
   const nextProject =
-    currentIndex < projects.length - 1 ? projects[currentIndex + 1] : null;
+    currentIndex < orderedProjects.length - 1
+      ? orderedProjects[currentIndex + 1]
+      : null;
 
   return (
     <div className="flex min-h-screen flex-col selection:bg-accent/30 selection:text-primary">
@@ -123,7 +127,7 @@ export default async function ProjectPage({ params }: Props) {
                 </p>
 
                 <div className="flex flex-wrap gap-3">
-                  {project.links.demo && (
+                  {project.links.demo && !project.demoLinks?.length && (
                     <a
                       href={project.links.demo}
                       target="_blank"
@@ -156,6 +160,28 @@ export default async function ProjectPage({ params }: Props) {
                     </a>
                   )}
                 </div>
+
+                {project.demoLinks && project.demoLinks.length > 0 && (
+                  <div className="mt-8 max-w-3xl rounded-2xl border border-border bg-surface/50 p-5">
+                    <p className="mb-4 text-xs font-bold uppercase tracking-widest text-secondary">
+                      Demos publicadas
+                    </p>
+                    <div className="flex flex-wrap gap-3">
+                      {project.demoLinks.map((demo) => (
+                        <a
+                          key={demo.href}
+                          href={demo.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={getButtonClasses("outline", "sm")}
+                        >
+                          {demo.label}
+                          <ExternalLink className="ml-2 h-4 w-4" />
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </FadeIn>
             </header>
           </div>

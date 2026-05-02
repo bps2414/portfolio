@@ -11,6 +11,8 @@ interface ProjectCardProps {
 export function ProjectCard({ project }: ProjectCardProps) {
   const isMain = project.isMain;
   const orderLabel = String(project.order).padStart(2, "0");
+  const externalHref =
+    project.links.demo || project.links.site || project.demoLinks?.[0]?.href;
 
   return (
     <div
@@ -101,9 +103,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
               <Github className="h-5 w-5" />
             </a>
           )}
-          {(project.links.demo || project.links.site) && (
+          {externalHref && (
             <a
-              href={project.links.demo || project.links.site}
+              href={externalHref}
               target="_blank"
               rel="noopener noreferrer"
               className="p-2 -m-2 text-secondary hover:text-primary transition-colors"
