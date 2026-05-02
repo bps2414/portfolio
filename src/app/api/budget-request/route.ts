@@ -4,7 +4,69 @@ import {
   withBudgetRequestMetadata,
 } from "@/lib/budget-request";
 
+type RateLimitEntry = {
+  count: number;
+  resetAt: number;
+};
+
+const rateLimitWindowMs = 10 * 60 * 1000;
+const rateLimitMaxRequests = 3;
+const rateLimitStore = new Map<string, RateLimitEntry>();
+const honeypotFields = ["website", "companyWebsite", "company_site"];
+
+function getClientIp(request: Request): string {
+  const forwardedFor = request.headers.get("x-forwarded-for");
+  const forwardedIp = forwardedFor?.split(",")[0]?.trim();
+
+  return forwardedIp || request.headers.get("x-real-ip")?.trim() || "unknown";
+}
+
+function isRateLimited(clientIp: string): boolean {
+  const now = Date.now();
+  const current = rateLimitStore.get(clientIp);
+
+  if (!current || current.resetAt <= now) {
+    rateLimitStore.set(clientIp, {
+      count: 1,
+      resetAt: now + rateLimitWindowMs,
+    });
+    return false;
+  }
+
+  if (current.count >= rateLimitMaxRequests) {
+    return true;
+  }
+
+  current.count += 1;
+  return false;
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function hasFilledHoneypot(body: unknown): boolean {
+  if (!isRecord(body)) {
+    return false;
+  }
+
+  // Campo invisivel anti-bot: visitante real nao deve preencher.
+  return honeypotFields.some((field) => {
+    const value = body[field];
+    return typeof value === "string" && value.trim().length > 0;
+  });
+}
+
 export async function POST(request: Request) {
+  const clientIp = getClientIp(request);
+
+  if (isRateLimited(clientIp)) {
+    return Response.json(
+      { ok: false, message: "Tente novamente em instantes." },
+      { status: 429 },
+    );
+  }
+
   let body: unknown;
 
   try {
@@ -12,6 +74,13 @@ export async function POST(request: Request) {
   } catch {
     return Response.json(
       { ok: false, message: "Payload invalido." },
+      { status: 400 },
+    );
+  }
+
+  if (hasFilledHoneypot(body)) {
+    return Response.json(
+      { ok: false, message: "Nao foi possivel validar a solicitacao." },
       { status: 400 },
     );
   }
@@ -32,8 +101,9 @@ export async function POST(request: Request) {
   const webhookUrl = process.env.DISCORD_BUDGET_WEBHOOK_URL;
 
   if (!webhookUrl) {
+    console.error("DISCORD_BUDGET_WEBHOOK_URL ausente");
     return Response.json(
-      { ok: false, message: "Canal de orcamento nao configurado." },
+      { ok: false, message: "Nao consegui processar a solicitacao agora." },
       { status: 500 },
     );
   }
