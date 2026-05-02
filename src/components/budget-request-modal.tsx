@@ -1,6 +1,7 @@
 "use client";
 
 import { type FormEvent, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import {
   ArrowLeft,
   ArrowRight,
@@ -92,6 +93,7 @@ export function BudgetRequestModal({
   const [message, setMessage] = useState("");
   const steps = useMemo(() => getSteps(kind), [kind]);
   const isCustom = kind === "custom";
+  const portalRoot = typeof document === "undefined" ? null : document.body;
 
   function updateField<K extends keyof FormState>(
     field: K,
@@ -153,6 +155,7 @@ export function BudgetRequestModal({
     setStep(0);
     setStatus("idle");
     setMessage("");
+    setForm(initialFormState);
   }
 
   async function submit(event: FormEvent<HTMLFormElement>) {
@@ -220,7 +223,8 @@ export function BudgetRequestModal({
         {label}
       </Button>
 
-      {open ? (
+      {open && portalRoot
+        ? createPortal(
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/75 px-4 py-6 backdrop-blur-sm">
           <form
             onSubmit={submit}
@@ -480,8 +484,10 @@ export function BudgetRequestModal({
               </div>
             ) : null}
           </form>
-        </div>
-      ) : null}
+        </div>,
+        portalRoot,
+      )
+        : null}
     </>
   );
 }
