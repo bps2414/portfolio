@@ -1,23 +1,37 @@
 import type { MetadataRoute } from "next";
 import { siteConfig } from "@/config/site";
-import { projects } from "@/data/projects";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date().toISOString().slice(0, 10);
-  const projectUrls = projects.map((project) => ({
-    url: `${siteConfig.url}/projetos/${project.slug}`,
-    lastModified,
-    changeFrequency: "monthly" as const,
-    priority: 0.8,
-  }));
+  const lastModified = "2026-05-02";
 
   return [
     {
-      url: siteConfig.url,
+      url: `${siteConfig.url}/`,
       lastModified,
-      changeFrequency: "monthly",
-      priority: 1,
     },
-    ...projectUrls,
+    {
+      url: `${siteConfig.url}/projetos/chamadafacil`,
+      lastModified,
+    },
+    {
+      url: `${siteConfig.url}/projetos/prado-auto-pecas`,
+      lastModified,
+    },
+    {
+      url: `${siteConfig.url}/projetos/food-templates-bps`,
+      lastModified,
+    },
+    {
+      url: `${siteConfig.url}/projetos/ptbr-merger`,
+      lastModified,
+    },
+    {
+      url: `${siteConfig.url}/projetos/barbearia-da-vila`,
+      lastModified,
+    },
+    {
+      url: `${siteConfig.url}/projetos/bps-fishing-macro`,
+      lastModified,
+    },
   ];
 }
