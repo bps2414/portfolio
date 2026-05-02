@@ -303,7 +303,7 @@ export function validateBudgetRequest(input: unknown): ValidationResult {
     notes: normalizeOptionalString(projectInput.notes, fieldLimits.long),
   };
   const metadata = normalizeBudgetRequestMetadata();
-  const selectedPackage = selectedPackageInput
+  const selectedPackage = isPackageKind && selectedPackageInput
     ? {
         title: normalizeStringByRequirement(
           selectedPackageInput.title,
