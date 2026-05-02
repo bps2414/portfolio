@@ -292,6 +292,19 @@ function ProjectCaseStudy({
         </section>
       </FadeIn>
 
+      {project.screenshots && project.screenshots.length > 0 && (
+        <FadeIn>
+          <ScreenshotGallery screenshots={project.screenshots} />
+        </FadeIn>
+      )}
+
+      {project.caseStudy.screenshots &&
+        project.caseStudy.screenshots.length > 0 && (
+          <FadeIn>
+            <ScreenshotGallery screenshots={project.caseStudy.screenshots} />
+          </FadeIn>
+        )}
+
       {project.caseStudy.sections.map((section, index) => (
         <FadeIn key={section.title} delay={index * 50}>
           <section className="perf-section grid gap-8 md:grid-cols-[240px_minmax(0,1fr)] pt-12 border-t border-border/40">
@@ -323,13 +336,6 @@ function ProjectCaseStudy({
           </section>
         </FadeIn>
       ))}
-
-      {project.caseStudy.screenshots &&
-        project.caseStudy.screenshots.length > 0 && (
-          <FadeIn>
-            <ScreenshotGallery screenshots={project.caseStudy.screenshots} />
-          </FadeIn>
-        )}
 
       {project.limitations && (
         <FadeIn>
@@ -370,6 +376,12 @@ function DefaultProjectDetails({
           </div>
         </section>
       </FadeIn>
+
+      {project.screenshots && project.screenshots.length > 0 && (
+        <FadeIn>
+          <ScreenshotGallery screenshots={project.screenshots} />
+        </FadeIn>
+      )}
 
       {/* Features */}
       {project.features && project.features.length > 0 && (

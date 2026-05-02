@@ -122,6 +122,8 @@ export function ScreenshotGallery({ screenshots }: ScreenshotGalleryProps) {
                   height={current.height}
                   sizes="(max-width: 640px) 92vw, (max-width: 1024px) 100vw, 896px"
                   quality={82}
+                  loading="eager"
+                  unoptimized
                   className="w-full h-full object-cover object-top md:transition-transform md:duration-700 motion-reduce:transition-none md:group-hover:scale-[1.02]"
                 />
               </div>
@@ -198,6 +200,7 @@ export function ScreenshotGallery({ screenshots }: ScreenshotGalleryProps) {
                     width={160}
                     height={90}
                     sizes="160px"
+                    unoptimized
                     className="w-full h-full object-cover object-top"
                   />
                 </button>
@@ -262,6 +265,7 @@ export function ScreenshotGallery({ screenshots }: ScreenshotGalleryProps) {
                 height={current.height}
                 sizes="90vw"
                 quality={85}
+                unoptimized
                 className="max-h-[80vh] w-auto h-auto object-contain"
               />
             </div>

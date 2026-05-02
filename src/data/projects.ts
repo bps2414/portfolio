@@ -1,3 +1,11 @@
+export type ProjectScreenshot = {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  caption: string;
+};
+
 export type Project = {
   slug: string;
   title: string;
@@ -18,6 +26,7 @@ export type Project = {
   limitations?: string;
   microcopy?: string;
   isMain: boolean;
+  screenshots?: ProjectScreenshot[];
   features?: string[];
   technicalDecisions?: string[];
   learnings?: string[];
@@ -31,13 +40,7 @@ export type Project = {
       body?: string[];
       items?: string[];
     }[];
-    screenshots?: {
-      src: string;
-      alt: string;
-      width: number;
-      height: number;
-      caption: string;
-    }[];
+    screenshots?: ProjectScreenshot[];
   };
 };
 
@@ -364,6 +367,29 @@ export const projects: Project[] = [
           ],
         },
       ],
+      screenshots: [
+        {
+          src: "/screenshots/saborearte-desktop.png",
+          alt: "Screenshot desktop do template Restaurante Saborearte.",
+          width: 1440,
+          height: 1000,
+          caption: "Restaurante Saborearte em desktop.",
+        },
+        {
+          src: "/screenshots/fornoemassa-desktop.png",
+          alt: "Screenshot desktop do template Pizzaria Forno e Massa.",
+          width: 1440,
+          height: 1000,
+          caption: "Pizzaria Forno e Massa em desktop.",
+        },
+        {
+          src: "/screenshots/burguerhouse-desktop.png",
+          alt: "Screenshot desktop do template Hamburgueria Burguer House.",
+          width: 1440,
+          height: 1000,
+          caption: "Hamburgueria Burguer House em desktop.",
+        },
+      ],
     },
   },
   {
@@ -421,6 +447,15 @@ export const projects: Project[] = [
     limitations:
       "Projeto demonstrável; textos, dados comerciais e canais de contato devem ser revisados antes de uso por um negócio real.",
     isMain: false,
+    screenshots: [
+      {
+        src: "/screenshots/barbeariadavila-desktop.png",
+        alt: "Screenshot desktop da landing page Barbearia da Vila.",
+        width: 1440,
+        height: 1000,
+        caption: "Landing page da Barbearia da Vila em desktop.",
+      },
+    ],
     features: [
       "Hero com imagem e CTA.",
       "Menu fixo com navegação por seções.",
