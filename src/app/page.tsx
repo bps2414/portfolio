@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { ProjectCard } from "@/components/project-card";
+import { BudgetRequestModal } from "@/components/budget-request-modal";
 import { projects } from "@/data/projects";
 import { getButtonClasses } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
@@ -47,6 +48,7 @@ const faqItems = [
 
 const servicePlans = [
   {
+    kind: "package_landing" as const,
     title: "Landing Page Local",
     price: "R$ 200 a R$ 300",
     description: "Para negócios que precisam de uma página simples, bonita e publicada online.",
@@ -61,6 +63,7 @@ const servicePlans = [
     ],
   },
   {
+    kind: "package_editable" as const,
     title: "Site com Painel / Cardápio Editável",
     price: "A partir de R$ 500",
     description: "Para negócios que precisam editar produtos, cardápio, informações ou conteúdos sem depender de alterar código.",
@@ -560,19 +563,58 @@ export default function Home() {
                       ))}
                     </div>
 
-                    <a
-                      href={whatsappBudgetLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={getButtonClasses(plan.featured ? "primary" : "outline", "lg", "w-full font-semibold")}
-                    >
-                      <Whatsapp className="mr-3 h-5 w-5" />
-                      Pedir orçamento pelo WhatsApp
-                    </a>
+                    <div className="grid gap-3">
+                      <BudgetRequestModal
+                        kind={plan.kind}
+                        label="Solicitar este pacote"
+                        variant={plan.featured ? "primary" : "outline"}
+                        packageInfo={{ title: plan.title, priceLabel: plan.price }}
+                        className="w-full font-semibold"
+                      />
+                      <a
+                        href={whatsappBudgetLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={getButtonClasses("ghost", "lg", "w-full font-semibold")}
+                      >
+                        <Whatsapp className="mr-3 h-5 w-5" />
+                        Prefiro conversar no WhatsApp
+                      </a>
+                    </div>
                   </div>
                 </FadeIn>
               ))}
             </div>
+
+            <FadeIn delay={250}>
+              <div className="mt-8 rounded-xl border border-border bg-background/70 p-5 sm:flex sm:items-center sm:justify-between sm:gap-6">
+                <div>
+                  <h3 className="font-heading text-xl font-bold tracking-tight text-primary">
+                    Precisa de algo fora dos pacotes?
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-secondary">
+                    Envie uma solicitação personalizada com o que você já sabe. Se preferir conversar primeiro, o WhatsApp continua aberto.
+                  </p>
+                </div>
+                <div className="mt-5 grid gap-3 sm:mt-0 sm:min-w-64">
+                  <BudgetRequestModal
+                    kind="custom"
+                    label="Solicitar orçamento personalizado"
+                    variant="primary"
+                    className="w-full font-semibold"
+                  />
+                  <a
+                    href={whatsappBudgetLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={getButtonClasses("outline", "lg", "w-full font-semibold")}
+                  >
+                    <Whatsapp className="mr-3 h-5 w-5" />
+                    Chamar no WhatsApp
+                  </a>
+                </div>
+              </div>
+            </FadeIn>
 
             <FadeIn delay={250}>
               <div className="mt-8 grid grid-cols-1 gap-4 rounded-xl border border-border bg-background/70 p-5 text-sm leading-relaxed text-secondary md:grid-cols-[auto_1fr] md:items-center">
@@ -638,7 +680,7 @@ export default function Home() {
                 
                 <h2 className="text-4xl md:text-5xl font-heading font-bold tracking-tight mb-6">Vamos conversar?</h2>
                 <p className="text-lg md:text-xl text-secondary mb-12 leading-relaxed max-w-2xl mx-auto">
-                  Me chame no WhatsApp e conte qual plano faz mais sentido para o seu negócio. A partir disso, eu ajusto o escopo e passo um orçamento claro.
+                  Se preferir conversar direto, me chame no WhatsApp. Se quiser organizar o pedido antes, use a solicitação nos planos acima.
                 </p>
                 
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
