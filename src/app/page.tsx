@@ -5,10 +5,44 @@ import { ProjectCard } from "@/components/project-card";
 import { projects } from "@/data/projects";
 import { getButtonClasses } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
-import { ArrowRight, Code2, Wrench, LayoutTemplate, MessageSquare, CheckCircle2 } from "lucide-react";
-import { Github } from "@/components/icons";
+import { ArrowRight, Code2, Wrench, LayoutTemplate, CheckCircle2, Clock3, Settings2 } from "lucide-react";
+import { Github, Whatsapp } from "@/components/icons";
 import { FadeIn } from "@/components/fade-in";
 import { cn } from "@/lib/utils";
+
+const whatsappBudgetLink = "https://wa.me/5521987783382";
+
+const servicePlans = [
+  {
+    title: "Landing Page Local",
+    price: "R$ 200 a R$ 300",
+    description: "Para negócios que precisam de uma página simples, bonita e publicada online.",
+    idealFor: "Ideal para quem quer aparecer melhor online e não precisa alterar conteúdo com frequência.",
+    deadline: "Prazo estimado: 3 a 7 dias",
+    features: [
+      "Página única profissional",
+      "WhatsApp, Instagram e mapa",
+      "Serviços, fotos e texto de apresentação",
+      "Publicação online",
+      "1 rodada de ajustes antes da publicação final",
+    ],
+  },
+  {
+    title: "Site com Painel / Cardápio Editável",
+    price: "A partir de R$ 500",
+    description: "Para negócios que precisam editar produtos, cardápio, informações ou conteúdos sem depender de alterar código.",
+    idealFor: "Ideal para quem muda cardápio, produtos, preços ou informações com frequência.",
+    deadline: "Prazo estimado: a partir de 7 dias",
+    featured: true,
+    features: [
+      "Painel administrativo",
+      "Login e área de edição",
+      "Estrutura de produtos, cardápio ou conteúdos",
+      "Publicação online",
+      "Funcionalidades combinadas por escopo",
+    ],
+  },
+];
 
 export default function Home() {
   const featuredProjects = projects.filter((p) => p.isMain);
@@ -362,7 +396,102 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 8. Contato via GitHub */}
+        {/* 8. Planos comerciais */}
+        <section className="perf-section py-28 md:py-32 bg-surface/30 border-y border-border">
+          <div className="container mx-auto max-w-6xl px-6">
+            <FadeIn>
+              <div className="mb-14 md:mb-16 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+                <div className="max-w-2xl space-y-4">
+                  <div className="flex items-center gap-4 text-accent text-sm font-bold tracking-widest uppercase">
+                    <span className="w-12 h-px bg-accent"></span>
+                    Planos
+                  </div>
+                  <h2 className="text-3xl md:text-5xl font-heading font-bold tracking-tight">Planos simples para negócios locais</h2>
+                  <p className="text-lg text-secondary leading-relaxed">
+                    Sites objetivos para quem quer começar com presença profissional online, sem projeto inflado e sem complicação.
+                  </p>
+                </div>
+                <div className="rounded-lg border border-border bg-background/70 px-4 py-3 text-sm leading-relaxed text-secondary md:max-w-sm">
+                  Os valores servem como ponto de partida. O orçamento final depende do conteúdo, prazo, funcionalidades e nível de personalização.
+                </div>
+              </div>
+            </FadeIn>
+
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+              {servicePlans.map((plan, i) => (
+                <FadeIn key={plan.title} delay={i * 150} className="h-full">
+                  <div
+                    className={cn(
+                      "h-full rounded-2xl border bg-background p-6 sm:p-8 transition-colors",
+                      plan.featured
+                        ? "border-accent/50 shadow-[0_0_32px_rgba(234,179,8,0.08)]"
+                        : "border-border"
+                    )}
+                  >
+                    <div className="mb-8 flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+                      <div>
+                        <div className="mb-4 inline-flex items-center gap-2 rounded-sm border border-border bg-raised px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-secondary">
+                          {plan.featured ? "Mais autonomia" : "Entrada rápida"}
+                        </div>
+                        <h3 className="font-heading text-2xl md:text-3xl font-bold tracking-tight text-primary">
+                          {plan.title}
+                        </h3>
+                      </div>
+                      <div className="shrink-0 rounded-xl border border-border bg-surface px-4 py-3 text-left sm:text-right">
+                        <div className="text-xs font-bold uppercase tracking-widest text-secondary">Investimento</div>
+                        <div className="mt-1 text-xl font-heading font-bold text-primary">{plan.price}</div>
+                      </div>
+                    </div>
+
+                    <p className="mb-5 text-base leading-relaxed text-secondary">
+                      {plan.description}
+                    </p>
+                    <p className="mb-7 text-sm leading-relaxed text-primary">
+                      {plan.idealFor}
+                    </p>
+
+                    <div className="mb-7 flex items-center gap-3 rounded-lg border border-border/70 bg-surface/60 px-4 py-3 text-sm font-medium text-primary">
+                      <Clock3 className="h-5 w-5 shrink-0 text-accent" />
+                      <span>{plan.deadline}</span>
+                    </div>
+
+                    <div className="mb-8 space-y-3">
+                      {plan.features.map((feature) => (
+                        <div key={feature} className="flex gap-3 text-sm leading-relaxed text-secondary">
+                          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+                          <span>{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <a
+                      href={whatsappBudgetLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={getButtonClasses(plan.featured ? "primary" : "outline", "lg", "w-full font-semibold")}
+                    >
+                      <Whatsapp className="mr-3 h-5 w-5" />
+                      Pedir orçamento pelo WhatsApp
+                    </a>
+                  </div>
+                </FadeIn>
+              ))}
+            </div>
+
+            <FadeIn delay={250}>
+              <div className="mt-8 grid grid-cols-1 gap-4 rounded-xl border border-border bg-background/70 p-5 text-sm leading-relaxed text-secondary md:grid-cols-[auto_1fr] md:items-center">
+                <div className="flex h-11 w-11 items-center justify-center rounded-lg border border-border bg-surface text-primary">
+                  <Settings2 className="h-5 w-5" />
+                </div>
+                <p>
+                  Depois da aprovação e publicação, novas alterações podem ser combinadas à parte. Projetos com painel editável reduzem a necessidade de ajustes manuais, porque o próprio cliente consegue atualizar informações principais.
+                </p>
+              </div>
+            </FadeIn>
+          </div>
+        </section>
+
+        {/* 9. Contato via WhatsApp */}
         <section className="perf-section py-32 relative border-t border-border">
           {/* Subtle glow for the final section */}
           <div className="mobile-paint-lite absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[220px] sm:h-[300px] bg-accent/5 blur-[56px] sm:blur-[100px] rounded-[100%] pointer-events-none" />
@@ -373,17 +502,20 @@ export default function Home() {
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-accent to-transparent"></div>
                 
                 <div className="mx-auto w-20 h-20 rounded-2xl bg-background border border-border flex items-center justify-center mb-10 text-primary shadow-sm">
-                  <MessageSquare className="w-8 h-8" />
+                  <Whatsapp className="w-9 h-9" />
                 </div>
                 
                 <h2 className="text-4xl md:text-5xl font-heading font-bold tracking-tight mb-6">Vamos conversar?</h2>
                 <p className="text-lg md:text-xl text-secondary mb-12 leading-relaxed max-w-2xl mx-auto">
-                  Para oportunidades em desenvolvimento web, suporte ou projetos para pequenos negócios, meu contato é direto pelo GitHub.
+                  Me chame no WhatsApp e conte qual plano faz mais sentido para o seu negócio. A partir disso, eu ajusto o escopo e passo um orçamento claro.
                 </p>
                 
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                  <a href={siteConfig.links.github} target="_blank" rel="noopener noreferrer" className={getButtonClasses("primary", "lg", "w-full sm:w-auto font-semibold shadow-lg")}>
-                    <Github className="mr-3 h-5 w-5" /> Acessar Perfil no GitHub
+                  <a href={whatsappBudgetLink} target="_blank" rel="noopener noreferrer" className={getButtonClasses("primary", "lg", "w-full sm:w-auto font-semibold shadow-lg")}>
+                    <Whatsapp className="mr-3 h-5 w-5" /> Pedir orçamento pelo WhatsApp
+                  </a>
+                  <a href={siteConfig.links.github} target="_blank" rel="noopener noreferrer" className={getButtonClasses("outline", "lg", "w-full sm:w-auto font-semibold")}>
+                    <Github className="mr-3 h-5 w-5" /> Ver GitHub
                   </a>
                 </div>
               </div>
