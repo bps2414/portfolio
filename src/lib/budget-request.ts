@@ -27,7 +27,7 @@ export type BudgetRequestPayload = {
     currentUrlOrSocial?: string;
     projectType?: string;
     mainGoal: string;
-    desiredDeadline: string;
+    desiredDeadline?: string;
     contentStatus?: string;
     budgetRange?: string;
     selectedOptions: ClientFacingOption[];
@@ -60,12 +60,12 @@ export const clientFacingOptions: Array<{
   { value: "whatsapp", label: "WhatsApp" },
   { value: "map", label: "Mapa" },
   { value: "gallery", label: "Galeria" },
-  { value: "services_prices", label: "Servicos/precos" },
+  { value: "services_prices", label: "Serviços/preços" },
   { value: "testimonials", label: "Depoimentos" },
-  { value: "form", label: "Formulario" },
-  { value: "editable_menu_products", label: "Cardapio/produtos editaveis" },
+  { value: "form", label: "Formulário" },
+  { value: "editable_menu_products", label: "Cardápio/produtos editáveis" },
   { value: "admin_panel", label: "Painel para editar depois" },
-  { value: "not_sure", label: "Ainda nao sei" },
+  { value: "not_sure", label: "Ainda não sei" },
 ];
 
 const budgetRequestKinds: BudgetRequestKind[] = [
@@ -187,7 +187,7 @@ export function escapeDiscordMarkdown(value: string): string {
 
 export function sanitizeDiscordText(value: string | undefined): string {
   if (!value) {
-    return "Nao informado";
+    return "Não informado";
   }
 
   const withoutLineBreaks = value.replace(/\s+/g, " ").trim();
@@ -214,7 +214,7 @@ function formatField(label: string, value: string | undefined): string {
 
 function formatOptionLabels(options: ClientFacingOption[]): string {
   if (options.length === 0) {
-    return "Nao informado";
+    return "Não informado";
   }
 
   return options.map((option) => optionLabels.get(option) ?? option).join(", ");
@@ -271,10 +271,11 @@ export function validateBudgetRequest(input: unknown): ValidationResult {
       "Objetivo principal",
       errors,
     ),
-    desiredDeadline: normalizeRequiredString(
+    desiredDeadline: normalizeStringByRequirement(
       projectInput.desiredDeadline,
       fieldLimits.short,
       "Prazo desejado",
+      isCustomKind,
       errors,
     ),
     contentStatus: normalizeStringByRequirement(
@@ -343,8 +344,8 @@ export function validateBudgetRequest(input: unknown): ValidationResult {
     errors.push("Objetivo principal obrigatorio.");
   }
 
-  if (!project.desiredDeadline) {
-    errors.push("Prazo desejado obrigatorio.");
+  if (isCustomKind && !project.desiredDeadline) {
+    errors.push("Prazo desejado obrigatório para orçamento personalizado.");
   }
 
   if (isPackageKind) {
@@ -500,7 +501,11 @@ export function formatDiscordMessage(payload: BudgetRequestPayload): string {
   const budgetRangeLabel =
     payload.kind === "custom"
       ? payload.project.budgetRange
-      : "Nao perguntada nos pacotes";
+      : "Não perguntada nos pacotes";
+  const deadlineLabel =
+    payload.kind === "custom"
+      ? payload.project.desiredDeadline
+      : "Definido pelo pacote";
   const missingUsefulFields = getMissingUsefulFields(payload);
   const internalNotes = getInternalNotes(payload);
 
@@ -521,8 +526,8 @@ export function formatDiscordMessage(payload: BudgetRequestPayload): string {
     formatField("Site/rede atual", payload.project.currentUrlOrSocial),
     formatField("Tipo de projeto", payload.project.projectType),
     formatField("Objetivo principal", payload.project.mainGoal),
-    formatField("Prazo desejado", payload.project.desiredDeadline),
-    formatField("Status do conteudo", payload.project.contentStatus),
+    formatField("Prazo desejado", deadlineLabel),
+    formatField("Status do conteúdo", payload.project.contentStatus),
     formatField("Faixa informada", budgetRangeLabel),
     `**Funcionalidades desejadas:** ${formatOptionLabels(
       payload.project.selectedOptions,

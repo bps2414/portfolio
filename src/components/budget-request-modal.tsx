@@ -77,6 +77,18 @@ function getSteps(kind: BudgetRequestKind) {
   return ["Contato", "Projeto", "Extras opcionais"];
 }
 
+function formatWhatsApp(raw: string): string {
+  // Strip everything except digits
+  const digits = raw.replace(/\D/g, "").slice(0, 11);
+  if (digits.length === 0) return "";
+  if (digits.length <= 2) return `(${digits}`;
+  if (digits.length <= 6) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+  if (digits.length <= 10)
+    return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`;
+  // 11 digits: (XX) XXXXX-XXXX
+  return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+}
+
 export function BudgetRequestModal({
   kind,
   label,
@@ -120,7 +132,7 @@ export function BudgetRequestModal({
     if (step === 0) {
       return (
         form.name.trim().length > 0 &&
-        form.whatsapp.trim().length > 0 &&
+        form.whatsapp.replace(/\D/g, "").length >= 10 &&
         form.whatsappConsent
       );
     }
@@ -134,9 +146,9 @@ export function BudgetRequestModal({
         );
       }
 
+      // Package: no deadline field
       return (
         form.mainGoal.trim().length > 0 &&
-        form.desiredDeadline.trim().length > 0 &&
         form.contentStatus.trim().length > 0
       );
     }
@@ -306,7 +318,10 @@ export function BudgetRequestModal({
                       <Field
                         label="WhatsApp"
                         value={form.whatsapp}
-                        onChange={(value) => updateField("whatsapp", value)}
+                        onChange={(value) =>
+                          updateField("whatsapp", formatWhatsApp(value))
+                        }
+                        placeholder="(21) 98778-3382"
                         required
                       />
                       <label className="flex gap-3 rounded-lg border border-border bg-background/60 p-3 text-sm text-secondary">
@@ -342,14 +357,16 @@ export function BudgetRequestModal({
                         required
                         textarea
                       />
-                      <Field
-                        label="Prazo desejado"
-                        value={form.desiredDeadline}
-                        onChange={(value) =>
-                          updateField("desiredDeadline", value)
-                        }
-                        required
-                      />
+                      {isCustom ? (
+                        <Field
+                          label="Prazo desejado"
+                          value={form.desiredDeadline}
+                          onChange={(value) =>
+                            updateField("desiredDeadline", value)
+                          }
+                          required
+                        />
+                      ) : null}
                       {!isCustom ? (
                         <Field
                           label="Já tem textos, imagens ou logo?"
@@ -498,12 +515,14 @@ function Field({
   onChange,
   required = false,
   textarea = false,
+  placeholder,
 }: {
   label: string;
   value: string;
   onChange: (value: string) => void;
   required?: boolean;
   textarea?: boolean;
+  placeholder?: string;
 }) {
   const inputClassName =
     "mt-2 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-primary outline-none transition-colors placeholder:text-secondary focus:border-accent";
@@ -517,12 +536,14 @@ function Field({
           value={value}
           onChange={(event) => onChange(event.target.value)}
           className={cn(inputClassName, "min-h-20 resize-none")}
+          placeholder={placeholder}
         />
       ) : (
         <input
           value={value}
           onChange={(event) => onChange(event.target.value)}
           className={inputClassName}
+          placeholder={placeholder}
         />
       )}
     </label>
