@@ -44,9 +44,9 @@ export type BudgetRequestPayload = {
 };
 
 export type BudgetRequestMetadataInput = {
-  submittedAt?: string;
-  sourcePage?: string;
-  userAgent?: string;
+  submittedAt?: unknown;
+  sourcePage?: unknown;
+  userAgent?: unknown;
 };
 
 export type ValidationResult =
@@ -229,6 +229,7 @@ export function validateBudgetRequest(input: unknown): ValidationResult {
 
   const contactInput = isRecord(input.contact) ? input.contact : {};
   const projectInput = isRecord(input.project) ? input.project : {};
+  const metadataInput = isRecord(input.metadata) ? input.metadata : undefined;
   const selectedPackageInput = isRecord(input.selectedPackage)
     ? input.selectedPackage
     : undefined;
@@ -302,7 +303,7 @@ export function validateBudgetRequest(input: unknown): ValidationResult {
     ),
     notes: normalizeOptionalString(projectInput.notes, fieldLimits.long),
   };
-  const metadata = normalizeBudgetRequestMetadata();
+  const metadata = normalizeBudgetRequestMetadata(metadataInput);
   const selectedPackage = isPackageKind && selectedPackageInput
     ? {
         title: normalizeStringByRequirement(
@@ -491,6 +492,10 @@ export function formatDiscordMessage(payload: BudgetRequestPayload): string {
         formatField("Referencia do pacote", payload.selectedPackage.priceLabel),
       ]
     : [];
+  const budgetRangeLabel =
+    payload.kind === "custom"
+      ? payload.project.budgetRange
+      : "Nao perguntada nos pacotes";
   const missingUsefulFields = getMissingUsefulFields(payload);
   const internalNotes = getInternalNotes(payload);
 
@@ -513,7 +518,7 @@ export function formatDiscordMessage(payload: BudgetRequestPayload): string {
     formatField("Objetivo principal", payload.project.mainGoal),
     formatField("Prazo desejado", payload.project.desiredDeadline),
     formatField("Status do conteudo", payload.project.contentStatus),
-    formatField("Faixa informada", payload.project.budgetRange),
+    formatField("Faixa informada", budgetRangeLabel),
     `**Funcionalidades desejadas:** ${formatOptionLabels(
       payload.project.selectedOptions,
     )}`,
