@@ -11,6 +11,8 @@ export type Project = {
   title: string;
   type: string;
   description: string;
+  problem?: string;
+  featuredReason?: string;
   stack: string[];
   order: number;
   ogImage?: string;
@@ -52,6 +54,10 @@ export const projects: Project[] = [
     order: 1,
     description:
       "Sistema full-stack de chamados para pequenos negócios, com abertura pública, consulta por código/e-mail e painel admin protegido com fila operacional.",
+    problem:
+      "Organiza solicitações que normalmente ficam espalhadas entre WhatsApp, e-mail e conversas informais.",
+    featuredReason:
+      "Projeto mais forte para demonstrar fluxo full-stack, autenticação, banco de dados e cuidado com produto.",
     stack: [
       "Next.js",
       "TypeScript",
@@ -238,6 +244,10 @@ export const projects: Project[] = [
     order: 2,
     description:
       "Site institucional publicado para negócio local de autopeças e serviços relacionados, com foco em apresentação clara, contato rápido, SEO local e manutenção simples.",
+    problem:
+      "Ajuda um negócio local a apresentar serviços, canais de contato e informações principais em uma página pública responsiva.",
+    featuredReason:
+      "Projeto real publicado, com foco em presença local, manutenção simples e canais diretos de contato.",
     stack: ["HTML", "CSS", "JavaScript", "JSON", "PowerShell"],
     links: {
       site: "https://pradoautopecas.pages.dev/",
@@ -278,6 +288,8 @@ export const projects: Project[] = [
     order: 3,
     description:
       "Template multi-tema para negócios de alimentação, com demos para restaurante, pizzaria e hamburgueria. Inclui páginas comerciais, cardápio digital, galeria, contato via WhatsApp e estudo técnico de backend/admin.",
+    problem:
+      "Mostra como uma base comercial pode ser adaptada para restaurantes, pizzarias e hamburguerias sem fingir que as demos são clientes reais.",
     stack: [
       "HTML",
       "CSS",
@@ -399,6 +411,8 @@ export const projects: Project[] = [
     order: 5,
     description:
       "Ferramenta local para analisar arquivos MKV, detectar faixas de áudio PT-BR, criar um plano de processamento e gerar um arquivo final com FFmpeg/FFprobe.",
+    problem:
+      "Automatiza uma tarefa local repetitiva que dependeria de inspeção manual de arquivos de vídeo.",
     stack: ["Python", "FFmpeg", "FFprobe", "Pytest", "HTML", "CSS", "JavaScript"],
     links: {
       github: "https://github.com/bps2414/ptbr-merger",
@@ -439,6 +453,8 @@ export const projects: Project[] = [
     order: 4,
     description:
       "Landing page responsiva para barbearia, com apresentação visual, serviços, galeria, equipe, FAQ, mapa, páginas legais, SEO básico e chamada para contato comercial.",
+    problem:
+      "Demonstra uma página comercial focada em serviços, confiança visual, WhatsApp e SEO local para negócios de atendimento presencial.",
     stack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion", "Lucide React"],
     links: {
       demo: "https://barbeariadavila.vercel.app/",
@@ -488,6 +504,8 @@ export const projects: Project[] = [
     order: 6,
     description:
       "Ferramenta desktop local para Windows que automatiza um fluxo de pesca em jogo, com interface própria, controle de mouse e teclado, OCR, detecção por cor, configurações persistentes, logs e empacotamento em executável.",
+    problem:
+      "Registra meu início em automação local, interface desktop e empacotamento de uma ferramenta para Windows.",
     stack: [
       "Python",
       "Tkinter",

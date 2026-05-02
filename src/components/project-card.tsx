@@ -63,6 +63,20 @@ export function ProjectCard({ project }: ProjectCardProps) {
           {project.description}
         </p>
 
+        {project.problem && (
+          <p className="rounded-lg border border-border/50 bg-raised/70 px-4 py-3 text-sm leading-relaxed text-secondary">
+            <span className="font-semibold text-primary">Resolve: </span>
+            {project.problem}
+          </p>
+        )}
+
+        {project.featuredReason && (
+          <p className="text-sm leading-relaxed text-secondary">
+            <span className="font-semibold text-primary">Destaque: </span>
+            {project.featuredReason}
+          </p>
+        )}
+
         {/* Stack tags */}
         <div className="flex flex-wrap gap-2 pt-2">
           {project.stack.slice(0, isMain ? 5 : 4).map((tech) => (
@@ -98,7 +112,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
               target="_blank"
               rel="noopener noreferrer"
               className="p-2 -m-2 text-secondary hover:text-primary transition-colors"
-              aria-label="GitHub"
+              aria-label={`Ver código de ${project.title} no GitHub`}
             >
               <Github className="h-5 w-5" />
             </a>
@@ -109,7 +123,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
               target="_blank"
               rel="noopener noreferrer"
               className="p-2 -m-2 text-secondary hover:text-primary transition-colors"
-              aria-label="Visitar site"
+              aria-label={`Abrir demo ou site de ${project.title}`}
             >
               <ExternalLink className="h-5 w-5" />
             </a>

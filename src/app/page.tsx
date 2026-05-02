@@ -10,7 +10,40 @@ import { Github, Whatsapp } from "@/components/icons";
 import { FadeIn } from "@/components/fade-in";
 import { cn } from "@/lib/utils";
 
-const whatsappBudgetLink = "https://wa.me/5521987783382";
+const whatsappBudgetLink = siteConfig.links.whatsapp;
+
+const faqItems = [
+  {
+    question: "Você cria sites para pequenos negócios?",
+    answer:
+      "Sim. Crio sites objetivos para pequenos negócios que precisam apresentar serviços, mostrar informações importantes e receber contatos pelo WhatsApp.",
+  },
+  {
+    question: "Você faz landing pages?",
+    answer:
+      "Faço landing pages responsivas para negócios locais, serviços, projetos pessoais e validação de ideias. O foco é clareza, carregamento rápido e CTA bem definido.",
+  },
+  {
+    question: "Você trabalha com projetos com painel administrativo?",
+    answer:
+      "Sim, quando o escopo pede edição de conteúdo, produtos, cardápio ou informações frequentes. Também deixo claro quando uma landing page simples resolve melhor.",
+  },
+  {
+    question: "Quais tecnologias você usa?",
+    answer:
+      "Uso principalmente React, Next.js, TypeScript, Tailwind CSS, HTML, CSS, JavaScript, Git, GitHub e Vercel. Em alguns projetos também uso Supabase, PostgreSQL e Node.js.",
+  },
+  {
+    question: "Como posso entrar em contato?",
+    answer:
+      "O caminho mais direto é pelo WhatsApp para orçamento e pelo GitHub para avaliar meus repositórios e projetos publicados.",
+  },
+  {
+    question: "Você faz sites com foco em WhatsApp e SEO local?",
+    answer:
+      "Sim. Para pequenos negócios, costumo priorizar informações claras, botões de WhatsApp, estrutura básica de SEO local, sitemap, robots, Open Graph e boa leitura no mobile.",
+  },
+];
 
 const servicePlans = [
   {
@@ -52,9 +85,72 @@ export default function Home() {
   const technicalProjects = projects.filter((p) =>
     ["ptbr-merger", "bps-fishing-macro"].includes(p.slug)
   );
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": `${siteConfig.url}/#person`,
+        name: "Bryan Souza",
+        url: siteConfig.url,
+        sameAs: [siteConfig.links.github],
+        jobTitle: "Desenvolvedor Web",
+        knowsAbout: [
+          "React",
+          "Next.js",
+          "TypeScript",
+          "Tailwind CSS",
+          "Landing Pages",
+          "SEO Local",
+          "Sites para pequenos negócios",
+        ],
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${siteConfig.url}/#website`,
+        name: siteConfig.title,
+        url: siteConfig.url,
+        inLanguage: siteConfig.language,
+        description: siteConfig.description,
+        publisher: {
+          "@id": `${siteConfig.url}/#person`,
+        },
+      },
+      {
+        "@type": "ItemList",
+        "@id": `${siteConfig.url}/#projects`,
+        name: "Projetos de Bryan Souza",
+        itemListElement: [...projects]
+          .sort((a, b) => a.order - b.order)
+          .map((project, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            url: `${siteConfig.url}/projetos/${project.slug}`,
+            name: project.title,
+            description: project.description,
+          })),
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${siteConfig.url}/#faq`,
+        mainEntity: faqItems.map((item) => ({
+          "@type": "Question",
+          name: item.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: item.answer,
+          },
+        })),
+      },
+    ],
+  };
 
   return (
     <div className="flex flex-col min-h-screen selection:bg-accent/30 selection:text-primary">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Header />
       
       <main className="flex-1">
@@ -79,7 +175,7 @@ export default function Home() {
 
             <FadeIn delay={200}>
               <p className="text-base sm:text-lg md:text-2xl text-secondary max-w-3xl mb-8 sm:mb-12 leading-relaxed font-light">
-                Sou Bryan / bps2414. Crio interfaces, sistemas simples e ferramentas úteis com foco em organização, experiência do usuário e apresentação profissional.
+                Sou Bryan Souza, desenvolvedor web em início de carreira. Crio landing pages, sites responsivos e projetos digitais para pequenos negócios, recrutadores e pessoas que querem avaliar meu trabalho pelo resultado e pelo código.
               </p>
             </FadeIn>
             
@@ -98,7 +194,7 @@ export default function Home() {
               <div className="mt-12 max-w-3xl">
                 <p className="text-sm font-medium text-secondary uppercase tracking-widest mb-4">Stack principal</p>
                 <div className="flex flex-wrap gap-2.5">
-                  {['React', 'Next.js', 'TypeScript', 'Tailwind', 'HTML', 'CSS', 'JavaScript', 'Supabase'].map((tech) => (
+                  {['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'HTML', 'CSS', 'JavaScript', 'Supabase'].map((tech) => (
                     <div 
                       key={tech}
                       className="px-4 py-2 rounded border border-border/40 bg-surface/60 sm:backdrop-blur-sm text-sm font-medium text-primary shadow-sm"
@@ -124,7 +220,7 @@ export default function Home() {
                   </div>
                   <h2 className="text-4xl md:text-5xl font-heading font-bold tracking-tight">Projetos principais</h2>
                   <p className="text-lg text-secondary leading-relaxed">
-                    Casos de estudo com maior profundidade técnica e aplicação real no mercado local.
+                    Casos de estudo com maior profundidade técnica, aplicação real ou valor direto para pequenos negócios.
                   </p>
                 </div>
               </div>
@@ -151,7 +247,7 @@ export default function Home() {
                 </div>
                 <h2 className="text-3xl md:text-4xl font-heading font-bold tracking-tight">Sites e templates comerciais</h2>
                 <p className="text-lg text-secondary leading-relaxed">
-                  Projetos voltados a páginas comerciais, demos publicadas, contato direto e adaptação para negócios locais.
+                  Projetos voltados a criação de sites, páginas comerciais, demos publicadas, contato direto por WhatsApp e adaptação para negócios locais. Demos são identificadas como templates, não como clientes reais.
                 </p>
               </div>
             </FadeIn>
@@ -251,10 +347,10 @@ export default function Home() {
               <FadeIn delay={150}>
                 <div className="space-y-6 text-lg text-secondary leading-relaxed">
                   <p>
-                    Tenho interesse em desenvolvimento web, suporte técnico e criação de sites simples para pequenos negócios. Meu foco atual é construir projetos claros, navegáveis e fáceis de explicar para quem avalia o trabalho pelo resultado e pelo código.
+                    Tenho interesse em desenvolvimento web, suporte técnico, oportunidades de Jovem Aprendiz, estágio ou entrada em tecnologia, além de freelas pequenos e bem definidos. Meu foco atual é construir projetos claros, navegáveis e fáceis de explicar para quem avalia o trabalho pelo resultado e pelo código.
                   </p>
                   <p>
-                    Trabalho com escopos realistas: uma landing page precisa comunicar bem e carregar corretamente; um sistema web precisa ter fluxo compreensível, autenticação quando necessário e limites técnicos bem definidos.
+                    Trabalho com escopos realistas: uma landing page precisa comunicar bem, carregar corretamente e facilitar contato; um sistema web precisa ter fluxo compreensível, autenticação quando necessário e limites técnicos bem definidos.
                   </p>
                   <p>
                     Uso IA como apoio em pesquisa, revisão, prototipagem e aceleração de tarefas repetitivas, mantendo responsabilidade sobre decisões, validação, código final e limites de cada projeto.
@@ -263,7 +359,7 @@ export default function Home() {
                   <div className="pt-8 mt-8 border-t border-border grid grid-cols-1 sm:grid-cols-2 gap-6">
                     {[
                       "Organização de código",
-                      "Acessibilidade básica",
+                      "SEO técnico básico",
                       "UI clara e direta",
                       "Documentação honesta"
                     ].map((item) => (
@@ -297,19 +393,19 @@ export default function Home() {
                 {
                   icon: LayoutTemplate,
                   title: "Frontend",
-                  desc: "Desenvolvimento de interfaces performáticas e responsivas.",
+                  desc: "Criação de sites responsivos, landing pages e interfaces web com boa leitura no mobile.",
                   skills: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'HTML', 'CSS', 'JavaScript', 'Acessibilidade']
                 },
                 {
                   icon: Code2,
                   title: "Backend e Dados",
-                  desc: "APIs, autenticação e modelagem de banco de dados.",
+                  desc: "APIs, autenticação, modelagem de dados e fluxos simples com painel administrativo quando necessário.",
                   skills: ['Supabase', 'PostgreSQL', 'RLS', 'Server Actions', 'REST APIs', 'Node.js']
                 },
                 {
                   icon: Wrench,
                   title: "Ferramentas",
-                  desc: "Controle de versão, deploy e automação local.",
+                  desc: "Controle de versão, deploy, SEO local básico e automação local.",
                   skills: ['Git', 'GitHub', 'Vercel', 'Python', 'PowerShell', 'FFmpeg']
                 }
               ].map((block, i) => (
@@ -491,7 +587,42 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 9. Contato via WhatsApp */}
+        {/* 9. FAQ */}
+        <section id="faq" className="perf-section py-24 md:py-28 border-b border-border/70 scroll-mt-24">
+          <div className="container mx-auto max-w-6xl px-6">
+            <FadeIn>
+              <div className="mb-12 max-w-2xl space-y-4">
+                <div className="flex items-center gap-4 text-accent text-sm font-bold tracking-widest uppercase">
+                  <span className="w-12 h-px bg-accent"></span>
+                  FAQ
+                </div>
+                <h2 className="text-3xl md:text-5xl font-heading font-bold tracking-tight">
+                  Perguntas rápidas
+                </h2>
+                <p className="text-lg text-secondary leading-relaxed">
+                  Respostas diretas para quem está avaliando um freela, uma oportunidade de entrada em tecnologia ou a criação de uma landing page.
+                </p>
+              </div>
+            </FadeIn>
+
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              {faqItems.map((item, i) => (
+                <FadeIn key={item.question} delay={i * 60} className="h-full">
+                  <article className="h-full rounded-xl border border-border bg-surface/60 p-5 sm:p-6">
+                    <h3 className="mb-3 font-heading text-lg font-bold leading-snug text-primary">
+                      {item.question}
+                    </h3>
+                    <p className="text-sm leading-relaxed text-secondary">
+                      {item.answer}
+                    </p>
+                  </article>
+                </FadeIn>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* 10. Contato via WhatsApp */}
         <section className="perf-section py-32 relative border-t border-border">
           {/* Subtle glow for the final section */}
           <div className="mobile-paint-lite absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[220px] sm:h-[300px] bg-accent/5 blur-[56px] sm:blur-[100px] rounded-[100%] pointer-events-none" />

@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const title = `${project.title} | ${siteConfig.name}`;
   const socialImage = project.ogImage
     ? `${siteConfig.url}${project.ogImage}`
-    : undefined;
+    : `${siteConfig.url}/opengraph-image`;
   const images = socialImage
     ? [
         {
@@ -55,6 +55,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: project.description,
     alternates: {
       canonical: url,
+    },
+    robots: {
+      index: true,
+      follow: true,
     },
     openGraph: {
       title,
@@ -95,9 +99,33 @@ export default async function ProjectPage({ params }: Props) {
     currentIndex < orderedProjects.length - 1
       ? orderedProjects[currentIndex + 1]
       : null;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": `${siteConfig.url}/projetos/${project.slug}#creative-work`,
+    name: project.title,
+    url: `${siteConfig.url}/projetos/${project.slug}`,
+    description: project.description,
+    inLanguage: siteConfig.language,
+    creator: {
+      "@type": "Person",
+      name: "Bryan Souza",
+      url: siteConfig.url,
+      sameAs: [siteConfig.links.github],
+    },
+    keywords: project.stack,
+    about: project.problem,
+    image: project.ogImage ? `${siteConfig.url}${project.ogImage}` : undefined,
+    codeRepository: project.links.github,
+    workExample: project.links.demo || project.links.site || project.demoLinks?.[0]?.href,
+  };
 
   return (
     <div className="flex min-h-screen flex-col selection:bg-accent/30 selection:text-primary">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Header />
 
       <main className="flex-1 pt-24 pb-16 md:pt-32 md:pb-24">
@@ -125,6 +153,17 @@ export default async function ProjectPage({ params }: Props) {
                 <p className="mb-10 max-w-3xl text-xl leading-relaxed text-secondary font-light">
                   {project.description}
                 </p>
+
+                {project.problem && (
+                  <div className="mb-8 max-w-3xl rounded-xl border border-border bg-surface/60 p-5">
+                    <p className="text-xs font-bold uppercase tracking-widest text-secondary">
+                      Problema que resolve
+                    </p>
+                    <p className="mt-3 text-base leading-relaxed text-primary">
+                      {project.problem}
+                    </p>
+                  </div>
+                )}
 
                 <div className="flex flex-wrap gap-3">
                   {project.links.demo && !project.demoLinks?.length && (
