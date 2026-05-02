@@ -563,7 +563,7 @@ export default function Home() {
                       ))}
                     </div>
 
-                    <div className="grid gap-3">
+                    <div className="flex flex-col gap-4">
                       <BudgetRequestModal
                         kind={plan.kind}
                         label="Solicitar este pacote"
@@ -596,7 +596,7 @@ export default function Home() {
                     Envie uma solicitação personalizada com o que você já sabe. Se preferir conversar primeiro, o WhatsApp continua aberto.
                   </p>
                 </div>
-                <div className="mt-5 grid gap-3 sm:mt-0 sm:min-w-64">
+                <div className="mt-5 flex flex-col gap-4 sm:mt-0 sm:min-w-64">
                   <BudgetRequestModal
                     kind="custom"
                     label="Solicitar orçamento personalizado"
