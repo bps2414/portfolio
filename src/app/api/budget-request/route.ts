@@ -21,7 +21,21 @@ function getClientIp(request: Request): string {
   return forwardedIp || request.headers.get("x-real-ip")?.trim() || "unknown";
 }
 
+function cleanupExpiredEntries() {
+  const now = Date.now();
+
+  for (const [key, entry] of rateLimitStore) {
+    if (entry.resetAt <= now) {
+      rateLimitStore.delete(key);
+    }
+  }
+}
+
 function isRateLimited(clientIp: string): boolean {
+  if (rateLimitStore.size > 1000) {
+    cleanupExpiredEntries();
+  }
+
   const now = Date.now();
   const current = rateLimitStore.get(clientIp);
 
@@ -58,6 +72,45 @@ function hasFilledHoneypot(body: unknown): boolean {
 }
 
 export async function POST(request: Request) {
+  // SEC-005: reject oversized payloads early
+  const contentLength = parseInt(
+    request.headers.get("content-length") ?? "0",
+    10,
+  );
+
+  if (contentLength > 16_384) {
+    return Response.json(
+      { ok: false, message: "Payload muito grande." },
+      { status: 413 },
+    );
+  }
+
+  // SEC-001: require application/json to block CSRF via HTML forms
+  const contentType = request.headers.get("content-type");
+
+  if (!contentType?.includes("application/json")) {
+    return Response.json(
+      { ok: false, message: "Content-Type invalido." },
+      { status: 415 },
+    );
+  }
+
+  // SEC-012: verify origin to prevent cross-site request forgery
+  const origin = request.headers.get("origin");
+  const allowedOrigins = new Set(
+    [
+      process.env.NEXT_PUBLIC_SITE_URL,
+      "https://bps2414.vercel.app",
+    ].filter(Boolean),
+  );
+
+  if (origin && !allowedOrigins.has(origin)) {
+    return Response.json(
+      { ok: false, message: "Origem nao permitida." },
+      { status: 403 },
+    );
+  }
+
   const clientIp = getClientIp(request);
 
   if (isRateLimited(clientIp)) {
@@ -98,10 +151,15 @@ export async function POST(request: Request) {
     );
   }
 
+  // SEC-006: validate webhook URL points to Discord
   const webhookUrl = process.env.DISCORD_BUDGET_WEBHOOK_URL;
 
-  if (!webhookUrl) {
-    console.error("DISCORD_BUDGET_WEBHOOK_URL ausente");
+  if (
+    !webhookUrl ||
+    (!webhookUrl.startsWith("https://discord.com/api/webhooks/") &&
+      !webhookUrl.startsWith("https://discordapp.com/api/webhooks/"))
+  ) {
+    console.error("DISCORD_BUDGET_WEBHOOK_URL invalida ou ausente");
     return Response.json(
       { ok: false, message: "Nao consegui processar a solicitacao agora." },
       { status: 500 },

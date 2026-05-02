@@ -334,6 +334,12 @@ export function validateBudgetRequest(input: unknown): ValidationResult {
 
   if (!contact.whatsapp) {
     errors.push("WhatsApp obrigatorio.");
+  } else {
+    const whatsappDigits = contact.whatsapp.replace(/\D/g, "");
+
+    if (whatsappDigits.length < 10 || whatsappDigits.length > 13) {
+      errors.push("WhatsApp deve conter entre 10 e 13 digitos.");
+    }
   }
 
   if (!contact.whatsappConsent) {
@@ -518,6 +524,7 @@ export function formatDiscordMessage(payload: BudgetRequestPayload): string {
     `**Aceitou contato por WhatsApp:** ${
       payload.contact.whatsappConsent ? "Sim" : "Nao"
     }`,
+    formatField("Consentimento registrado em", payload.metadata.submittedAt),
     "",
     "**Projeto**",
     formatField("Tipo de solicitacao", payload.kind),

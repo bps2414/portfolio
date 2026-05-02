@@ -2,7 +2,6 @@ import Link from "next/link";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { ProjectCard } from "@/components/project-card";
-import { BudgetRequestModal } from "@/components/budget-request-modal";
 import { projects } from "@/data/projects";
 import { getButtonClasses } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
@@ -564,21 +563,14 @@ export default function Home() {
                     </div>
 
                     <div className="flex flex-col gap-4">
-                      <BudgetRequestModal
-                        kind={plan.kind}
-                        label="Solicitar este pacote"
-                        variant={plan.featured ? "primary" : "outline"}
-                        packageInfo={{ title: plan.title, priceLabel: plan.price }}
-                        className="w-full font-semibold"
-                      />
                       <a
                         href={whatsappBudgetLink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={getButtonClasses("ghost", "lg", "w-full font-semibold")}
+                        className={getButtonClasses(plan.featured ? "primary" : "outline", "lg", "w-full font-semibold")}
                       >
                         <Whatsapp className="mr-3 h-5 w-5" />
-                        Prefiro conversar no WhatsApp
+                        Conversar pelo WhatsApp
                       </a>
                     </div>
                   </div>
@@ -593,21 +585,15 @@ export default function Home() {
                     Precisa de algo fora dos pacotes?
                   </h3>
                   <p className="mt-2 text-sm leading-relaxed text-secondary">
-                    Envie uma solicitação personalizada com o que você já sabe. Se preferir conversar primeiro, o WhatsApp continua aberto.
+                    Me chame no WhatsApp para conversar sobre o que você precisa. Sem formulário, sem burocracia.
                   </p>
                 </div>
-                <div className="mt-5 flex flex-col gap-4 sm:mt-0 sm:min-w-64">
-                  <BudgetRequestModal
-                    kind="custom"
-                    label="Solicitar orçamento personalizado"
-                    variant="primary"
-                    className="w-full font-semibold"
-                  />
+                <div className="mt-5 sm:mt-0 sm:min-w-64">
                   <a
                     href={whatsappBudgetLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={getButtonClasses("outline", "lg", "w-full font-semibold")}
+                    className={getButtonClasses("primary", "lg", "w-full font-semibold")}
                   >
                     <Whatsapp className="mr-3 h-5 w-5" />
                     Chamar no WhatsApp
@@ -680,7 +666,7 @@ export default function Home() {
                 
                 <h2 className="text-4xl md:text-5xl font-heading font-bold tracking-tight mb-6">Vamos conversar?</h2>
                 <p className="text-lg md:text-xl text-secondary mb-12 leading-relaxed max-w-2xl mx-auto">
-                  Se preferir conversar direto, me chame no WhatsApp. Se quiser organizar o pedido antes, use a solicitação nos planos acima.
+                  Se quiser conversar sobre um projeto, tirar dúvidas ou pedir um orçamento, me chame direto no WhatsApp.
                 </p>
                 
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
