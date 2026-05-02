@@ -115,11 +115,18 @@ Evite reintroduzir `backdrop-filter` em elementos fixos no mobile, `transition-a
 
 ## Deploy (Vercel)
 
-O projeto está configurado para deploy direto no Vercel sem variáveis de ambiente adicionais:
+O projeto está configurado para deploy direto no Vercel. Para o formulário de orçamento, configure a variável server-only abaixo antes de usar o envio para Discord:
+
+```txt
+DISCORD_BUDGET_WEBHOOK_URL=
+```
+
+Essa variável não deve usar o prefixo `NEXT_PUBLIC_`.
 
 1. Importar o repositório em [vercel.com/new](https://vercel.com/new)
 2. Framework preset: **Next.js** (detectado automaticamente)
-3. Clicar em **Deploy**
+3. Adicionar `DISCORD_BUDGET_WEBHOOK_URL` nas variáveis de ambiente do projeto
+4. Clicar em **Deploy**
 
 > **Nota:** Atualizar `siteConfig.url` em `src/config/site.ts` com a URL final após o primeiro deploy.
 
