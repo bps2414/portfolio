@@ -472,7 +472,10 @@ export function withBudgetRequestMetadata(
 ): BudgetRequestPayload {
   return {
     ...payload,
-    metadata: normalizeBudgetRequestMetadata(metadata),
+    metadata: normalizeBudgetRequestMetadata({
+      ...payload.metadata,
+      ...metadata,
+    }),
   };
 }
 
@@ -486,7 +489,9 @@ function limitDiscordMessage(message: string): string {
 }
 
 export function formatDiscordMessage(payload: BudgetRequestPayload): string {
-  const packageLines = payload.selectedPackage
+  const isPackageKind =
+    payload.kind === "package_landing" || payload.kind === "package_editable";
+  const packageLines = isPackageKind && payload.selectedPackage
     ? [
         formatField("Pacote", payload.selectedPackage.title),
         formatField("Referencia do pacote", payload.selectedPackage.priceLabel),
