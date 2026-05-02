@@ -203,12 +203,12 @@ export function BudgetRequestModal({
 
     if (!response.ok || !data.ok) {
       setStatus("error");
-      setMessage(data.message ?? "Nao consegui enviar sua solicitacao agora.");
+      setMessage(data.message ?? "Não consegui enviar sua solicitação agora.");
       return;
     }
 
     setStatus("success");
-    setMessage(data.message ?? "Solicitacao recebida.");
+    setMessage(data.message ?? "Solicitação recebida.");
   }
 
   return (
@@ -233,10 +233,10 @@ export function BudgetRequestModal({
             <div className="flex items-start justify-between gap-5 border-b border-border px-5 py-4 sm:px-6">
               <div>
                 <p className="text-xs font-bold uppercase tracking-widest text-accent">
-                  {packageInfo?.title ?? "Orcamento personalizado"}
+                  {packageInfo?.title ?? "Orçamento personalizado"}
                 </p>
                 <h2 className="mt-1 font-heading text-2xl font-bold tracking-tight text-primary">
-                  Montar solicitacao
+                  Montar solicitação
                 </h2>
                 <p className="mt-2 text-sm leading-relaxed text-secondary">
                   Preencha o essencial. Os campos opcionais ajudam a reduzir
@@ -247,7 +247,7 @@ export function BudgetRequestModal({
                 type="button"
                 onClick={closeModal}
                 className="rounded-md p-2 text-secondary transition-colors hover:bg-raised hover:text-primary"
-                aria-label="Fechar formulario"
+                aria-label="Fechar formulário"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -275,7 +275,7 @@ export function BudgetRequestModal({
                 <div className="flex min-h-60 flex-col items-center justify-center text-center">
                   <CheckCircle2 className="mb-5 h-12 w-12 text-accent" />
                   <h3 className="font-heading text-2xl font-bold text-primary">
-                    Solicitacao recebida
+                    Solicitação recebida
                   </h3>
                   <p className="mt-3 text-sm leading-relaxed text-secondary">
                     {message}
@@ -352,7 +352,7 @@ export function BudgetRequestModal({
                       />
                       {!isCustom ? (
                         <Field
-                          label="Ja tem textos, imagens ou logo?"
+                          label="Já tem textos, imagens ou logo?"
                           value={form.contentStatus}
                           onChange={(value) =>
                             updateField("contentStatus", value)
@@ -376,7 +376,7 @@ export function BudgetRequestModal({
                         onToggle={toggleOption}
                       />
                       <Field
-                        label="Integracoes ou necessidades especificas"
+                        label="Integrações ou necessidades específicas"
                         value={form.specificNeeds}
                         onChange={(value) =>
                           updateField("specificNeeds", value)
@@ -409,7 +409,7 @@ export function BudgetRequestModal({
                       {isCustom ? (
                         <>
                           <Field
-                            label="Ja tem textos, imagens ou logo?"
+                            label="Já tem textos, imagens ou logo?"
                             value={form.contentStatus}
                             onChange={(value) =>
                               updateField("contentStatus", value)
@@ -425,12 +425,12 @@ export function BudgetRequestModal({
                         </>
                       ) : null}
                       <Field
-                        label="Referencias"
+                        label="Referências"
                         value={form.references}
                         onChange={(value) => updateField("references", value)}
                       />
                       <Field
-                        label="Observacoes finais"
+                        label="Observações finais"
                         value={form.notes}
                         onChange={(value) => updateField("notes", value)}
                         textarea
@@ -440,7 +440,7 @@ export function BudgetRequestModal({
 
                   {status === "error" ? (
                     <p className="mt-4 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-200">
-                      {message} Voce pode tentar novamente ou me chamar pelo
+                      {message} Você pode tentar novamente ou me chamar pelo
                       WhatsApp.
                     </p>
                   ) : null}
