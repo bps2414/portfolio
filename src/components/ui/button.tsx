@@ -17,10 +17,10 @@ export function getButtonClasses(
   const resolvedClassName = !isSize ? sizeOrClassName : className;
 
   const variants = {
-    primary: "bg-accent hover:bg-accent/90 text-accent-foreground shadow-[0_0_15px_rgba(234,179,8,0.25)] md:hover:shadow-[0_0_25px_rgba(234,179,8,0.45)] border border-transparent md:hover:-translate-y-0.5",
-    secondary: "bg-surface border border-border text-primary hover:bg-raised shadow-sm md:hover:-translate-y-0.5",
-    outline: "border border-border bg-transparent hover:bg-surface hover:text-primary text-primary hover:border-accent/50 md:hover:-translate-y-0.5",
-    ghost: "hover:bg-surface hover:text-primary text-secondary md:hover:-translate-y-0.5",
+    primary: "bg-accent hover:brightness-110 text-accent-foreground shadow-[0_0_15px_rgba(234,179,8,0.25)] md:hover:shadow-[0_0_25px_rgba(234,179,8,0.45)] border border-transparent md:hover:-translate-y-0.5 transition-all",
+    secondary: "bg-surface border border-border text-primary hover:bg-raised shadow-sm md:hover:-translate-y-0.5 transition-all",
+    outline: "border border-border bg-transparent hover:bg-raised hover:text-primary text-primary hover:border-accent/50 md:hover:-translate-y-0.5 transition-all",
+    ghost: "hover:bg-raised hover:text-primary text-secondary md:hover:-translate-y-0.5 transition-all",
   }
   
   const sizes = {
