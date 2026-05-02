@@ -60,8 +60,8 @@ export default function Home() {
       <main className="flex-1">
         {/* 1. Hero */}
         <section className="relative pt-28 pb-8 sm:pt-36 md:pt-48 md:pb-10 flex flex-col justify-center overflow-hidden">
-          {/* Subtle background glow */}
-          <div className="mobile-paint-lite absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[320px] sm:w-[800px] sm:h-[500px] bg-accent/5 blur-[72px] sm:blur-[150px] rounded-[100%] pointer-events-none" />
+          {/* Brilho de fundo suave */}
+          <div className="hero-ambient-glow mobile-paint-lite absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[320px] sm:w-[800px] sm:h-[500px] blur-[72px] sm:blur-[150px] rounded-[100%] pointer-events-none" />
           
           <div className="container mx-auto max-w-6xl px-4 sm:px-6 relative z-10 mt-8 sm:mt-12 md:mt-0">
             <FadeIn>
