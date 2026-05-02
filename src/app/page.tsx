@@ -564,7 +564,9 @@ export default function Home() {
 
                     <div className="flex flex-col gap-4">
                       <a
-                        href={whatsappBudgetLink}
+                        href={`${whatsappBudgetLink}?text=${encodeURIComponent(
+                          `Olá, tenho interesse no plano ${plan.title}. Gostaria de tirar algumas dúvidas.`
+                        )}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className={getButtonClasses(plan.featured ? "primary" : "outline", "lg", "w-full font-semibold")}
@@ -590,7 +592,9 @@ export default function Home() {
                 </div>
                 <div className="mt-5 sm:mt-0 sm:min-w-64">
                   <a
-                    href={whatsappBudgetLink}
+                    href={`${whatsappBudgetLink}?text=${encodeURIComponent(
+                      "Olá, gostaria de conversar sobre um projeto personalizado fora dos planos."
+                    )}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className={getButtonClasses("primary", "lg", "w-full font-semibold")}
@@ -670,7 +674,7 @@ export default function Home() {
                 </p>
                 
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                  <a href={whatsappBudgetLink} target="_blank" rel="noopener noreferrer" className={getButtonClasses("primary", "lg", "w-full sm:w-auto font-semibold shadow-lg")}>
+                  <a href={`${whatsappBudgetLink}?text=${encodeURIComponent("Olá, vi seu portfólio e gostaria de conversar sobre um projeto.")}`} target="_blank" rel="noopener noreferrer" className={getButtonClasses("primary", "lg", "w-full sm:w-auto font-semibold shadow-lg")}>
                     <Whatsapp className="mr-3 h-5 w-5" /> Pedir orçamento pelo WhatsApp
                   </a>
                   <a href={siteConfig.links.github} target="_blank" rel="noopener noreferrer" className={getButtonClasses("outline", "lg", "w-full sm:w-auto font-semibold")}>
