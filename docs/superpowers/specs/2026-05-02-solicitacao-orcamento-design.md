@@ -1,91 +1,92 @@
-# Spec: Solicitação de orçamento com análise interna
+# Spec: Solicitação leve de orçamento
 
 ## Objetivo
 
-Criar um caminho discreto no portfolio para visitantes que querem pedir orçamento sem iniciar conversa imediata no WhatsApp. A home continua limpa e focada em portfolio; o formulário aparece apenas quando o usuário escolhe montar uma solicitação.
+Criar um caminho discreto para contratação sem transformar o portfolio em sistema, CRM ou funil agressivo.
 
-O sistema não calcula nem promete preço final para o cliente. Ele coleta dados suficientes para reduzir conversas posteriores e envia uma análise interna para o Discord, ajudando a decidir se o pedido vale resposta, se precisa de perguntas adicionais ou se deve ser recusado.
+O objetivo final é simples:
 
-## Decisão de produto
+> Cliente preenche → eu recebo organizado no Discord privado → eu continuo pelo WhatsApp.
 
-A seção de planos deve oferecer três caminhos:
+O WhatsApp direto continua sempre visível como alternativa principal para quem prefere conversar, está em dúvida ou não quer preencher formulário.
 
-1. **Landing Page Local**
+## Direção de produto
+
+A experiência deve parecer uma continuação natural do portfolio, não uma ferramenta pesada de orçamento. O CTA pode abrir um modal curto ou levar para `/contratar`, mas a interface deve manter a home limpa.
+
+Opções disponíveis:
+
+1. **Solicitar Landing Page Local**
    - Plano existente: `R$ 200 a R$ 300`.
-   - Ação: solicitar este pacote.
-   - Fluxo curto, com pacote já selecionado.
+   - Fluxo curto.
+   - Não pergunta faixa de investimento.
 
-2. **Site com Painel / Cardápio Editável**
+2. **Solicitar Site com Painel / Cardápio Editável**
    - Plano existente: `A partir de R$ 500`.
-   - Ação: solicitar este pacote.
-   - Fluxo curto, com pacote já selecionado.
+   - Fluxo curto.
+   - Não pergunta faixa de investimento.
 
 3. **Solicitar orçamento personalizado**
-   - Para projetos fora dos pacotes, com escopo maior, integrações, automações, mais páginas ou necessidade específica.
+   - Para projetos fora dos pacotes, com escopo maior, integrações, automações, páginas extras ou necessidades específicas.
    - Fluxo um pouco mais completo.
-   - Usado para análise interna de complexidade, não para preço automático ao cliente.
-
-A opção de WhatsApp direto continua existindo para quem prefere conversar, não sabe preencher o formulário ou quer tirar dúvidas antes.
+   - Pergunta faixa de investimento.
 
 ## Interface
 
-Na área dos planos, cada plano pode ter uma ação de solicitação estruturada. A página também deve preservar uma chamada de WhatsApp visível e simples.
+A home deve preservar uma chamada clara de WhatsApp e um CTA discreto para solicitação estruturada.
 
-O formulário deve abrir em um **modal curto em etapas**, com fundo do site atrás. O modal não deve exigir rolagem em condições normais de desktop e deve evitar sensação de formulário longo no mobile.
+Texto sugerido:
 
-Texto sugerido antes do formulário:
+> Quer começar com calma?
+>
+> Se você já sabe o que precisa, envie uma solicitação organizada. Se ainda está decidindo, pode me chamar direto no WhatsApp.
 
-> Preencha o essencial para eu entender o projeto. Campos opcionais ajudam a reduzir perguntas depois.
+Ações:
 
-Texto sugerido para campos opcionais:
+- **Montar solicitação**
+- **Chamar no WhatsApp**
 
-> Quanto mais contexto vier agora, menos perguntas posso precisar fazer depois.
+Se a implementação usar modal, ele deve ser curto, em etapas e sem cara de formulário longo. Se usar `/contratar`, a página deve ser simples e parecer parte do portfolio.
+
+Texto de apoio no formulário:
+
+> Preencha o essencial para eu entender o projeto. Os campos opcionais ajudam a reduzir perguntas depois.
 
 Mensagem final para o cliente:
 
-> Solicitação recebida. Vou analisar com calma e entro em contato pelo WhatsApp informado se fizer sentido avançarmos.
+> Solicitação recebida. Vou analisar com calma e entro em contato pelo WhatsApp informado.
 
-## Estrutura do modal
+## Fluxos
 
-O modal deve ser guiado por etapas curtas. A etapa inicial depende da origem do clique.
+### Pacotes
 
-### Fluxo para pacotes
-
-Origem:
-
-- `package_landing`
-- `package_editable`
-
-Etapas:
+Fluxo curto:
 
 1. **Contato**
    - Nome.
    - WhatsApp.
-   - Consentimento para contato via WhatsApp.
+   - Aceite para contato pelo WhatsApp.
 
 2. **Projeto**
    - Objetivo principal.
    - Prazo desejado.
-   - Situação do conteúdo.
+   - Se já tem textos, imagens ou logo.
 
-3. **Contexto opcional**
+3. **Extras opcionais**
    - Nome da marca ou empresa.
    - Site ou Instagram atual.
    - Referências.
+   - Itens desejados.
    - Observações finais.
 
-### Fluxo para orçamento personalizado
+### Orçamento personalizado
 
-Origem:
-
-- `custom`
-
-Etapas:
+Fluxo completo, mas ainda leve:
 
 1. **Contato**
    - Nome.
    - WhatsApp.
-   - Consentimento para contato via WhatsApp.
+   - Aceite para contato pelo WhatsApp.
 
 2. **Projeto**
    - Tipo de projeto.
@@ -94,15 +95,15 @@ Etapas:
 
 3. **Escopo**
    - Faixa de investimento.
-   - Funcionalidades principais desejadas.
-   - Integrações desejadas.
+   - Itens desejados.
+   - Integrações ou necessidades específicas.
 
 4. **Contexto opcional**
    - Nome da marca ou empresa.
    - Site ou Instagram atual.
    - Referências.
-   - Conteúdo disponível.
-   - Quem decide o projeto.
+   - Se já tem textos, imagens ou logo.
+   - Quem vai aprovar o projeto.
    - Observações finais.
 
 ## Campos obrigatórios e opcionais
@@ -114,16 +115,17 @@ Obrigatórios:
 - Nome.
 - WhatsApp.
 - Pacote escolhido, preenchido automaticamente.
-- Objetivo principal do site.
+- Objetivo principal.
 - Prazo desejado.
-- Situação do conteúdo.
+- Se já tem textos, imagens ou logo.
 - Aceite para contato pelo WhatsApp.
 
 Opcionais:
 
 - Nome da marca ou empresa.
 - Site ou Instagram atual.
-- Referências de sites.
+- Referências.
+- Itens desejados.
 - Observações finais.
 
 ### Orçamento personalizado
@@ -136,7 +138,7 @@ Obrigatórios:
 - Objetivo principal.
 - Prazo desejado.
 - Faixa de investimento.
-- Funcionalidades principais desejadas.
+- Itens desejados.
 - Aceite para contato pelo WhatsApp.
 
 Opcionais:
@@ -144,17 +146,44 @@ Opcionais:
 - Nome da marca ou empresa.
 - Site ou Instagram atual.
 - Referências.
-- Integrações desejadas.
-- Conteúdo disponível.
-- Quem decide o projeto.
+- Integrações ou necessidades específicas.
+- Se já tem textos, imagens ou logo.
+- Quem vai aprovar o projeto.
 - Observações finais.
 
-## Payload de entrada
+## Linguagem dos checkboxes
 
-O formulário deve produzir um payload normalizado, independentemente da origem.
+Os checkboxes devem usar linguagem de cliente, sem termos técnicos. Opções sugeridas:
+
+- WhatsApp.
+- Mapa.
+- Galeria.
+- Serviços/preços.
+- Depoimentos.
+- Formulário.
+- Cardápio/produtos editáveis.
+- Painel para editar depois.
+- Ainda não sei.
+
+Essas opções podem alimentar internamente campos mais técnicos, mas o cliente só deve ver linguagem simples.
+
+## Payload
+
+O formulário deve gerar um payload normalizado para envio ao Discord.
 
 ```ts
 type BudgetRequestKind = "package_landing" | "package_editable" | "custom";
+
+type ClientFacingOption =
+  | "whatsapp"
+  | "map"
+  | "gallery"
+  | "services_prices"
+  | "testimonials"
+  | "form"
+  | "editable_menu_products"
+  | "admin_panel"
+  | "not_sure";
 
 type BudgetRequestPayload = {
   kind: BudgetRequestKind;
@@ -173,12 +202,12 @@ type BudgetRequestPayload = {
     projectType?: string;
     mainGoal: string;
     desiredDeadline: string;
-    budgetRange?: string;
     contentStatus?: string;
-    desiredFeatures?: string[];
-    integrations?: string[];
+    budgetRange?: string;
+    selectedOptions: ClientFacingOption[];
+    specificNeeds?: string;
     references?: string;
-    decisionMaker?: string;
+    approvalContact?: string;
     notes?: string;
   };
   metadata: {
@@ -189,102 +218,70 @@ type BudgetRequestPayload = {
 };
 ```
 
-## Cálculo interno do orçamento
+Regras do payload:
 
-O cálculo é apenas uma **análise interna**, enviada para o Discord. Ele não deve aparecer como valor final para o cliente.
+- `budgetRange` só deve ser obrigatório em `custom`.
+- `selectedPackage` deve vir preenchido automaticamente nos pacotes.
+- `selectedOptions` deve aceitar `not_sure` para não travar cliente indeciso.
+- Campos opcionais vazios não bloqueiam envio.
 
-Saídas esperadas:
+## Análise interna para Discord
 
-- `leadPotential`: `low`, `medium` ou `high`.
-- `estimatedComplexity`: `low`, `medium` ou `high`.
-- `fit`: `package_fit`, `custom_fit`, `needs_clarification` ou `poor_fit`.
-- `urgency`: `normal`, `soon` ou `urgent`.
-- `riskFlags`: lista de alertas.
-- `missingFields`: lista de campos úteis que ficaram vazios.
-- `suggestedNextAction`: `accept_contact`, `ask_more`, `decline` ou `manual_review`.
-- `internalSummary`: resumo curto para leitura rápida no Discord.
+A análise continua existindo, mas é privada. Ela não deve aparecer para o cliente como cálculo, pontuação, complexidade, preço automático ou diagnóstico.
 
-### Regras para pacotes
+O Discord deve receber:
 
-Pacotes não precisam de orçamento automático. O cálculo deve comparar o pedido com o pacote escolhido.
+- Dados do cliente.
+- Tipo de solicitação.
+- Pacote escolhido, quando houver.
+- Resumo do projeto.
+- Itens selecionados.
+- Prazo.
+- Faixa de investimento, apenas no personalizado.
+- Campos opcionais preenchidos.
+- Campos importantes que ficaram vazios.
+- Observações internas sobre encaixe e próximos pontos para perguntar.
 
-Sinais de bom encaixe:
+### Regras internas para pacotes
 
-- Objetivo combina com o pacote.
-- Prazo é compatível com o prazo estimado do plano.
-- Conteúdo já existe ou está parcialmente pronto.
-- Pedido não adiciona funcionalidades fora do escopo.
-- Observações são claras.
+Pacotes devem gerar uma leitura simples:
 
-Sinais de alerta:
+- O pedido parece caber no pacote.
+- O pedido talvez precise virar personalizado.
+- O pedido precisa de pergunta antes de responder.
 
-- Cliente escolhe Landing Page Local, mas pede painel, login, edição de produtos ou automação.
-- Cliente escolhe Site com Painel, mas descreve demanda muito simples.
-- Prazo é muito curto.
-- Conteúdo está ausente.
-- Observações indicam escopo indefinido.
+Alertas úteis:
 
-Classificação:
+- Landing Page Local com pedido de painel, cardápio editável, produtos editáveis ou muitas funcionalidades.
+- Site com Painel pedido para algo simples demais.
+- Prazo muito curto.
+- Cliente ainda não tem textos, imagens ou logo.
+- Cliente marcou "ainda não sei".
 
-- `package_fit`: pacote escolhido parece suficiente.
-- `needs_clarification`: pacote pode servir, mas faltam detalhes.
-- `custom_fit`: pedido parece maior que o pacote escolhido.
-- `poor_fit`: pedido tem sinais de desalinhamento forte.
+### Regras internas para personalizado
 
-### Regras para personalizado
+O personalizado deve ajudar a montar a primeira resposta no WhatsApp.
 
-O personalizado usa uma pontuação interna simples.
+O Discord deve destacar:
 
-Complexidade começa em `low` e sobe por sinais de escopo:
+- O que o cliente quer.
+- O que parece essencial.
+- O que parece opcional.
+- O que pode aumentar escopo.
+- O que falta perguntar.
+- Se a faixa de investimento parece compatível com o que foi pedido.
 
-- Muitas funcionalidades desejadas.
-- Integrações com serviços externos.
-- Login, painel, pagamentos, automações ou área administrativa.
-- Conteúdo inexistente ou indefinido.
-- Prazo urgente.
-- Objetivo pouco claro.
-
-Potencial do lead sobe quando:
-
-- Faixa de investimento é compatível com o escopo.
-- Objetivo é claro.
-- Cliente enviou referências.
-- Conteúdo está pronto ou parcialmente pronto.
-- Prazo é realista.
-
-Potencial do lead cai quando:
-
-- Faixa de investimento é incompatível com o escopo.
-- Prazo é urgente e escopo é alto.
-- Cliente não sabe explicar objetivo.
-- Campos opcionais críticos ficaram vazios.
-- Observações sugerem expectativa de projeto grande com orçamento baixo.
-
-### Matriz de decisão interna
-
-| Condição | Próxima ação |
-| --- | --- |
-| Alto potencial + baixa/média complexidade | `accept_contact` |
-| Alto potencial + alta complexidade | `manual_review` |
-| Médio potencial + campos importantes faltando | `ask_more` |
-| Baixo potencial + muitos alertas | `decline` |
-| Qualquer caso ambíguo | `manual_review` |
+Não é necessário mostrar score, nota, nível de complexidade ou valor estimado automático.
 
 ## Mensagem no Discord
-
-A mensagem no Discord deve ser escaneável e separar dados do cliente, pedido e análise.
 
 Formato sugerido:
 
 ```md
 Novo pedido de orçamento
 
-Tipo: Site com Painel / Cardápio Editável
-Status: Pedido de pacote
-Potencial: Médio
-Complexidade: Baixa
-Encaixe: package_fit
-Próxima ação sugerida: accept_contact
+Tipo: Orçamento personalizado
+Pacote: -
 
 Cliente:
 - Nome: ...
@@ -293,50 +290,49 @@ Cliente:
 Projeto:
 - Objetivo: ...
 - Prazo: ...
+- Itens desejados: WhatsApp, mapa, galeria
 - Conteúdo: ...
-- Faixa: ...
-- Funcionalidades: ...
+- Faixa informada: ...
 - Referências: ...
+- Observações: ...
 
-Análise interna:
-- Resumo: ...
-- Alertas: ...
-- Campos úteis ausentes: ...
+Análise privada:
+- Encaixe: ...
+- Pontos para perguntar: ...
+- Atenções: ...
+- Próximo passo sugerido: chamar pelo WhatsApp
 ```
 
 ## Tratamento de erro
 
-Se o envio para o Discord falhar, o cliente não deve receber detalhes técnicos. A interface deve orientar uma saída simples:
+Se o envio para o Discord falhar, a interface deve oferecer uma saída simples:
 
 > Não consegui enviar sua solicitação agora. Você pode tentar novamente ou me chamar pelo WhatsApp.
 
-O erro técnico deve ser registrado internamente para depuração.
+Detalhes técnicos não devem aparecer para o cliente.
 
 ## Restrições
 
-- Não mostrar preço automático final para o cliente.
-- Não prometer resposta automática.
+- Não mostrar cálculo ao cliente.
+- Não mostrar pontuação ao cliente.
+- Não mostrar complexidade ao cliente.
+- Não mostrar preço automático ao cliente.
+- Não perguntar faixa de investimento nos pacotes.
+- Não transformar a home em sistema ou dashboard.
+- Não remover o WhatsApp direto.
 - Não exigir conta, login ou cadastro.
-- Não transformar a home em dashboard ou funil agressivo.
-- Não remover o caminho de WhatsApp direto.
+- Não prometer resposta automática.
 - Não criar automação de aceite ou recusa para o cliente no MVP.
-
-## Evolução futura
-
-Depois de validar se os pedidos chegam com qualidade, o sistema pode evoluir para:
-
-- Botões internos no Discord: aceitar, pedir mais informações, recusar.
-- Registro de status em banco ou planilha.
-- Respostas semiautomáticas por WhatsApp, apenas se houver integração confiável.
-- Página interna simples para histórico de solicitações.
 
 ## Critérios de aceite
 
-- A home continua visualmente limpa.
-- O usuário consegue escolher entre WhatsApp direto e solicitação estruturada.
-- Pacotes e orçamento personalizado usam o mesmo modal, mas com fluxos adaptados.
-- Campos obrigatórios impedem envio incompleto demais.
-- Campos opcionais não bloqueiam o cliente.
-- O cliente recebe apenas uma confirmação simples.
-- O Discord recebe dados completos e análise interna.
-- O cálculo interno nunca é apresentado como preço final ao cliente.
+- O portfolio continua limpo.
+- O WhatsApp direto continua visível como alternativa principal.
+- O cliente consegue montar uma solicitação sem sair de um fluxo leve.
+- Pacotes usam `Contato → Projeto → Extras opcionais`.
+- Orçamento personalizado usa `Contato → Projeto → Escopo → Contexto opcional`.
+- Pacotes não pedem faixa de investimento.
+- Checkboxes usam linguagem simples de cliente.
+- O cliente recebe apenas confirmação simples.
+- O Discord privado recebe o pedido organizado com análise interna.
+- A continuação acontece pelo WhatsApp.
