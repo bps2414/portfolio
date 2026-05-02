@@ -3,7 +3,7 @@ import { siteConfig } from "@/config/site";
 import { projects } from "@/data/projects";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date();
+  const lastModified = new Date().toISOString().slice(0, 10);
   const projectUrls = projects.map((project) => ({
     url: `${siteConfig.url}/projetos/${project.slug}`,
     lastModified,
