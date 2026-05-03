@@ -10,7 +10,8 @@
     "build": "next build",
     "start": "next start",
     "screenshots": "node scripts/screenshots.js",
-    "lint": "eslint"
+    "lint": "eslint",
+    "seo:check": "node scripts/validate-seo.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.1",
