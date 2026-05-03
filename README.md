@@ -118,17 +118,21 @@ Evite reintroduzir `backdrop-filter` em elementos fixos no mobile, `transition-a
 O projeto está configurado para deploy direto no Vercel. Para o formulário de orçamento, configure a variável server-only abaixo antes de usar o envio para Discord:
 
 ```txt
-DISCORD_BUDGET_WEBHOOK_URL=
+DISCORD_BUDGET_WEBHOOK_URL=https://discord.com/api/webhooks/REPLACE_WITH_ID/REPLACE_WITH_TOKEN
+NEXT_PUBLIC_SITE_URL=https://bps2414.vercel.app
 ```
 
-Essa variável não deve usar o prefixo `NEXT_PUBLIC_`.
+`DISCORD_BUDGET_WEBHOOK_URL` não deve usar o prefixo `NEXT_PUBLIC_`. `NEXT_PUBLIC_SITE_URL` é pública e deve apontar para a URL final do site.
 
 1. Importar o repositório em [vercel.com/new](https://vercel.com/new)
 2. Framework preset: **Next.js** (detectado automaticamente)
 3. Adicionar `DISCORD_BUDGET_WEBHOOK_URL` nas variáveis de ambiente do projeto
-4. Clicar em **Deploy**
+4. Adicionar `NEXT_PUBLIC_SITE_URL` com a URL canônica final
+5. Clicar em **Deploy**
 
-> **Nota:** Atualizar `siteConfig.url` em `src/config/site.ts` com a URL final após o primeiro deploy.
+O build roda `npm run env:check` antes do `next build`. Se o webhook estiver ausente ou não for uma URL de webhook do Discord, o build falha para evitar deploy com formulário quebrado.
+
+Mais detalhes: [`SECURITY.md`](./SECURITY.md).
 
 ---
 
