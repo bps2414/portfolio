@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 export type BudgetRequestKind = "package_landing" | "package_editable" | "custom";
 
 export type ClientFacingOption =
@@ -68,11 +70,25 @@ export const clientFacingOptions: Array<{
   { value: "not_sure", label: "Ainda não sei" },
 ];
 
-const budgetRequestKinds: BudgetRequestKind[] = [
+const budgetRequestKinds = [
   "package_landing",
   "package_editable",
   "custom",
-];
+] as const satisfies readonly BudgetRequestKind[];
+
+export const budgetRequestPackages = {
+  package_landing: {
+    title: "Landing Page Local",
+    priceLabel: "R$ 200 a R$ 300",
+  },
+  package_editable: {
+    title: "Site com Painel / Cardapio Editavel",
+    priceLabel: "A partir de R$ 500",
+  },
+} as const satisfies Record<
+  Exclude<BudgetRequestKind, "custom">,
+  { title: string; priceLabel: string }
+>;
 
 const validClientFacingOptions = new Set<ClientFacingOption>(
   clientFacingOptions.map((option) => option.value),
@@ -81,6 +97,49 @@ const validClientFacingOptions = new Set<ClientFacingOption>(
 const optionLabels = new Map<ClientFacingOption, string>(
   clientFacingOptions.map((option) => [option.value, option.label]),
 );
+
+const clientFacingOptionValues = clientFacingOptions.map(
+  (option) => option.value,
+) as [ClientFacingOption, ...ClientFacingOption[]];
+
+const optionalStringSchema = z.string().optional();
+
+const budgetRequestInputSchema = z.object({
+  kind: z.enum(budgetRequestKinds),
+  selectedPackage: z
+    .object({
+      title: optionalStringSchema,
+      priceLabel: optionalStringSchema,
+    })
+    .optional(),
+  contact: z.object({
+    name: z.string(),
+    whatsapp: z.string(),
+    whatsappConsent: z.boolean(),
+  }),
+  project: z.object({
+    businessName: optionalStringSchema,
+    currentUrlOrSocial: optionalStringSchema,
+    projectType: optionalStringSchema,
+    mainGoal: z.string(),
+    desiredDeadline: optionalStringSchema,
+    contentStatus: optionalStringSchema,
+    budgetRange: optionalStringSchema,
+    selectedOptions: z.array(z.enum(clientFacingOptionValues)).optional(),
+    specificNeeds: optionalStringSchema,
+    references: optionalStringSchema,
+    approvalContact: optionalStringSchema,
+    notes: optionalStringSchema,
+  }),
+  metadata: z
+    .object({
+      submittedAt: optionalStringSchema,
+      sourcePage: optionalStringSchema,
+      userAgent: optionalStringSchema,
+    })
+    .optional(),
+  website: optionalStringSchema,
+});
 
 const fieldLimits = {
   short: 160,
@@ -92,10 +151,6 @@ const fieldLimits = {
   discordLongField: 480,
   discordMessage: 1900,
 } as const;
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === "object" && value !== null && !Array.isArray(value);
-}
 
 function normalizeString(value: unknown): string | undefined {
   if (typeof value !== "string") {
@@ -169,6 +224,14 @@ function normalizeKind(value: unknown): BudgetRequestKind | undefined {
     : undefined;
 }
 
+function getCanonicalPackage(kind: BudgetRequestKind) {
+  if (kind === "custom") {
+    return undefined;
+  }
+
+  return budgetRequestPackages[kind];
+}
+
 function normalizeSelectedOptions(value: unknown): ClientFacingOption[] {
   if (!Array.isArray(value)) {
     return [];
@@ -191,7 +254,10 @@ export function sanitizeDiscordText(value: string | undefined): string {
   }
 
   const withoutLineBreaks = value.replace(/\s+/g, " ").trim();
-  const withoutMentions = withoutLineBreaks
+  const withoutAutoLinks = withoutLineBreaks.replace(/\bhttps?:\/\//gi, (match) =>
+    match.toLowerCase().startsWith("https") ? "hxxps://" : "hxxp://",
+  );
+  const withoutMentions = withoutAutoLinks
     .replace(/@everyone/gi, "[everyone]")
     .replace(/@here/gi, "[here]")
     .replace(/<@&?\d+>/g, "[mention]")
@@ -222,19 +288,18 @@ function formatOptionLabels(options: ClientFacingOption[]): string {
 
 export function validateBudgetRequest(input: unknown): ValidationResult {
   const errors: string[] = [];
+  const parsedInput = budgetRequestInputSchema.safeParse(input);
 
-  if (!isRecord(input)) {
+  if (!parsedInput.success) {
     return { ok: false, errors: ["Solicitacao invalida."] };
   }
 
-  const contactInput = isRecord(input.contact) ? input.contact : {};
-  const projectInput = isRecord(input.project) ? input.project : {};
-  const metadataInput = isRecord(input.metadata) ? input.metadata : undefined;
-  const selectedPackageInput = isRecord(input.selectedPackage)
-    ? input.selectedPackage
-    : undefined;
+  const parsed = parsedInput.data;
+  const contactInput = parsed.contact;
+  const projectInput = parsed.project;
+  const metadataInput = parsed.metadata;
 
-  const kind = normalizeKind(input.kind);
+  const kind = normalizeKind(parsed.kind);
   const isPackageKind = kind === "package_landing" || kind === "package_editable";
   const isCustomKind = kind === "custom";
   const contact = {
@@ -305,24 +370,7 @@ export function validateBudgetRequest(input: unknown): ValidationResult {
     notes: normalizeOptionalString(projectInput.notes, fieldLimits.long),
   };
   const metadata = normalizeBudgetRequestMetadata(metadataInput);
-  const selectedPackage = isPackageKind && selectedPackageInput
-    ? {
-        title: normalizeStringByRequirement(
-          selectedPackageInput.title,
-          fieldLimits.short,
-          "Titulo do pacote",
-          isPackageKind,
-          errors,
-        ) ?? "",
-        priceLabel: normalizeStringByRequirement(
-          selectedPackageInput.priceLabel,
-          fieldLimits.short,
-          "Faixa do pacote",
-          isPackageKind,
-          errors,
-        ) ?? "",
-      }
-    : undefined;
+  const selectedPackage = kind ? getCanonicalPackage(kind) : undefined;
 
   if (!kind) {
     errors.push("Tipo de solicitacao obrigatorio.");
@@ -355,14 +403,6 @@ export function validateBudgetRequest(input: unknown): ValidationResult {
   }
 
   if (isPackageKind) {
-    if (!selectedPackage?.title) {
-      errors.push("Titulo do pacote obrigatorio.");
-    }
-
-    if (!selectedPackage?.priceLabel) {
-      errors.push("Faixa do pacote obrigatoria.");
-    }
-
     if (!project.contentStatus) {
       errors.push("Status do conteudo obrigatorio.");
     }

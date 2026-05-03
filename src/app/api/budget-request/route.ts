@@ -3,14 +3,20 @@ import {
   validateBudgetRequest,
   withBudgetRequestMetadata,
 } from "@/lib/budget-request";
+import { SITE_URL } from "@/config/site";
+import { readServerEnv } from "@/lib/server-env";
 
 type RateLimitEntry = {
   count: number;
   resetAt: number;
 };
+type JsonBodyResult =
+  | { ok: true; body: unknown }
+  | { ok: false; status: number; message: string };
 
 const rateLimitWindowMs = 10 * 60 * 1000;
 const rateLimitMaxRequests = 3;
+const maxPayloadBytes = 16_384;
 const rateLimitStore = new Map<string, RateLimitEntry>();
 const honeypotFields = ["website", "companyWebsite", "company_site"];
 
@@ -28,6 +34,73 @@ function cleanupExpiredEntries() {
     if (entry.resetAt <= now) {
       rateLimitStore.delete(key);
     }
+  }
+}
+
+function methodNotAllowed() {
+  return Response.json(
+    { ok: false, message: "Metodo nao permitido." },
+    { status: 405, headers: { Allow: "POST" } },
+  );
+}
+
+function isAllowedOrigin(origin: string): boolean {
+  const allowedOrigins = new Set(
+    [SITE_URL, process.env.NEXT_PUBLIC_SITE_URL?.trim()]
+      .filter((value): value is string => Boolean(value))
+      .map((value) => {
+        try {
+          return new URL(value).origin;
+        } catch {
+          return "";
+        }
+      })
+      .filter(Boolean),
+  );
+
+  if (process.env.VERCEL_URL) {
+    allowedOrigins.add(`https://${process.env.VERCEL_URL}`);
+  }
+
+  if (process.env.NODE_ENV !== "production") {
+    try {
+      const url = new URL(origin);
+      const isLocalhost =
+        url.hostname === "localhost" ||
+        url.hostname === "127.0.0.1" ||
+        url.hostname === "[::1]";
+
+      if (isLocalhost && url.protocol === "http:") {
+        return true;
+      }
+    } catch {
+      return false;
+    }
+  }
+
+  return allowedOrigins.has(origin);
+}
+
+async function readJsonBody(request: Request): Promise<JsonBodyResult> {
+  const contentLength = Number.parseInt(
+    request.headers.get("content-length") ?? "0",
+    10,
+  );
+
+  if (Number.isFinite(contentLength) && contentLength > maxPayloadBytes) {
+    return { ok: false, status: 413, message: "Payload muito grande." };
+  }
+
+  const rawBody = await request.text();
+
+  if (new TextEncoder().encode(rawBody).byteLength > maxPayloadBytes) {
+    return { ok: false, status: 413, message: "Payload muito grande." };
+  }
+
+  try {
+    return { ok: true, body: JSON.parse(rawBody) };
+  } catch {
+    return { ok: false, status: 400, message: "Payload invalido." };
   }
 }
 
@@ -72,20 +145,7 @@ function hasFilledHoneypot(body: unknown): boolean {
 }
 
 export async function POST(request: Request) {
-  // SEC-005: reject oversized payloads early
-  const contentLength = parseInt(
-    request.headers.get("content-length") ?? "0",
-    10,
-  );
-
-  if (contentLength > 16_384) {
-    return Response.json(
-      { ok: false, message: "Payload muito grande." },
-      { status: 413 },
-    );
-  }
-
-  // SEC-001: require application/json to block CSRF via HTML forms
+  // Exige JSON para reduzir abuso via forms HTML simples.
   const contentType = request.headers.get("content-type");
 
   if (!contentType?.includes("application/json")) {
@@ -95,16 +155,10 @@ export async function POST(request: Request) {
     );
   }
 
-  // SEC-012: verify origin to prevent cross-site request forgery
+  // Confere Origin quando o navegador envia o header.
   const origin = request.headers.get("origin");
-  const allowedOrigins = new Set(
-    [
-      process.env.NEXT_PUBLIC_SITE_URL,
-      "https://bps2414.vercel.app",
-    ].filter(Boolean),
-  );
 
-  if (origin && !allowedOrigins.has(origin)) {
+  if (origin && !isAllowedOrigin(origin)) {
     return Response.json(
       { ok: false, message: "Origem nao permitida." },
       { status: 403 },
@@ -120,16 +174,16 @@ export async function POST(request: Request) {
     );
   }
 
-  let body: unknown;
+  const bodyResult = await readJsonBody(request);
 
-  try {
-    body = await request.json();
-  } catch {
+  if (!bodyResult.ok) {
     return Response.json(
-      { ok: false, message: "Payload invalido." },
-      { status: 400 },
+      { ok: false, message: bodyResult.message },
+      { status: bodyResult.status },
     );
   }
+
+  const body = bodyResult.body;
 
   if (hasFilledHoneypot(body)) {
     return Response.json(
@@ -142,23 +196,14 @@ export async function POST(request: Request) {
 
   if (!validation.ok) {
     return Response.json(
-      {
-        ok: false,
-        message: "Confira os campos obrigatorios.",
-        errors: validation.errors,
-      },
+      { ok: false, message: "Confira os campos obrigatorios." },
       { status: 400 },
     );
   }
 
-  // SEC-006: validate webhook URL points to Discord
-  const webhookUrl = process.env.DISCORD_BUDGET_WEBHOOK_URL;
+  const env = readServerEnv();
 
-  if (
-    !webhookUrl ||
-    (!webhookUrl.startsWith("https://discord.com/api/webhooks/") &&
-      !webhookUrl.startsWith("https://discordapp.com/api/webhooks/"))
-  ) {
+  if (!env.ok) {
     console.error("DISCORD_BUDGET_WEBHOOK_URL invalida ou ausente");
     return Response.json(
       { ok: false, message: "Nao consegui processar a solicitacao agora." },
@@ -175,7 +220,7 @@ export async function POST(request: Request) {
   let discordResponse: Response;
 
   try {
-    discordResponse = await fetch(webhookUrl, {
+    discordResponse = await fetch(env.data.DISCORD_BUDGET_WEBHOOK_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -202,4 +247,8 @@ export async function POST(request: Request) {
     message:
       "Solicitacao recebida. Vou analisar com calma e entro em contato pelo WhatsApp informado.",
   });
+}
+
+export function GET() {
+  return methodNotAllowed();
 }

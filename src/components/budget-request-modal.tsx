@@ -78,14 +78,14 @@ function getSteps(kind: BudgetRequestKind) {
 }
 
 function formatWhatsApp(raw: string): string {
-  // Strip everything except digits
+  // Remove tudo que nao for digito.
   const digits = raw.replace(/\D/g, "").slice(0, 11);
   if (digits.length === 0) return "";
   if (digits.length <= 2) return `(${digits}`;
   if (digits.length <= 6) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
   if (digits.length <= 10)
     return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`;
-  // 11 digits: (XX) XXXXX-XXXX
+  // 11 digitos: (XX) XXXXX-XXXX.
   return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
 }
 
@@ -313,6 +313,7 @@ export function BudgetRequestModal({
                         label="Nome"
                         value={form.name}
                         onChange={(value) => updateField("name", value)}
+                        maxLength={160}
                         required
                       />
                       <Field
@@ -322,6 +323,7 @@ export function BudgetRequestModal({
                           updateField("whatsapp", formatWhatsApp(value))
                         }
                         placeholder="(21) 98778-3382"
+                        maxLength={40}
                         required
                       />
                       <label className="flex gap-3 rounded-lg border border-border bg-background/60 p-3 text-sm text-secondary">
@@ -333,7 +335,9 @@ export function BudgetRequestModal({
                           }
                           className="mt-1"
                         />
-                        Aceito receber contato pelo WhatsApp informado.
+                        Aceito receber contato pelo WhatsApp informado para
+                        tratar deste pedido de orcamento. Nao envie dados
+                        sensiveis neste formulario.
                       </label>
                     </div>
                   ) : null}
@@ -347,6 +351,7 @@ export function BudgetRequestModal({
                           onChange={(value) =>
                             updateField("projectType", value)
                           }
+                          maxLength={160}
                           required
                         />
                       ) : null}
@@ -354,6 +359,7 @@ export function BudgetRequestModal({
                         label="Objetivo principal"
                         value={form.mainGoal}
                         onChange={(value) => updateField("mainGoal", value)}
+                        maxLength={800}
                         required
                         textarea
                       />
@@ -364,6 +370,7 @@ export function BudgetRequestModal({
                           onChange={(value) =>
                             updateField("desiredDeadline", value)
                           }
+                          maxLength={160}
                           required
                         />
                       ) : null}
@@ -374,6 +381,7 @@ export function BudgetRequestModal({
                           onChange={(value) =>
                             updateField("contentStatus", value)
                           }
+                          maxLength={160}
                           required
                         />
                       ) : null}
@@ -386,6 +394,7 @@ export function BudgetRequestModal({
                         label="Faixa de investimento"
                         value={form.budgetRange}
                         onChange={(value) => updateField("budgetRange", value)}
+                        maxLength={160}
                         required
                       />
                       <OptionGrid
@@ -398,6 +407,7 @@ export function BudgetRequestModal({
                         onChange={(value) =>
                           updateField("specificNeeds", value)
                         }
+                        maxLength={800}
                         textarea
                       />
                     </div>
@@ -415,6 +425,7 @@ export function BudgetRequestModal({
                         label="Nome da marca ou empresa"
                         value={form.businessName}
                         onChange={(value) => updateField("businessName", value)}
+                        maxLength={160}
                       />
                       <Field
                         label="Site ou Instagram atual"
@@ -422,6 +433,7 @@ export function BudgetRequestModal({
                         onChange={(value) =>
                           updateField("currentUrlOrSocial", value)
                         }
+                        maxLength={200}
                       />
                       {isCustom ? (
                         <>
@@ -431,6 +443,7 @@ export function BudgetRequestModal({
                             onChange={(value) =>
                               updateField("contentStatus", value)
                             }
+                            maxLength={160}
                           />
                           <Field
                             label="Quem vai aprovar o projeto?"
@@ -438,6 +451,7 @@ export function BudgetRequestModal({
                             onChange={(value) =>
                               updateField("approvalContact", value)
                             }
+                            maxLength={160}
                           />
                         </>
                       ) : null}
@@ -445,11 +459,13 @@ export function BudgetRequestModal({
                         label="Referências"
                         value={form.references}
                         onChange={(value) => updateField("references", value)}
+                        maxLength={800}
                       />
                       <Field
                         label="Observações finais"
                         value={form.notes}
                         onChange={(value) => updateField("notes", value)}
+                        maxLength={800}
                         textarea
                       />
                     </div>
@@ -516,6 +532,7 @@ function Field({
   required = false,
   textarea = false,
   placeholder,
+  maxLength,
 }: {
   label: string;
   value: string;
@@ -523,6 +540,7 @@ function Field({
   required?: boolean;
   textarea?: boolean;
   placeholder?: string;
+  maxLength?: number;
 }) {
   const inputClassName =
     "mt-2 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-primary outline-none transition-colors placeholder:text-secondary focus:border-accent";
@@ -535,6 +553,7 @@ function Field({
         <textarea
           value={value}
           onChange={(event) => onChange(event.target.value)}
+          maxLength={maxLength}
           className={cn(inputClassName, "min-h-20 resize-none")}
           placeholder={placeholder}
         />
@@ -542,6 +561,7 @@ function Field({
         <input
           value={value}
           onChange={(event) => onChange(event.target.value)}
+          maxLength={maxLength}
           className={inputClassName}
           placeholder={placeholder}
         />
