@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://bps2414.vercel.app/sitemap.xml
