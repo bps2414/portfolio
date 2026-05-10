@@ -8,6 +8,7 @@ import { siteConfig } from "@/config/site";
 import { ArrowRight, Code2, Wrench, LayoutTemplate, CheckCircle2, Clock3, Settings2 } from "lucide-react";
 import { Github, Whatsapp } from "@/components/icons";
 import { FadeIn } from "@/components/fade-in";
+import { BudgetForm } from "@/components/budget-form";
 import { cn } from "@/lib/utils";
 
 const whatsappBudgetLink = siteConfig.links.whatsapp;
@@ -154,13 +155,13 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <Header />
-      
+
       <main className="flex-1">
         {/* 1. Hero */}
         <section className="relative pt-28 pb-8 sm:pt-36 md:pt-48 md:pb-10 flex flex-col justify-center overflow-hidden">
           {/* Brilho de fundo suave */}
           <div className="hero-ambient-glow mobile-paint-lite absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[320px] sm:w-[800px] sm:h-[500px] blur-[72px] sm:blur-[150px] rounded-[100%] pointer-events-none" />
-          
+
           <div className="container mx-auto max-w-6xl px-4 sm:px-6 relative z-10 mt-8 sm:mt-12 md:mt-0">
             <FadeIn>
               <div className="inline-flex items-center gap-3 px-3 py-1.5 rounded-full bg-surface border border-border text-xs font-medium text-secondary mb-8 shadow-sm">
@@ -180,7 +181,7 @@ export default function Home() {
                 Sou Bryan Souza, desenvolvedor web em início de carreira. Crio landing pages, sites responsivos e projetos digitais para pequenos negócios, recrutadores e pessoas que querem avaliar meu trabalho pelo resultado e pelo código.
               </p>
             </FadeIn>
-            
+
             <FadeIn delay={300}>
               <div className="flex flex-col sm:flex-row gap-4 sm:items-center">
                 <a href="#projetos" className={getButtonClasses("primary", "lg", "w-full sm:w-auto font-semibold")}>
@@ -197,7 +198,7 @@ export default function Home() {
                 <p className="text-sm font-medium text-secondary uppercase tracking-widest mb-4">Stack principal</p>
                 <div className="flex flex-wrap gap-2.5">
                   {['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'HTML', 'CSS', 'JavaScript', 'Supabase'].map((tech) => (
-                    <div 
+                    <div
                       key={tech}
                       className="px-4 py-2 rounded border border-border/40 bg-surface/60 sm:backdrop-blur-sm text-sm font-medium text-primary shadow-sm"
                     >
@@ -357,7 +358,7 @@ export default function Home() {
                   <p>
                     Uso IA como apoio em pesquisa, revisão, prototipagem e aceleração de tarefas repetitivas, mantendo responsabilidade sobre decisões, validação, código final e limites de cada projeto.
                   </p>
-                  
+
                   <div className="pt-8 mt-8 border-t border-border grid grid-cols-1 sm:grid-cols-2 gap-6">
                     {[
                       "Organização de código",
@@ -389,7 +390,7 @@ export default function Home() {
                 <h2 className="text-4xl md:text-5xl font-heading font-bold tracking-tight">Stack e Habilidades</h2>
               </div>
             </FadeIn>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
                 {
@@ -418,7 +419,7 @@ export default function Home() {
                     </div>
                     <h3 className="font-heading font-bold text-2xl mb-3">{block.title}</h3>
                     <p className="text-secondary mb-8">{block.desc}</p>
-                    
+
                     <div className="mt-auto flex flex-wrap gap-2">
                       {block.skills.map(skill => (
                         <span key={skill} className="px-3 py-1.5 bg-raised text-primary text-sm font-medium rounded-md border border-border/50">
@@ -449,7 +450,7 @@ export default function Home() {
 
             <div className="relative max-w-4xl mx-auto">
               <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-border -translate-x-1/2 z-0"></div>
-              
+
               <div className="space-y-12 md:space-y-0 relative z-10">
                 {[
                   { step: "01", title: "Entendimento", desc: "Levantamento do objetivo, do público-alvo e das restrições técnicas." },
@@ -472,19 +473,19 @@ export default function Home() {
                           <h3 className="font-heading font-bold text-2xl mb-3 text-primary">{item.title}</h3>
                           <p className="text-secondary leading-relaxed">{item.desc}</p>
                         </div>
-                        
+
                         {/* Mobile card version without the connector lines */}
                         <div className="w-full p-6 rounded-xl border border-border bg-surface text-center md:hidden">
-                           <div className="text-accent font-bold text-sm mb-2">Fase {item.step}</div>
-                           <h3 className="font-heading font-bold text-xl mb-2">{item.title}</h3>
-                           <p className="text-secondary text-sm">{item.desc}</p>
+                          <div className="text-accent font-bold text-sm mb-2">Fase {item.step}</div>
+                          <h3 className="font-heading font-bold text-xl mb-2">{item.title}</h3>
+                          <p className="text-secondary text-sm">{item.desc}</p>
                         </div>
                       </div>
 
                       <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-background border-4 border-surface items-center justify-center font-bold text-primary z-20 shadow-md">
                         {item.step}
                       </div>
-                      
+
                       <div className="hidden md:block w-1/2"></div>
                     </div>
                   </FadeIn>
@@ -619,6 +620,36 @@ export default function Home() {
           </div>
         </section>
 
+        {/* 8b. Solicitar orçamento (formulário) */}
+        <section
+          id="orcamento"
+          className="perf-section py-24 md:py-28 border-b border-border/70 scroll-mt-24"
+        >
+          <div className="container mx-auto max-w-4xl px-6">
+            <FadeIn>
+              <div className="mb-10 max-w-2xl space-y-3">
+                <div className="flex items-center gap-4 text-accent text-sm font-bold tracking-widest uppercase">
+                  <span className="w-12 h-px bg-accent" />
+                  Orçamento
+                </div>
+                <h2 className="text-3xl md:text-5xl font-heading font-bold tracking-tight">
+                  Solicite um orçamento rápido
+                </h2>
+                <p className="text-lg text-secondary leading-relaxed">
+                  Preencha os campos abaixo. Eu leio e te respondo pelo WhatsApp informado. Se preferir conversar direto, use o botão do WhatsApp que aparece ao lado.
+                </p>
+              </div>
+            </FadeIn>
+            <FadeIn delay={100}>
+              <BudgetForm
+                whatsappHref={`${whatsappBudgetLink}?text=${encodeURIComponent(
+                  "Olá, vi seu portfólio e gostaria de conversar sobre um projeto."
+                )}`}
+              />
+            </FadeIn>
+          </div>
+        </section>
+
         {/* 9. FAQ */}
         <section id="faq" className="perf-section py-24 md:py-28 border-b border-border/70 scroll-mt-24">
           <div className="container mx-auto max-w-6xl px-6">
@@ -658,21 +689,21 @@ export default function Home() {
         <section className="perf-section py-32 relative border-t border-border">
           {/* Subtle glow for the final section */}
           <div className="mobile-paint-lite absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[220px] sm:h-[300px] bg-accent/5 blur-[56px] sm:blur-[100px] rounded-[100%] pointer-events-none" />
-          
+
           <div className="container mx-auto max-w-4xl px-6 relative z-10">
             <FadeIn>
               <div className="p-6 sm:p-12 md:p-24 rounded-3xl bg-surface border border-border shadow-sm sm:shadow-xl text-center relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-accent to-transparent"></div>
-                
+
                 <div className="mx-auto w-20 h-20 rounded-2xl bg-background border border-border flex items-center justify-center mb-10 text-primary shadow-sm">
                   <Whatsapp className="w-9 h-9" />
                 </div>
-                
+
                 <h2 className="text-4xl md:text-5xl font-heading font-bold tracking-tight mb-6">Vamos conversar?</h2>
                 <p className="text-lg md:text-xl text-secondary mb-12 leading-relaxed max-w-2xl mx-auto">
                   Se quiser conversar sobre um projeto, tirar dúvidas ou pedir um orçamento, me chame direto no WhatsApp.
                 </p>
-                
+
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                   <a href={`${whatsappBudgetLink}?text=${encodeURIComponent("Olá, vi seu portfólio e gostaria de conversar sobre um projeto.")}`} target="_blank" rel="noopener noreferrer" className={getButtonClasses("primary", "lg", "w-full sm:w-auto font-semibold shadow-lg")}>
                     <Whatsapp className="mr-3 h-5 w-5" /> Pedir orçamento pelo WhatsApp

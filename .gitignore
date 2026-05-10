@@ -45,5 +45,7 @@ next-env.d.ts
 # internal planning and agent files (not for public repo)
 .planning/
 .worktrees/
+.kiro/
+.vscode/
 CLAUDE.md
 AGENTS.md

@@ -115,24 +115,42 @@ Evite reintroduzir `backdrop-filter` em elementos fixos no mobile, `transition-a
 
 ## Deploy (Vercel)
 
-O projeto está configurado para deploy direto no Vercel. Para o formulário de orçamento, configure a variável server-only abaixo antes de usar o envio para Discord:
+O projeto está configurado para deploy direto no Vercel. Para o formulário de orçamento, configure a variável server-only abaixo antes de ativar o encaminhamento para o webhook do n8n:
 
 ```txt
-DISCORD_BUDGET_WEBHOOK_URL=https://discord.com/api/webhooks/REPLACE_WITH_ID/REPLACE_WITH_TOKEN
+N8N_WEBHOOK_URL=https://n8n.exemplo.com/webhook/REPLACE_WITH_PATH
 NEXT_PUBLIC_SITE_URL=https://bps2414.vercel.app
 ```
 
-`DISCORD_BUDGET_WEBHOOK_URL` não deve usar o prefixo `NEXT_PUBLIC_`. `NEXT_PUBLIC_SITE_URL` é pública e deve apontar para a URL final do site.
+`N8N_WEBHOOK_URL` é uma variável server-only e **não** deve usar o prefixo `NEXT_PUBLIC_`, caso contrário a URL vazaria no bundle do navegador. `NEXT_PUBLIC_SITE_URL` é pública e deve apontar para a URL final do site.
 
 1. Importar o repositório em [vercel.com/new](https://vercel.com/new)
 2. Framework preset: **Next.js** (detectado automaticamente)
-3. Adicionar `DISCORD_BUDGET_WEBHOOK_URL` nas variáveis de ambiente do projeto
+3. Adicionar `N8N_WEBHOOK_URL` nas variáveis de ambiente do projeto (marcar como server-only)
 4. Adicionar `NEXT_PUBLIC_SITE_URL` com a URL canônica final
 5. Clicar em **Deploy**
 
-O build roda `npm run env:check` antes do `next build`. Se o webhook estiver ausente ou não for uma URL de webhook do Discord, o build falha para evitar deploy com formulário quebrado.
+O build roda `npm run env:check` antes do `next build`. Se `N8N_WEBHOOK_URL` estiver ausente ou não começar com `https://`, o build falha para evitar deploy com formulário quebrado.
 
 Mais detalhes: [`SECURITY.md`](./SECURITY.md).
+
+---
+
+## Como testar o webhook do n8n localmente
+
+Para rodar o formulário de orçamento em desenvolvimento sem precisar de um n8n real, use um webhook de teste público (ex.: https://webhook.site).
+
+1. Abra https://webhook.site e copie a URL única gerada.
+2. Crie um arquivo `.env.local` na raiz do projeto com:
+   ```
+   N8N_WEBHOOK_URL=https://webhook.site/SEU-UUID-AQUI
+   NEXT_PUBLIC_SITE_URL=http://localhost:3000
+   ```
+3. Rode `npm run dev` (ou `npm run build && npm run start`).
+4. Acesse `http://localhost:3000/#orcamento`, preencha o formulário e envie.
+5. No dashboard do webhook.site, confira que o JSON chegou com as chaves esperadas: `source`, `name`, `phone`, `businessType`, `projectType`, `budget`, `message`, `pageUrl`, `createdAt`, `userAgent`, `metadata`.
+
+Nunca commite a URL real do webhook. `N8N_WEBHOOK_URL` é server-only — não use prefixo `NEXT_PUBLIC_` porque isso vazaria a URL no bundle do navegador.
 
 ---
 

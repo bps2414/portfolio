@@ -1,27 +1,25 @@
 import { z } from "zod";
 
-const discordWebhookUrlSchema = z
+// n8n hospedado/self-hosted não tem prefixo fixo; apenas exigimos https.
+const n8nWebhookUrlSchema = z
   .string()
   .trim()
-  .url()
+  .min(1, "N8N_WEBHOOK_URL obrigatória.")
+  .url("N8N_WEBHOOK_URL deve ser uma URL válida.")
   .refine(
-    (value) =>
-      value.startsWith("https://discord.com/api/webhooks/") ||
-      value.startsWith("https://discordapp.com/api/webhooks/"),
-    "DISCORD_BUDGET_WEBHOOK_URL deve ser uma URL de webhook do Discord.",
+    (value) => value.startsWith("https://"),
+    "N8N_WEBHOOK_URL deve usar https.",
   );
 
 export const serverEnvSchema = z.object({
-  DISCORD_BUDGET_WEBHOOK_URL: discordWebhookUrlSchema,
+  N8N_WEBHOOK_URL: n8nWebhookUrlSchema,
 });
 
 export type ServerEnv = z.infer<typeof serverEnvSchema>;
 
 export function readServerEnv(
   env: NodeJS.ProcessEnv = process.env,
-):
-  | { ok: true; data: ServerEnv }
-  | { ok: false; issues: string[] } {
+): { ok: true; data: ServerEnv } | { ok: false; issues: string[] } {
   const parsed = serverEnvSchema.safeParse(env);
 
   if (parsed.success) {

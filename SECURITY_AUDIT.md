@@ -1,5 +1,10 @@
 # Auditoria de segurança do portfólio
 
+> **Nota arquival (atualização do spec `budget-request-form`):**
+> O fluxo descrito neste documento foi **substituído**. O modal multi-etapa antigo (`src/components/budget-request-modal.tsx`) e a camada de formatação para Discord (`src/lib/budget-request.ts`) não existem mais. A nova implementação usa um formulário inline (`src/components/budget-form.tsx`) que encaminha o lead para um webhook do n8n via `src/app/api/budget-request/route.ts`, com `N8N_WEBHOOK_URL` no lugar de `DISCORD_BUDGET_WEBHOOK_URL`.
+>
+> As seções **M1** (pacote/preço manipulado pelo frontend) e **B3** (consentimento mínimo do modal) ficam **arquivadas** — o novo `Lead_Payload` não carrega `selectedPackage`/`priceLabel`, e o novo formulário não tem wizard nem consentimento explícito de WhatsApp. Os controles atuais estão documentados em `SECURITY.md`.
+
 Data: 2026-05-02  
 Escopo: aplicação Next.js 16 em `src/`, rotas App Router, formulário de orçamento, webhook Discord, variáveis de ambiente, SEO, headers, dependências e arquivos versionados.
 

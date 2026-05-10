@@ -1,15 +1,15 @@
 # Segurança e configuração de secrets
 
-Este portfólio usa um endpoint server-only para receber pedidos de orçamento e encaminhar uma mensagem para um webhook privado do Discord.
+Este portfólio usa um endpoint server-only para receber pedidos de orçamento e encaminhar o lead para um webhook privado do n8n.
 
 ## Variáveis obrigatórias
 
 ```txt
-DISCORD_BUDGET_WEBHOOK_URL=https://discord.com/api/webhooks/REPLACE_WITH_ID/REPLACE_WITH_TOKEN
+N8N_WEBHOOK_URL=https://n8n.exemplo.com/webhook/REPLACE_WITH_ID
 NEXT_PUBLIC_SITE_URL=https://bps2414.vercel.app
 ```
 
-- `DISCORD_BUDGET_WEBHOOK_URL` é privado. Nunca use prefixo `NEXT_PUBLIC_` nele.
+- `N8N_WEBHOOK_URL` é privado. Nunca use prefixo `NEXT_PUBLIC_` nele.
 - `NEXT_PUBLIC_SITE_URL` é público e serve para canonical, sitemap e validação de origem.
 - Não coloque valores reais em `.env.example`, README, issues, screenshots ou código.
 
@@ -17,7 +17,7 @@ NEXT_PUBLIC_SITE_URL=https://bps2414.vercel.app
 
 1. Abra o projeto na Vercel.
 2. Acesse `Settings` -> `Environment Variables`.
-3. Adicione `DISCORD_BUDGET_WEBHOOK_URL` para Production e Preview se quiser testar preview.
+3. Adicione `N8N_WEBHOOK_URL` para Production e Preview se quiser testar preview.
 4. Adicione `NEXT_PUBLIC_SITE_URL` com a URL pública final.
 5. Redeploy.
 
@@ -28,11 +28,10 @@ O script `npm run env:check` valida o formato do webhook antes do build. Um buil
 - Webhook chamado apenas por `/api/budget-request`.
 - Payload JSON obrigatório e limite de 16 KB.
 - Rate limit básico por IP em memória.
-- Honeypot invisível para bots.
+- Honeypot invisível (campo `website`) que, quando preenchido, retorna 200 sem encaminhar o payload.
+- Timeout de 8s em `fetch` para o webhook do n8n (`AbortSignal.timeout`).
 - Validação server-side com Zod e normalização de campos.
 - Pacote/preço canônico no servidor, ignorando preço manipulado pelo frontend.
-- Neutralização de markdown, menções e links clicáveis no Discord.
-- `allowed_mentions: { parse: [] }` no payload do Discord.
 - Headers de segurança via `next.config.ts`.
 - `/api/` bloqueado no `robots.txt`.
 
