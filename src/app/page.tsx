@@ -600,32 +600,6 @@ export default function Home() {
             </div>
 
             <FadeIn delay={250}>
-              <div className="mt-8 rounded-xl border border-border bg-background/70 p-5 sm:flex sm:items-center sm:justify-between sm:gap-6">
-                <div>
-                  <h3 className="font-heading text-xl font-bold tracking-tight text-primary">
-                    Precisa de algo fora dos pacotes?
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-secondary">
-                    Me chame no WhatsApp para conversar sobre o que você precisa. Sem formulário, sem burocracia.
-                  </p>
-                </div>
-                <div className="mt-5 sm:mt-0 sm:min-w-64">
-                  <a
-                    href={`${whatsappBudgetLink}?text=${encodeURIComponent(
-                      "Olá, gostaria de conversar sobre um projeto personalizado fora dos planos."
-                    )}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={getButtonClasses("primary", "lg", "w-full font-semibold")}
-                  >
-                    <Whatsapp className="mr-3 h-5 w-5" />
-                    Chamar no WhatsApp
-                  </a>
-                </div>
-              </div>
-            </FadeIn>
-
-            <FadeIn delay={250}>
               <div className="mt-8 grid grid-cols-1 gap-4 rounded-xl border border-border bg-background/70 p-5 text-sm leading-relaxed text-secondary md:grid-cols-[auto_1fr] md:items-center">
                 <div className="flex h-11 w-11 items-center justify-center rounded-lg border border-border bg-surface text-primary">
                   <Settings2 className="h-5 w-5" />
