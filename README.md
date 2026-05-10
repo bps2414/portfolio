@@ -147,7 +147,7 @@ Para rodar o formulário de orçamento em desenvolvimento sem precisar de um n8n
    NEXT_PUBLIC_SITE_URL=http://localhost:3000
    ```
 3. Rode `npm run dev` (ou `npm run build && npm run start`).
-4. Acesse `http://localhost:3000/#orcamento`, preencha o formulário e envie.
+4. Acesse `http://localhost:3000`, role até a seção de planos, clique em **Solicitar orçamento** em qualquer card, preencha o formulário no modal e envie.
 5. No dashboard do webhook.site, confira que o JSON chegou com as chaves esperadas: `source`, `name`, `phone`, `businessType`, `projectType`, `budget`, `message`, `pageUrl`, `createdAt`, `userAgent`, `metadata`.
 
 Nunca commite a URL real do webhook. `N8N_WEBHOOK_URL` é server-only — não use prefixo `NEXT_PUBLIC_` porque isso vazaria a URL no bundle do navegador.

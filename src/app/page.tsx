@@ -5,10 +5,10 @@ import { ProjectCard } from "@/components/project-card";
 import { projects } from "@/data/projects";
 import { getButtonClasses } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
-import { ArrowRight, Code2, Wrench, LayoutTemplate, CheckCircle2, Clock3, Settings2 } from "lucide-react";
+import { ArrowRight, Code2, Wrench, LayoutTemplate, CheckCircle2, Clock3, Send, Settings2 } from "lucide-react";
 import { Github, Whatsapp } from "@/components/icons";
 import { FadeIn } from "@/components/fade-in";
-import { BudgetForm } from "@/components/budget-form";
+import { BudgetFormModal } from "@/components/budget-form-modal";
 import { cn } from "@/lib/utils";
 
 const whatsappBudgetLink = siteConfig.links.whatsapp;
@@ -563,7 +563,7 @@ export default function Home() {
                       ))}
                     </div>
 
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-3">
                       <a
                         href={`${whatsappBudgetLink}?text=${encodeURIComponent(
                           `Olá, tenho interesse no plano ${plan.title}. Gostaria de tirar algumas dúvidas.`
@@ -575,6 +575,24 @@ export default function Home() {
                         <Whatsapp className="mr-3 h-5 w-5" />
                         Conversar pelo WhatsApp
                       </a>
+                      <BudgetFormModal
+                        triggerLabel={
+                          <>
+                            <Send className="mr-3 h-5 w-5" />
+                            Solicitar orçamento
+                          </>
+                        }
+                        triggerClassName={getButtonClasses(
+                          plan.featured ? "outline" : "ghost",
+                          "lg",
+                          "w-full font-semibold"
+                        )}
+                        whatsappHref={`${whatsappBudgetLink}?text=${encodeURIComponent(
+                          `Olá, tenho interesse no plano ${plan.title}. Gostaria de tirar algumas dúvidas.`
+                        )}`}
+                        title={`Solicitar orçamento — ${plan.title}`}
+                        subtitle="Preencha os campos abaixo. Eu leio e te respondo pelo WhatsApp informado."
+                      />
                     </div>
                   </div>
                 </FadeIn>
@@ -616,36 +634,6 @@ export default function Home() {
                   Depois da aprovação e publicação, novas alterações podem ser combinadas à parte. Projetos com painel editável reduzem a necessidade de ajustes manuais, porque o próprio cliente consegue atualizar informações principais.
                 </p>
               </div>
-            </FadeIn>
-          </div>
-        </section>
-
-        {/* 8b. Solicitar orçamento (formulário) */}
-        <section
-          id="orcamento"
-          className="perf-section py-24 md:py-28 border-b border-border/70 scroll-mt-24"
-        >
-          <div className="container mx-auto max-w-4xl px-6">
-            <FadeIn>
-              <div className="mb-10 max-w-2xl space-y-3">
-                <div className="flex items-center gap-4 text-accent text-sm font-bold tracking-widest uppercase">
-                  <span className="w-12 h-px bg-accent" />
-                  Orçamento
-                </div>
-                <h2 className="text-3xl md:text-5xl font-heading font-bold tracking-tight">
-                  Solicite um orçamento rápido
-                </h2>
-                <p className="text-lg text-secondary leading-relaxed">
-                  Preencha os campos abaixo. Eu leio e te respondo pelo WhatsApp informado. Se preferir conversar direto, use o botão do WhatsApp que aparece ao lado.
-                </p>
-              </div>
-            </FadeIn>
-            <FadeIn delay={100}>
-              <BudgetForm
-                whatsappHref={`${whatsappBudgetLink}?text=${encodeURIComponent(
-                  "Olá, vi seu portfólio e gostaria de conversar sobre um projeto."
-                )}`}
-              />
             </FadeIn>
           </div>
         </section>

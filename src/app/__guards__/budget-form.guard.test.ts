@@ -27,6 +27,20 @@ describe("Guardas arquiteturais do budget-form", () => {
         ).not.toMatch(/\bprocess\.env\b/);
     });
 
+    it("o modal do formulário também não referencia N8N_WEBHOOK_URL nem process.env", () => {
+        const content = readRepoFile("src/components/budget-form-modal.tsx");
+
+        expect(
+            content,
+            "O modal do formulário não pode mencionar N8N_WEBHOOK_URL no bundle do cliente.",
+        ).not.toMatch(/N8N_WEBHOOK_URL/);
+
+        expect(
+            content,
+            "O modal do formulário não pode ler process.env — toda a leitura de ambiente é feita em /api/budget-request.",
+        ).not.toMatch(/\bprocess\.env\b/);
+    });
+
     it(".env.example contém a linha N8N_WEBHOOK_URL com valor vazio", () => {
         const envExample = readRepoFile(".env.example");
 
