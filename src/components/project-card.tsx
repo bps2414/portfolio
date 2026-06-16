@@ -101,7 +101,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           href={`/projetos/${project.slug}`}
           className="inline-flex items-center text-sm font-semibold text-primary group-hover:text-accent transition-colors"
         >
-          {project.caseStudy ? "Ver estudo de caso" : "Ver detalhes"}
+          {project.caseStudy ? "Ver detalhes do projeto" : "Ver detalhes"}
           <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
         </Link>
 

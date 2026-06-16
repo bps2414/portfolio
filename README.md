@@ -11,7 +11,6 @@ Portfólio pessoal construído com **Next.js 16**, **React 19**, **TypeScript** 
 | Projeto | Tipo | Stack |
 |---|---|---|
 | [ChamadaFácil](https://chamadafacil.vercel.app) | Sistema full-stack de chamados | Next.js, TypeScript, Supabase, PostgreSQL/RLS |
-| [Prado Auto Peças](https://pradoautopecas.pages.dev) | Site real para negócio local | HTML, CSS, JavaScript |
 | PTBRMerger | Ferramenta local técnica | Python, FFmpeg |
 | Barbearia da Vila | Landing page comercial | Next.js, Framer Motion |
 | [BPS Fishing Macro](https://github.com/bps2414/bps-fishing-macro) | Primeiro projeto técnico / automação desktop | Python, OCR, PyInstaller |
@@ -47,7 +46,7 @@ src/
 │   ├── robots.ts           # Robots.txt dinâmico
 │   ├── sitemap.ts          # Sitemap dinâmico
 │   └── projetos/[slug]/
-│       └── page.tsx        # Páginas de detalhe / estudo de caso
+│       └── page.tsx        # Páginas de detalhe / informações do projeto
 ├── components/
 │   ├── layout/
 │   │   ├── header.tsx      # Cabeçalho com scroll detection e theme toggle
@@ -63,7 +62,7 @@ src/
 ├── config/
 │   └── site.ts             # Configuração global (nome, URL, links)
 ├── data/
-│   └── projects.ts         # Dados dos projetos (tipo, stack, case study)
+│   └── projects.ts         # Dados dos projetos (tipo, stack, detalhes)
 └── lib/
     └── utils.ts            # Utilitário cn() (clsx + tailwind-merge)
 ```

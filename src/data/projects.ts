@@ -238,50 +238,6 @@ export const projects: Project[] = [
     },
   },
   {
-    slug: "prado-auto-pecas",
-    title: "Prado Auto Peças",
-    type: "site real para negócio local",
-    order: 2,
-    description:
-      "Site institucional publicado para negócio local de autopeças e serviços relacionados, com foco em apresentação clara, contato rápido, SEO local e manutenção simples.",
-    problem:
-      "Ajuda um negócio local a apresentar serviços, canais de contato e informações principais em uma página pública responsiva.",
-    featuredReason:
-      "Projeto real publicado, com foco em presença local, manutenção simples e canais diretos de contato.",
-    stack: ["HTML", "CSS", "JavaScript", "JSON", "PowerShell"],
-    links: {
-      site: "https://pradoautopecas.pages.dev/",
-      github: "https://github.com/bps2414/pradoautopecas",
-    },
-    limitations:
-      "Site estático; não inclui backend, CMS online, login ou dados públicos de resultado.",
-    isMain: true,
-    features: [
-      "Página institucional responsiva.",
-      "CTAs para telefone, WhatsApp e Instagram.",
-      "Conteúdo editável em JSON com editor local.",
-      "Editor local aberto por script batch.",
-      "Upload local de imagens pelo editor.",
-      "Backups automáticos a cada salvamento.",
-      "Sitemap, robots, canonical, Open Graph e JSON-LD.",
-      "Headers de segurança e cache para deploy estático.",
-      "Script de verificação técnica.",
-    ],
-    technicalDecisions: [
-      "Site estático primeiro para reduzir custo e manutenção.",
-      "Editor local em vez de painel online para evitar login e backend.",
-      "JSON como fonte única de conteúdo.",
-      "Páginas geradas no salvamento para manter o deploy simples.",
-      "PowerShell por ser adequado ao uso local em Windows.",
-    ],
-    learnings: [
-      "Arquitetura simples pode ser a melhor solução para pequenos negócios.",
-      "SEO local exige atenção a metadata, sitemap, robots e dados estruturados.",
-      "Editor local reduz superfície de ataque em projetos pequenos.",
-      "Scripts de validação ajudam a evitar quebra em deploy estático.",
-    ],
-  },
-  {
     slug: "food-templates-bps",
     title: "Templates de Alimentação",
     type: "template comercial / estudo de produto",
