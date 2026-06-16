@@ -11,6 +11,8 @@ Portfólio pessoal construído com **Next.js 16**, **React 19**, **TypeScript** 
 | Projeto | Tipo | Stack |
 |---|---|---|
 | [ChamadaFácil](https://chamadafacil.vercel.app) | Sistema full-stack de chamados | Next.js, TypeScript, Supabase, PostgreSQL/RLS |
+| [FaltaOS](https://faltaos.vercel.app) | Sistema local-first de controle escolar | React 19, TypeScript, Vite, Tailwind 4, Better Auth, Supabase |
+| [EXCE](https://exce.vercel.app) | Template comercial / compilador PDF | TypeScript, Node.js, Playwright, SheetJS |
 | PTBRMerger | Ferramenta local técnica | Python, FFmpeg |
 | Barbearia da Vila | Landing page comercial | Next.js, Framer Motion |
 | [BPS Fishing Macro](https://github.com/bps2414/bps-fishing-macro) | Primeiro projeto técnico / automação desktop | Python, OCR, PyInstaller |
@@ -114,44 +116,23 @@ Evite reintroduzir `backdrop-filter` em elementos fixos no mobile, `transition-a
 
 ## Deploy (Vercel)
 
-O projeto está configurado para deploy direto no Vercel. Para o formulário de orçamento, configure a variável server-only abaixo antes de ativar o encaminhamento para o webhook do n8n:
+O projeto está configurado para deploy direto no Vercel.
 
 ```txt
-N8N_WEBHOOK_URL=https://n8n.exemplo.com/webhook/REPLACE_WITH_PATH
 NEXT_PUBLIC_SITE_URL=https://bps2414.vercel.app
 ```
 
-`N8N_WEBHOOK_URL` é uma variável server-only e **não** deve usar o prefixo `NEXT_PUBLIC_`, caso contrário a URL vazaria no bundle do navegador. `NEXT_PUBLIC_SITE_URL` é pública e deve apontar para a URL final do site.
+`NEXT_PUBLIC_SITE_URL` é pública e deve apontar para a URL final do site.
 
 1. Importar o repositório em [vercel.com/new](https://vercel.com/new)
 2. Framework preset: **Next.js** (detectado automaticamente)
-3. Adicionar `N8N_WEBHOOK_URL` nas variáveis de ambiente do projeto (marcar como server-only)
-4. Adicionar `NEXT_PUBLIC_SITE_URL` com a URL canônica final
-5. Clicar em **Deploy**
+3. Adicionar `NEXT_PUBLIC_SITE_URL` com a URL canônica final
+4. Clicar em **Deploy**
 
-O build roda `npm run env:check` antes do `next build`. Se `N8N_WEBHOOK_URL` estiver ausente ou não começar com `https://`, o build falha para evitar deploy com formulário quebrado.
-
-Mais detalhes: [`SECURITY.md`](./SECURITY.md).
+O build roda `npm run env:check` antes do `next build`.
 
 ---
 
-## Como testar o webhook do n8n localmente
-
-Para rodar o formulário de orçamento em desenvolvimento sem precisar de um n8n real, use um webhook de teste público (ex.: https://webhook.site).
-
-1. Abra https://webhook.site e copie a URL única gerada.
-2. Crie um arquivo `.env.local` na raiz do projeto com:
-   ```
-   N8N_WEBHOOK_URL=https://webhook.site/SEU-UUID-AQUI
-   NEXT_PUBLIC_SITE_URL=http://localhost:3000
-   ```
-3. Rode `npm run dev` (ou `npm run build && npm run start`).
-4. Acesse `http://localhost:3000`, role até a seção de planos, clique em **Solicitar orçamento** em qualquer card, preencha o formulário no modal e envie.
-5. No dashboard do webhook.site, confira que o JSON chegou com as chaves esperadas: `source`, `name`, `phone`, `businessType`, `projectType`, `budget`, `message`, `pageUrl`, `createdAt`, `userAgent`, `metadata`.
-
-Nunca commite a URL real do webhook. `N8N_WEBHOOK_URL` é server-only — não use prefixo `NEXT_PUBLIC_` porque isso vazaria a URL no bundle do navegador.
-
----
 
 ## Adicionar novos projetos
 

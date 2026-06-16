@@ -238,10 +238,171 @@ export const projects: Project[] = [
     },
   },
   {
+    slug: "faltaos",
+    title: "FaltaOS",
+    type: "sistema local-first de controle escolar",
+    order: 2,
+    description:
+      "Controle de frequência e organização acadêmica local-first, feito para responder duas perguntas simples: quantas faltas ainda posso ter sem entrar em risco, e o que exige minha atenção agora?",
+    problem:
+      "Estudantes enfrentam dificuldade para calcular margens de faltas de forma reativa e centralizar tarefas, notas e prazos sem abrir mão da privacidade ou depender de cadastros obrigatórios.",
+    featuredReason:
+      "Demonstra arquitetura local-first de alta complexidade, criptografia no cliente (AES-GCM), service worker PWA customizado, autenticação integrada e controle de entitlements server-side.",
+    stack: [
+      "React 19",
+      "TypeScript",
+      "Vite",
+      "Tailwind CSS 4",
+      "Better Auth",
+      "Supabase",
+      "Vercel Functions",
+      "PWA",
+      "Vitest",
+      "Playwright",
+    ],
+    links: {
+      demo: "https://faltaos.vercel.app",
+      github: "https://github.com/bps2414/faltaos",
+    },
+    limitations:
+      "O sync anônimo opcional opera via snapshots completos (sem resolução de conflito de granulação fina). A liberação do plano Plus via Pix manual baseia-se em tokens server-side e exige operação manual via CLI administrativa.",
+    isMain: true,
+    screenshots: [
+      {
+        src: "/projects/faltas/hero-product.png",
+        alt: "Painel principal do FaltaOS exibindo o dashboard de frequência por matéria e alertas de compromissos.",
+        width: 1920,
+        height: 1080,
+        caption: "Dashboard principal com controle de frequência, limite de faltas e visão de ritmo acadêmico.",
+      },
+      {
+        src: "/projects/faltas/seo-social.png",
+        alt: "Visão geral da interface do FaltaOS com tela de controle de compromissos e quadro Kanban.",
+        width: 1200,
+        height: 630,
+        caption: "Painel adaptado para redes sociais mostrando o controle de tarefas e notas acadêmicas.",
+      },
+    ],
+    caseStudy: {
+      summary: {
+        title: "Uma experiência de controle escolar que funciona offline e com total privacidade.",
+        body: [
+          "O FaltaOS é uma ferramenta local-first concebida para auxiliar estudantes na gestão acadêmica diária. O principal diferencial está no cálculo inteligente e em tempo real da margem de faltas por disciplina, tirando o peso matemático do aluno.",
+          "O sistema opera inteiramente no navegador do usuário sem exigir cadastro. Caso a sincronização seja desejada, o app oferece sync anônimo com criptografia ponta a ponta no cliente (AES-GCM) ou sync em tempo real associado a uma conta protegida via Better Auth.",
+        ],
+      },
+      sections: [
+        {
+          title: "Problema",
+          body: [
+            "Faltar a aulas por motivos de força maior faz parte da vida acadêmica, mas calcular a margem de segurança manualmente em cada matéria (especialmente quando a grade muda) gera ansiedade e erros.",
+            "Além disso, aplicativos tradicionais forçam o registro de contas na nuvem e o envio de dados acadêmicos privados para servidores centralizados apenas para realizar funções simples de checklist e histórico.",
+          ],
+        },
+        {
+          title: "Solução",
+          body: [
+            "A resposta foi construir uma aplicação baseada em armazenamento local que mantém os dados do usuário seguros no navegador. O cálculo de margens de falta, plano de resgate acadêmico e simulador multi-dia operam de forma 100% cliente-side.",
+            "Para usuários com conta, a integração com Better Auth e Supabase garante sincronização automática entre múltiplos dispositivos, enquanto o sync anônimo criptografa o payload no cliente com chaves locais, impedindo que até mesmo os operadores do banco leiam os dados das matérias.",
+          ],
+        },
+        {
+          title: "Funcionalidades implementadas",
+          items: [
+            "Dashboard completo com frequência real por aulas dadas, limites de ausências, tendência e risco.",
+            "Grade semanal de horários com slots customizados de segunda a sexta.",
+            "Registro de faltas com snapshot histórico da matéria no dia, protegendo dados retrospectivos.",
+            "Quadro Kanban de tarefas mobile-first com Drag and Drop funcional.",
+            "Boletim escolar com notas por subperíodos e cálculo integrado de média final.",
+            "Exportação e importação manual via arquivos JSON criptografados.",
+            "Sincronização em nuvem segura autenticada (Better Auth) ou anônima criptografada (AES-GCM).",
+            "Mapeamento de internacionalização pt-BR/en-US persistido nas configurações do aplicativo.",
+            "PWA instalável com service worker dedicado que garante funcionamento offline total.",
+          ],
+        },
+        {
+          title: "Decisões técnicas",
+          items: [
+            "React 19 como base do frontend para renderização moderna e reativa.",
+            "Tailwind CSS 4 aproveitando o compilador mais rápido e controle estrito de temas via variáveis de CSS.",
+            "Better Auth com Vercel Functions para persistência de sessões robusta, removendo segredos do cliente.",
+            "Criptografia AES-GCM em Web Crypto API nativa do navegador para proteção do sync anônimo.",
+            "Banco de dados Supabase PostgreSQL com migrações versionadas e regras RLS rígidas.",
+            "Teste de integridade estrutural (Vitest + Playwright) cobrindo desde o offline até a CLI administrativa.",
+          ],
+        },
+        {
+          title: "Limitações conscientes",
+          items: [
+            "O sync anônimo utiliza snapshots completos, podendo sobrescrever alterações feitas em sessões concorrentes paralelas.",
+            "O plano Plus exige verificação de PIX e liberação baseada em tokens administrativos no lado do servidor.",
+            "Bundle size ligeiramente elevado pelas bibliotecas de criptografia e formatação, contornado via code-splitting.",
+          ],
+        },
+        {
+          title: "Aprendizados",
+          items: [
+            "Como estruturar aplicações local-first robustas com garantia de fallback offline.",
+            "Uso da Web Crypto API para cifragem de payloads de forma síncrona com chaves derivadas.",
+            "Padrões de migração retroativa de dados e restauração de backups em storages locais.",
+            "Orquestração de sessões Better Auth em rotas protegidas no Next/Vite com cookies seguros.",
+          ],
+        },
+      ],
+    },
+  },
+  {
+    slug: "exce",
+    title: "EXCE",
+    type: "template comercial / ferramenta técnica",
+    order: 3,
+    description:
+      "Template comercial de landing page minimalista dark-mode acoplado a um compilador de planilhas para PDF sem retenção de dados.",
+    problem:
+      "Permite converter planilhas XLS/XLSX/CSV complexas em relatórios PDF sofisticados e elegantes, garantindo privacidade total ao processar dados apenas na memória RAM.",
+    stack: [
+      "TypeScript",
+      "Node.js",
+      "Express",
+      "Playwright",
+      "SheetJS",
+      "Vite",
+      "Vercel",
+      "HTML",
+      "CSS",
+    ],
+    links: {
+      demo: "https://exce.vercel.app",
+      github: "https://github.com/bps2414/exce",
+    },
+    limitations:
+      "Projeto concebido como template comercial customizável; não persistente em banco de dados e limitado pelo tempo de execução serverless.",
+    isMain: false,
+    features: [
+      "Landing page comercial dark-mode com micro-interações táteis e animações de scroll.",
+      "Painel de configuração centralizado (config.js) para gerenciar textos, cores e SEO sem mexer no HTML.",
+      "API de conversão zero-retenção que processa buffers de planilhas XLS, XLSX e CSV em memória.",
+      "Motor Playwright headless rodando Chromium para renderização de relatórios PDF com grade tipográfica no padrão Venture Capital.",
+      "Suporte a importação de planilhas locais ou planilhas do Google Sheets públicas.",
+      "Totalmente otimizado para deploy serverless na Vercel via vercel.json.",
+    ],
+    technicalDecisions: [
+      "Processamento 100% em memória RAM (zero-retention) para conformidade rígida de privacidade e segurança.",
+      "Uso de @sparticuz/chromium com playwright-core para contornar limites de tamanho do pacote serverless na Vercel.",
+      "Centralização de tokens e textos de design no frontend para otimizar revenda e manutenção do template.",
+      "CSS nativo e minimalista com variáveis customizadas in vez de frameworks pesados.",
+    ],
+    learnings: [
+      "Orquestração e otimização de execução do Chromium headless em ambientes serverless com recursos limitados.",
+      "Análise e manipulação de fluxos binários e dados de planilhas com SheetJS em TypeScript.",
+      "Desenho de arquitetura focada em privacidade desde a concepção (privacy by design).",
+    ],
+  },
+  {
     slug: "food-templates-bps",
     title: "Templates de Alimentação",
     type: "template comercial / estudo de produto",
-    order: 3,
+    order: 4,
     description:
       "Template multi-tema para negócios de alimentação, com demos para restaurante, pizzaria e hamburgueria. Inclui páginas comerciais, cardápio digital, galeria, contato via WhatsApp e estudo técnico de backend/admin.",
     problem:
@@ -364,7 +525,7 @@ export const projects: Project[] = [
     slug: "ptbr-merger",
     title: "PTBRMerger",
     type: "ferramenta local técnica",
-    order: 5,
+    order: 6,
     description:
       "Ferramenta local para analisar arquivos MKV, detectar faixas de áudio PT-BR, criar um plano de processamento e gerar um arquivo final com FFmpeg/FFprobe.",
     problem:
@@ -406,7 +567,7 @@ export const projects: Project[] = [
     slug: "barbearia-da-vila",
     title: "Barbearia da Vila",
     type: "landing page comercial demonstrável",
-    order: 4,
+    order: 5,
     description:
       "Landing page responsiva para barbearia, com apresentação visual, serviços, galeria, equipe, FAQ, mapa, páginas legais, SEO básico e chamada para contato comercial.",
     problem:
@@ -457,7 +618,7 @@ export const projects: Project[] = [
     slug: "bps-fishing-macro",
     title: "BPS Fishing Macro",
     type: "primeiro projeto técnico",
-    order: 6,
+    order: 7,
     description:
       "Ferramenta desktop local para Windows que automatiza um fluxo de pesca em jogo, com interface própria, controle de mouse e teclado, OCR, detecção por cor, configurações persistentes, logs e empacotamento em executável.",
     problem:
