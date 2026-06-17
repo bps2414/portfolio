@@ -157,56 +157,121 @@ export default function Home() {
 
       <main className="flex-1">
         {/* 1. Hero */}
-        <section className="relative pt-28 pb-8 sm:pt-36 md:pt-48 md:pb-10 flex flex-col justify-center overflow-hidden">
+        <section className="relative pt-20 pb-12 lg:pt-24 lg:pb-20 flex items-center overflow-hidden min-h-[85vh] lg:min-h-[90vh]">
           {/* Brilho de fundo suave */}
-          <div className="hero-ambient-glow mobile-paint-lite absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[320px] sm:w-[800px] sm:h-[500px] blur-[72px] sm:blur-[150px] rounded-[100%] pointer-events-none" />
+          <div className="hero-ambient-glow mobile-paint-lite absolute top-1/3 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[320px] sm:w-[800px] sm:h-[500px] blur-[72px] sm:blur-[150px] rounded-[100%] pointer-events-none" />
 
-          <div className="container mx-auto max-w-6xl px-4 sm:px-6 relative z-10 mt-8 sm:mt-12 md:mt-0">
-            <FadeIn>
-              <div className="inline-flex items-center gap-3 px-3 py-1.5 rounded-full bg-surface border border-border text-xs font-medium text-secondary mb-8 shadow-sm">
-                <span className="w-2 h-2 rounded-full bg-green-500 md:animate-pulse motion-reduce:animate-none" />
-                Disponível para novos projetos
+          <div className="container mx-auto max-w-6xl px-4 sm:px-6 relative z-10">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+              {/* Lado Esquerdo: Conteúdo */}
+              <div className="lg:col-span-7 flex flex-col items-start text-left">
+                <FadeIn>
+                  <div className="inline-flex items-center gap-2.5 px-3 py-1 rounded-full bg-surface border border-border text-xs font-mono font-medium text-secondary mb-6 shadow-sm">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                    </span>
+                    Disponível para novos projetos
+                  </div>
+                </FadeIn>
+
+                <FadeIn delay={100}>
+                  <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold tracking-tighter mb-6 leading-[1.15] text-primary">
+                    Construo projetos web com foco em <span className="bg-gradient-to-r from-accent to-yellow-600 text-transparent bg-clip-text">clareza</span>, usabilidade e <span className="text-primary/70 italic font-medium">entrega real</span>.
+                  </h1>
+                </FadeIn>
+
+                <FadeIn delay={200}>
+                  <p className="text-base sm:text-lg md:text-xl text-secondary max-w-xl mb-8 leading-relaxed font-light">
+                    Bryan Souza, desenvolvedor web. Crio landing pages rápidas e sistemas sob medida focados em performance, SEO local e conversão para o WhatsApp.
+                  </p>
+                </FadeIn>
+
+                <FadeIn delay={300}>
+                  <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+                    <a href="#projetos" className={getButtonClasses("primary", "lg", "w-full sm:w-auto font-semibold")}>
+                      Ver projetos
+                    </a>
+                    <a href={siteConfig.links.github} target="_blank" rel="noopener noreferrer" className={getButtonClasses("outline", "lg", "w-full sm:w-auto font-semibold group")}>
+                      <Github className="mr-2 h-5 w-5 text-secondary group-hover:text-primary transition-colors" /> Ver GitHub
+                    </a>
+                  </div>
+                </FadeIn>
               </div>
-            </FadeIn>
 
-            <FadeIn delay={100}>
-              <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-[5.5rem] font-heading font-extrabold tracking-tighter mb-6 sm:mb-8 max-w-5xl leading-[1.05]">
-                Construo projetos web com foco em <span className="bg-gradient-to-r from-accent to-yellow-600 text-transparent bg-clip-text">clareza</span>, usabilidade e <span className="text-primary/70 italic font-medium">entrega real</span>.
-              </h1>
-            </FadeIn>
-
-            <FadeIn delay={200}>
-              <p className="text-base sm:text-lg md:text-2xl text-secondary max-w-3xl mb-8 sm:mb-12 leading-relaxed font-light">
-                Sou Bryan Souza, desenvolvedor web em início de carreira. Crio landing pages, sites responsivos e projetos digitais para pequenos negócios, recrutadores e pessoas que querem avaliar meu trabalho pelo resultado e pelo código.
-              </p>
-            </FadeIn>
-
-            <FadeIn delay={300}>
-              <div className="flex flex-col sm:flex-row gap-4 sm:items-center">
-                <a href="#projetos" className={getButtonClasses("primary", "lg", "w-full sm:w-auto font-semibold")}>
-                  Ver projetos selecionados
-                </a>
-                <a href={siteConfig.links.github} target="_blank" rel="noopener noreferrer" className={getButtonClasses("outline", "lg", "w-full sm:w-auto font-semibold group")}>
-                  <Github className="mr-2 h-5 w-5 text-secondary group-hover:text-primary transition-colors" /> GitHub
-                </a>
-              </div>
-            </FadeIn>
-
-            <FadeIn delay={400}>
-              <div className="mt-12 max-w-3xl">
-                <p className="text-sm font-medium text-secondary uppercase tracking-widest mb-4">Stack principal</p>
-                <div className="flex flex-wrap gap-2.5">
-                  {['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'HTML', 'CSS', 'JavaScript', 'Supabase'].map((tech) => (
-                    <div
-                      key={tech}
-                      className="px-4 py-2 rounded border border-border/40 bg-surface/60 sm:backdrop-blur-sm text-sm font-medium text-primary shadow-sm"
-                    >
-                      {tech}
+              {/* Lado Direito: Editor de Código Realista */}
+              <div className="lg:col-span-5 w-full flex justify-center lg:justify-end">
+                <FadeIn delay={400} className="w-full max-w-md">
+                  <div className="w-full rounded-xl border border-border bg-surface/80 backdrop-blur-md overflow-hidden shadow-2xl font-mono text-xs text-secondary">
+                    {/* Header do editor */}
+                    <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-raised/50">
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-3 h-3 rounded-full bg-[#FF5F56] opacity-80" />
+                        <span className="w-3 h-3 rounded-full bg-[#FFBD2E] opacity-80" />
+                        <span className="w-3 h-3 rounded-full bg-[#27C93F] opacity-80" />
+                      </div>
+                      <span className="text-[10px] text-secondary/60">validate-env.mjs</span>
+                      <div className="w-12" />
                     </div>
-                  ))}
-                </div>
+                    {/* Linhas de código */}
+                    <div className="p-5 space-y-1.5 overflow-x-auto select-none">
+                      <div>
+                        <span className="text-[#F43F5E]">import</span> <span className="text-[#38BDF8]">{`{ z }`}</span> <span className="text-[#F43F5E]">from</span> <span className="text-[#A7F3D0]">"zod"</span><span className="text-primary">;</span>
+                      </div>
+                      <div className="text-secondary/40">// Validação de ambiente</div>
+                      <div>
+                        <span className="text-[#F43F5E]">const</span> <span className="text-[#38BDF8]">envSchema</span> <span className="text-[#F43F5E]">=</span> <span className="text-[#38BDF8]">z</span><span className="text-primary">.</span><span className="text-[#F59E0B]">object</span><span className="text-primary">({`{`}</span>
+                      </div>
+                      <div className="pl-4">
+                        <span className="text-[#38BDF8]">NEXT_PUBLIC_SITE_URL</span><span className="text-primary">:</span> <span className="text-[#38BDF8]">z</span><span className="text-primary">.</span><span className="text-[#F59E0B]">string</span><span className="text-primary">().</span><span className="text-[#F59E0B]">url</span><span className="text-primary">(),</span>
+                      </div>
+                      <div>
+                        <span className="text-primary">{`});`}</span>
+                      </div>
+                      <div className="h-2" />
+                      <div>
+                        <span className="text-[#F43F5E]">const</span> <span className="text-[#38BDF8]">parsed</span> <span className="text-[#F43F5E]">=</span> <span className="text-[#38BDF8]">envSchema</span><span className="text-primary">.</span><span className="text-[#F59E0B]">safeParse</span><span className="text-primary">(</span><span className="text-[#38BDF8]">process</span><span className="text-primary">.</span><span className="text-[#38BDF8]">env</span><span className="text-primary">);</span>
+                      </div>
+                      <div className="h-2" />
+                      <div>
+                        <span className="text-[#F43F5E]">if</span> <span className="text-primary">(</span><span className="text-[#F43F5E]">!</span><span className="text-[#38BDF8]">parsed</span><span className="text-primary">.</span><span className="text-[#38BDF8]">success</span><span className="text-primary">) {`{`}</span>
+                      </div>
+                      <div className="pl-4 text-[#F43F5E]">
+                        process<span className="text-primary">.</span>exit<span className="text-primary">(</span><span className="text-[#F59E0B]">1</span><span className="text-primary">);</span>
+                      </div>
+                      <div>
+                        <span className="text-primary">{`}`}</span>
+                      </div>
+                      <div className="h-2" />
+                      <div className="text-[#27C93F] bg-[#27C93F]/10 px-2 py-1 rounded border border-[#27C93F]/20 inline-block font-sans font-medium text-[10px]">
+                        ✓ Env check OK
+                      </div>
+                    </div>
+                  </div>
+                </FadeIn>
               </div>
-            </FadeIn>
+            </div>
+          </div>
+        </section>
+
+        {/* Faixa de Tecnologias (Stack Principal) */}
+        <section className="border-y border-border bg-surface/20 py-6">
+          <div className="container mx-auto max-w-6xl px-4 sm:px-6">
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-8">
+              <span className="text-xs font-mono font-bold uppercase tracking-wider text-secondary/60">
+                Stack principal
+              </span>
+              <div className="flex flex-wrap gap-2 md:gap-3">
+                {['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'HTML', 'CSS', 'JavaScript', 'Supabase'].map((tech) => (
+                  <span
+                    key={tech}
+                    className="px-3 py-1 rounded bg-surface border border-border text-xs font-medium text-primary shadow-xs"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
 
@@ -572,7 +637,7 @@ export default function Home() {
                         className={getButtonClasses(plan.featured ? "primary" : "outline", "lg", "w-full font-semibold")}
                       >
                         <Whatsapp className="mr-3 h-5 w-5" />
-                        Conversar pelo WhatsApp
+                        Conversar no WhatsApp
                       </a>
                     </div>
                   </div>
@@ -649,7 +714,7 @@ export default function Home() {
 
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                   <a href={`${whatsappBudgetLink}?text=${encodeURIComponent("Olá, vi seu portfólio e gostaria de conversar sobre um projeto.")}`} target="_blank" rel="noopener noreferrer" className={getButtonClasses("primary", "lg", "w-full sm:w-auto font-semibold shadow-lg")}>
-                    <Whatsapp className="mr-3 h-5 w-5" /> Pedir orçamento pelo WhatsApp
+                    <Whatsapp className="mr-3 h-5 w-5" /> Conversar no WhatsApp
                   </a>
                   <a href={siteConfig.links.github} target="_blank" rel="noopener noreferrer" className={getButtonClasses("outline", "lg", "w-full sm:w-auto font-semibold")}>
                     <Github className="mr-3 h-5 w-5" /> Ver GitHub
