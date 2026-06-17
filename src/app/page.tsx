@@ -5,10 +5,9 @@ import { ProjectCard } from "@/components/project-card";
 import { projects } from "@/data/projects";
 import { getButtonClasses } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
-import { ArrowRight, Code2, Wrench, LayoutTemplate, CheckCircle2, Clock3, Send, Settings2 } from "lucide-react";
+import { ArrowRight, Code2, Wrench, LayoutTemplate, CheckCircle2, Clock3, Settings2 } from "lucide-react";
 import { Github, Whatsapp } from "@/components/icons";
 import { FadeIn } from "@/components/fade-in";
-import { BudgetFormModal } from "@/components/budget-form-modal";
 import { cn } from "@/lib/utils";
 
 const whatsappBudgetLink = siteConfig.links.whatsapp;
@@ -575,24 +574,6 @@ export default function Home() {
                         <Whatsapp className="mr-3 h-5 w-5" />
                         Conversar pelo WhatsApp
                       </a>
-                      <BudgetFormModal
-                        triggerLabel={
-                          <>
-                            <Send className="mr-3 h-5 w-5" />
-                            Solicitar orçamento
-                          </>
-                        }
-                        triggerClassName={getButtonClasses(
-                          plan.featured ? "outline" : "ghost",
-                          "lg",
-                          "w-full font-semibold"
-                        )}
-                        whatsappHref={`${whatsappBudgetLink}?text=${encodeURIComponent(
-                          `Olá, tenho interesse no plano ${plan.title}. Gostaria de tirar algumas dúvidas.`
-                        )}`}
-                        title={`Solicitar orçamento — ${plan.title}`}
-                        subtitle="Preencha os campos abaixo. Eu leio e te respondo pelo WhatsApp informado."
-                      />
                     </div>
                   </div>
                 </FadeIn>

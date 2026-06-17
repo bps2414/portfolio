@@ -18,21 +18,21 @@ function runScript(env) {
 }
 
 describe("validate-env.mjs", () => {
-    it("falha quando N8N_WEBHOOK_URL está ausente", () => {
+    it("passa quando executado sem variáveis (vazio)", () => {
         const result = runScript({});
-        expect(result.status).not.toBe(0);
-        expect(result.stderr).toContain("N8N_WEBHOOK_URL");
+        expect(result.status).toBe(0);
+        expect(result.stdout).toContain("Env check OK.");
     });
 
-    it("falha quando N8N_WEBHOOK_URL não é https", () => {
-        const result = runScript({ N8N_WEBHOOK_URL: "http://foo" });
+    it("falha quando NEXT_PUBLIC_SITE_URL é inválida", () => {
+        const result = runScript({ NEXT_PUBLIC_SITE_URL: "invalid-url" });
         expect(result.status).not.toBe(0);
-        expect(result.stderr).toContain("N8N_WEBHOOK_URL");
+        expect(result.stderr).toContain("NEXT_PUBLIC_SITE_URL");
     });
 
-    it("passa quando N8N_WEBHOOK_URL é URL https válida", () => {
+    it("passa quando NEXT_PUBLIC_SITE_URL é uma URL válida", () => {
         const result = runScript({
-            N8N_WEBHOOK_URL: "https://n8n.exemplo.com/webhook/abc",
+            NEXT_PUBLIC_SITE_URL: "https://bps2414.vercel.app",
         });
         expect(result.status).toBe(0);
         expect(result.stdout).toContain("Env check OK.");
