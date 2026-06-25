@@ -3,6 +3,11 @@ const SETTLE_DELAY_MS = 1500;
 
 const projects = [
   {
+    name: "MS Modas",
+    slug: "monicaloja",
+    url: "https://msmodas.vercel.app/",
+  },
+  {
     name: "Barbearia da Vila",
     slug: "barbeariadavila",
     url: "https://barbeariadavila.vercel.app/",

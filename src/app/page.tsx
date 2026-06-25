@@ -82,7 +82,7 @@ const servicePlans = [
 export default function Home() {
   const featuredProjects = projects.filter((p) => p.isMain);
   const commercialSiteProjects = projects.filter((p) =>
-    ["food-templates-bps", "barbearia-da-vila"].includes(p.slug)
+    ["food-templates-bps", "barbearia-da-vila", "monicaloja"].includes(p.slug)
   );
   const technicalProjects = projects.filter((p) =>
     ["ptbr-merger", "bps-fishing-macro"].includes(p.slug)

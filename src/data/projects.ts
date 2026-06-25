@@ -525,7 +525,7 @@ export const projects: Project[] = [
     slug: "ptbr-merger",
     title: "PTBRMerger",
     type: "ferramenta local técnica",
-    order: 6,
+    order: 7,
     description:
       "Ferramenta local para analisar arquivos MKV, detectar faixas de áudio PT-BR, criar um plano de processamento e gerar um arquivo final com FFmpeg/FFprobe.",
     problem:
@@ -615,10 +615,61 @@ export const projects: Project[] = [
     ],
   },
   {
+    slug: "monicaloja",
+    title: "MonicaLoja",
+    type: "landing page comercial demonstrável",
+    order: 6,
+    description:
+      "Landing page comercial responsiva para a MS Modas (loja de roupas e enxovais), com fluxo de pedidos direto por WhatsApp, bento grid de coleções e mapa de localização.",
+    problem:
+      "Negócios de moda local e enxovais precisam de um canal de vendas direto e humanizado sem a complexidade ou taxas de um e-commerce tradicional, aproximando o cliente via WhatsApp.",
+    stack: ["React 19", "TypeScript", "Vite", "CSS Modules", "Motion", "Phosphor Icons"],
+    links: {
+      demo: "https://msmodas.vercel.app/",
+      github: "https://github.com/bps2414/MonicaLoja",
+    },
+    limitations:
+      "Projeto demonstrável; textos, dados comerciais e canais de contato devem ser revisados antes de uso por um negócio real.",
+    isMain: false,
+    screenshots: [
+      {
+        src: "/screenshots/monicaloja-desktop.png",
+        alt: "Screenshot desktop da landing page MS Modas.",
+        width: 1440,
+        height: 1000,
+        caption: "Landing page da MS Modas em desktop.",
+      },
+    ],
+    features: [
+      "Header dinâmico com navegação por seções e controle de scroll.",
+      "Hero section editorial com banner de destaque da loja.",
+      "Seção informativa detalhando o fluxo de compra, entrega na Zona Oeste e pagamento na entrega.",
+      "Bento grid de coleções (Feminino, Masculino, Infantil, Cama/Mesa/Banho e Lar/Decoração) com tags de produtos.",
+      "Integração com WhatsApp gerando links de mensagens dinâmicas e personalizadas por categoria de interesse.",
+      "Mapa incorporado do Google Maps exibindo a localização em Paciência, RJ.",
+      "Tratamento de erros com Error Boundary nativo.",
+      "Design totalmente responsivo e adaptado para dispositivos móveis.",
+    ],
+    technicalDecisions: [
+      "Vite como build tool para carregamento rápido no desenvolvimento e build otimizado em produção.",
+      "Escolha de CSS Modules para escopo local de estilos e facilidade de manutenção.",
+      "Uso de @phosphor-icons/react para iconografia consistente e leve.",
+      "Uso da biblioteca motion para animações fluidas na entrada dos componentes (fade-in, slide-up).",
+      "Centralização de dados e mensagens em src/lib/constants.ts para fácil manutenção de telefone e mensagens de venda.",
+      "Integração direta de WhatsApp via links com mensagens predefinidas para acelerar o funil de vendas.",
+    ],
+    learnings: [
+      "Landing pages locais convertem melhor com CTAs focados no WhatsApp.",
+      "Modularizar componentes acima da dobra (Header, Hero) melhora a legibilidade e carregamento inicial.",
+      "O uso de Bento Grid ajuda na organização visual de coleções com diferentes proporções de imagem.",
+      "Tratamento com Error Boundary no nível da aplicação evita que erros em componentes menores quebrem todo o site comercial.",
+    ],
+  },
+  {
     slug: "bps-fishing-macro",
     title: "BPS Fishing Macro",
     type: "primeiro projeto técnico",
-    order: 7,
+    order: 8,
     description:
       "Ferramenta desktop local para Windows que automatiza um fluxo de pesca em jogo, com interface própria, controle de mouse e teclado, OCR, detecção por cor, configurações persistentes, logs e empacotamento em executável.",
     problem:
